@@ -27,6 +27,7 @@ assert.equal(periodEnd('Jan - Mar 2026'), '2026-03-31');
 assert.equal(periodEnd('March 2026 Quarter'), '2026-03-31');
 assert.equal(periodEnd('Sep 2025'), '2025-09-30');
 assert.equal(periodEnd('Dec-24'), '2024-12-31');
+assert.equal(periodEnd('March Quarter 2026 Jan - Mar 2025'), '2025-03-31');
 assert.equal(suburbKey('East St Kilda'), 'ST KILDA EAST');
 assert.equal(suburbKey('Saint Kilda East'), 'ST KILDA EAST');
 assert.equal(suburbKey('Fitzroy (Vic.)'), 'FITZROY');
@@ -51,6 +52,7 @@ const pq = parseVgvQuarterly(readWorkbook(q));
 assert.ok(pq.rows.length === names.length, `quarterly rows ${pq.rows.length}`);
 const fitz = pq.rows.find((r) => r.key === 'FITZROY')!;
 assert.equal(fitz.median, 1001000);
+assert.equal(fitz.yearAgo, 901000);
 assert.equal(fitz.sales, 21);
 console.log('vgv quarterly ok:', pq.detail);
 

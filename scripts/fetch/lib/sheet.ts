@@ -30,7 +30,10 @@ const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', '
 export function periodEnd(label: string | null | undefined): string | null {
   if (!label) return null;
   const s = String(label).toLowerCase();
-  const year = s.match(/\b(19|20)\d{2}\b/)?.[0] ?? (s.match(/[-\s'](\d{2})\b/) ? `20${s.match(/[-\s'](\d{2})\b/)![1]}` : null);
+  // The last year mentioned ("Jan 2025 - Mar 2026" -> 2026).
+  const years = s.match(/\b(19|20)\d{2}\b/g);
+  const short = s.match(/[-\s'](\d{2})\b(?!.*[-\s']\d{2}\b)/);
+  const year = years ? years[years.length - 1] : short ? `20${short[1]}` : null;
   if (!year) return null;
   // Take the last month name mentioned ("Jan - Mar 2025" -> Mar).
   let month = -1;
@@ -49,7 +52,9 @@ function columnHeader(grid: Grid, headerRow: number, col: number, depth = 3): st
   for (let r = Math.max(0, headerRow - depth + 1); r <= headerRow; r++) {
     // Merged header cells only fill their first column; carry the last non-empty value leftwards.
     let v = grid[r]?.[col] ?? null;
-    if (v == null && r < headerRow) {
+    // Only carry merged values across rows that look like header rows (several cells), not titles.
+    const filled = (grid[r] ?? []).filter((c) => c != null).length;
+    if (v == null && r < headerRow && filled >= 3) {
       for (let c = col - 1; c >= Math.max(0, col - 2); c--) {
         if (grid[r]?.[c] != null) {
           v = grid[r][c];
@@ -70,6 +75,8 @@ export interface VgvQuarterRow {
   suburb: string;
   key: string;
   median: number;
+  /** Median for the same quarter a year earlier, when the sheet has it. */
+  yearAgo: number | null;
   sales: number | null;
 }
 
@@ -88,16 +95,25 @@ export function parseVgvQuarterly(sheets: Sheet[]): { rows: VgvQuarterRow[]; det
     const salesCols = cols.filter(({ c, h }) => isSales(h) && numericShare(c, -1) > 0.3);
     if (!medianCols.length) continue;
     const latest = medianCols[medianCols.length - 1];
+    const latestEnd = periodEnd(latest.h);
+    // The column whose period ends 12 months before the latest one.
+    const yearAgoCol = latestEnd
+      ? medianCols.find(({ h }) => {
+          const e = periodEnd(h);
+          return e != null && Number(e.slice(0, 4)) === Number(latestEnd.slice(0, 4)) - 1 && e.slice(5, 7) === latestEnd.slice(5, 7);
+        })
+      : undefined;
     const sales = salesCols.length ? salesCols[salesCols.length - 1] : null;
     const rows: VgvQuarterRow[] = [];
     for (const r of data) {
       const median = parseNumber(r[latest.c]);
       if (median == null || median < 50_000) continue;
       const suburb = String(r[suburbCol]);
-      rows.push({ suburb, key: suburbKey(suburb), median, sales: sales ? parseNumber(r[sales.c]) : null });
+      const ya = yearAgoCol ? parseNumber(r[yearAgoCol.c]) : null;
+      rows.push({ suburb, key: suburbKey(suburb), median, yearAgo: ya != null && ya > 50_000 ? ya : null, sales: sales ? parseNumber(r[sales.c]) : null });
     }
     if (rows.length < 200) throw new Error(`VGV quarterly: only ${rows.length} suburbs parsed on sheet "${name}"`);
-    return { rows, detail: `sheet "${name}", suburb col ${suburbCol}, median col "${latest.h}"${sales ? `, sales col "${sales.h}"` : ''}` };
+    return { rows, detail: `sheet "${name}", median col "${latest.h}"${yearAgoCol ? `, year-ago col "${yearAgoCol.h}"` : ''}${sales ? `, sales col "${sales.h}"` : ''}` };
   }
   throw new Error('VGV quarterly: no sheet with a Suburb/Locality header and price columns');
 }

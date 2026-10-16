@@ -34,12 +34,16 @@ export async function packageShow(id: string): Promise<CkanPackage> {
   throw lastErr instanceof Error ? lastErr : new Error(`CKAN package ${id} not found`);
 }
 
-/** Most recently added resource matching the formats, by created / last_modified date. */
-export async function latestResource(id: string, formats: string[]): Promise<CkanResource> {
+/** Resources matching the formats, newest first (by period end, last modified or created date). */
+export async function resources(id: string, formats: string[]): Promise<CkanResource[]> {
   const pkg = await packageShow(id);
   const fmt = formats.map((f) => f.toLowerCase());
   const list = pkg.resources.filter((r) => fmt.includes((r.format || '').toLowerCase()) || fmt.some((f) => r.url.toLowerCase().includes(`.${f}`)));
   if (!list.length) throw new Error(`no ${formats.join('/')} resource in ${id}`);
   const when = (r: CkanResource) => r.period_end || r.last_modified || r.created || '';
-  return list.sort((a, b) => when(b).localeCompare(when(a)))[0];
+  return list.sort((a, b) => when(b).localeCompare(when(a)));
+}
+
+export async function latestResource(id: string, formats: string[]): Promise<CkanResource> {
+  return (await resources(id, formats))[0];
 }

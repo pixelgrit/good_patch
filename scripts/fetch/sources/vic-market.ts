@@ -4,7 +4,7 @@
  *  - Valuer-General Victoria median house and unit prices by suburb (quarterly, plus yearly time series)
  *  - Homes Victoria Rental Report, moving annual median rents by suburb (quarterly)
  */
-import { latestResource } from '../lib/ckan';
+import { latestResource, resources, type CkanResource } from '../lib/ckan';
 import { cache, suburbKey, writeCsv, writeJson } from '../lib/common';
 import { download } from '../lib/http';
 import { parseRentSheet, parseVgvQuarterly, parseVgvTimeSeries, periodEnd, readWorkbook, type RentSeries } from '../lib/sheet';
@@ -27,11 +27,29 @@ const VGV_HEADERS = {
   'Upgrade-Insecure-Requests': '1',
 };
 
-async function fetchSheets(dataset: string, file: string) {
-  const res = await latestResource(dataset, ['xls', 'xlsx']);
+async function fetchResource(res: CkanResource, file: string) {
   const ext = res.url.toLowerCase().includes('.xlsx') || res.format.toLowerCase() === 'xlsx' ? 'xlsx' : 'xls';
   const p = await download(res.url, cache(`${file}.${ext}`), { headers: VGV_HEADERS, archiveFallback: true });
   return { res, sheets: readWorkbook(p) };
+}
+
+async function fetchSheets(dataset: string, file: string) {
+  return fetchResource(await latestResource(dataset, ['xls', 'xlsx']), file);
+}
+
+/** Newest release that can be downloaded (directly or via the archive), trying up to three. */
+async function fetchNewestAvailable(dataset: string, file: string) {
+  const list = (await resources(dataset, ['xls', 'xlsx'])).slice(0, 3);
+  let lastErr: unknown;
+  for (const res of list) {
+    try {
+      return await fetchResource(res, file);
+    } catch (err) {
+      lastErr = err;
+      console.warn(`  ${res.name}: ${(err as Error).message}`);
+    }
+  }
+  throw lastErr instanceof Error ? lastErr : new Error(`no downloadable release in ${dataset}`);
 }
 
 export const vgvPrices: Fetcher = {
@@ -50,10 +68,17 @@ export const vgvPrices: Fetcher = {
       asAt = asAt && asAt < qAsAt ? asAt : qAsAt || asAt;
       notes.push(`${type} quarter: ${q.res.name} (${quarter.detail})`);
 
-      const t = await fetchSheets(type === 'houses' ? VGV.houseSeries : VGV.unitSeries, `vgv-${type}-series`);
-      const ts = parseVgvTimeSeries(t.sheets);
-      notes.push(`${type} series: ${t.res.name} (${ts.detail})`);
-      const tsByKey = new Map(ts.rows.map((r) => [r.key, r]));
+      // The yearly series gives 3, 5 and 10-year growth. It's optional: if no
+      // release can be fetched, quarterly prices and 1-year growth still load.
+      let tsByKey = new Map<string, { years: Record<number, number> }>();
+      try {
+        const t = await fetchNewestAvailable(type === 'houses' ? VGV.houseSeries : VGV.unitSeries, `vgv-${type}-series`);
+        const ts = parseVgvTimeSeries(t.sheets);
+        notes.push(`${type} series: ${t.res.name} (${ts.detail})`);
+        tsByKey = new Map(ts.rows.map((r) => [r.key, r]));
+      } catch (err) {
+        notes.push(`${type} series unavailable: ${(err as Error).message}`);
+      }
 
       for (const r of quarter.rows) {
         const s = tsByKey.get(r.key);
@@ -65,6 +90,7 @@ export const vgvPrices: Fetcher = {
           key: r.key,
           type,
           median: r.median,
+          median_quarter_year_ago: r.yearAgo ?? '',
           sales: r.sales ?? '',
           period_end: qAsAt,
           series_last_year: last ?? '',

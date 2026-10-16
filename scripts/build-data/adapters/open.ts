@@ -105,7 +105,10 @@ export const vgvMedians: Adapter = {
       put('medianPrice', num(r.median));
       const last = num(r.median_last_year);
       const yearEnd = r.series_last_year ? `${r.series_last_year}-12-31` : asAt;
-      put('growth1y', pctChange(last, num(r.median_1y_ago)), yearEnd);
+      // 1-year growth: same quarter a year earlier if the quarterly sheet has it, else the yearly series.
+      const qYearAgo = num(r.median_quarter_year_ago);
+      if (qYearAgo) put('growth1y', pctChange(num(r.median), qYearAgo));
+      else put('growth1y', pctChange(last, num(r.median_1y_ago)), yearEnd);
       put('growth3y', pctChange(last, num(r.median_3y_ago)), yearEnd);
       put('growth5y', pctChange(last, num(r.median_5y_ago)), yearEnd);
       put('growth10y', pctChange(last, num(r.median_10y_ago)), yearEnd);
