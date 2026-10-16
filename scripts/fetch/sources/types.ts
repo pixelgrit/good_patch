@@ -17,6 +17,8 @@ export interface Fetcher {
   cadence: Cadence;
   /** Fetchers whose outputs this one reads (run first). */
   needs?: string[];
+  /** The publisher blocks cloud/CI addresses: skipped on GitHub Actions, run it from your own machine. */
+  localOnly?: string;
   run(): Promise<FetchResult>;
 }
 

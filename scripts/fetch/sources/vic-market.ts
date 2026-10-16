@@ -38,6 +38,7 @@ export const vgvPrices: Fetcher = {
   id: 'vgv',
   name: 'Valuer-General Victoria median prices by suburb',
   cadence: 'quarterly',
+  localOnly: 'land.vic.gov.au blocks GitHub Actions servers (HTTP 403). Run `npm run fetch -- --only=vgv` on your own computer after each quarterly release.',
   async run() {
     const out: Record<string, string | number | null>[] = [];
     const series: Record<string, Record<string, { t: string; v: number }[]>> = {};

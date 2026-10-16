@@ -23,6 +23,22 @@ SA2 figures (approvals, population) are apportioned to suburbs by area overlap: 
 
 "Fetcher checks" is how often the scheduled job looks for a new release. Fetching is idempotent: an unchanged file produces no commit.
 
+## Run locally: Valuer-General prices
+
+land.vic.gov.au's firewall rejects requests from GitHub's servers (HTTP 403, whatever the client or headers), so the scheduled job skips the Valuer-General fetcher. After each quarterly release (usually about three months after the quarter ends), run it from your own computer and push:
+
+```bash
+git pull
+npm install
+npm run fetch -- --only=vgv
+npm run data
+git add data/sources public/data
+git commit -m "Valuer-General prices"
+git push
+```
+
+Until it has run once, prices come from the Cotality snapshot for 69 suburbs, and the map shows only suburbs with a price. The app flags the prices as stale six months after their "as at" date.
+
 ## Hand-collected snapshot
 
 `data/real/` holds figures collected by hand in October 2026. The automated sources above overwrite them where they overlap.

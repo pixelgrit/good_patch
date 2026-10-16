@@ -28,7 +28,7 @@ npm run build        # typecheck and production build to dist/
 
 ### Keeping the data current
 
-`.github/workflows/refresh-data.yml` runs `fetch` and `data` every Monday, checks the app still builds, and commits any changed data. Once the project is in a GitHub repository it runs on its own; trigger it by hand from the Actions tab. A source that fails keeps its last good data, and the job reports the failure after committing whatever did update. GitHub pauses scheduled workflows in repositories with no activity for 60 days, but the weekly data commits count as activity.
+`.github/workflows/refresh-data.yml` runs `fetch` and `data` every Monday, checks the app still builds, and commits any changed data. Once the project is in a GitHub repository it runs on its own; trigger it by hand from the Actions tab. A source that fails keeps its last good data, and the job reports the failure after committing whatever did update. The one exception is Valuer-General prices: their server blocks GitHub, so run `npm run fetch -- --only=vgv` from your own computer each quarter and push (see [docs/data-sources.md](docs/data-sources.md#run-locally-valuer-general-prices)). GitHub pauses scheduled workflows in repositories with no activity for 60 days, but the weekly data commits count as activity.
 
 `npm run data` flag: `--all-vic` keeps every Victorian suburb rather than just metro Melbourne.
 

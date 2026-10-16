@@ -78,12 +78,13 @@ async function main() {
     }
   }
 
-  // Keep suburbs that received market data (real SAL brings in many with none).
+  // Keep suburbs with a median price for houses or units: without one there's
+  // no yield, and comparing them against priced suburbs would mislead.
   const before = ctx.suburbs.length;
-  ctx.suburbs = ctx.suburbs.filter((s) => Object.keys(s.houses.metrics).length + Object.keys(s.units.metrics).length > 0);
+  ctx.suburbs = ctx.suburbs.filter((s) => s.houses.metrics.medianPrice?.value != null || s.units.metrics.medianPrice?.value != null);
   ctx.byCode = new Map(ctx.suburbs.map((s) => [s.code, s]));
   ctx.boundaries = ctx.boundaries.filter((b) => ctx.byCode.has(b.properties.code));
-  if (before !== ctx.suburbs.length) console.log(`- kept ${ctx.suburbs.length} of ${before} suburbs with market data`);
+  if (before !== ctx.suburbs.length) console.log(`- kept ${ctx.suburbs.length} of ${before} suburbs with a median price`);
 
   console.log('- tram catchments and access');
   const catchments = ctx.transport ? tramCatchments(ctx.transport.tramStops) : { c400: null, c800: null };

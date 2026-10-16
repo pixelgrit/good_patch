@@ -43,6 +43,11 @@ async function main() {
       console.log(`- ${f.name}: up to date (${prev!.asAt ?? 'fetched ' + prev!.fetchedAt.slice(0, 10)})`);
       continue;
     }
+    if (f.localOnly && process.env.GITHUB_ACTIONS && !only?.includes(f.id)) {
+      console.log(`- ${f.name}: skipped on GitHub Actions. ${f.localOnly}`);
+      results[f.id] = prev?.status === 'ok' ? { ...prev, message: `Last fetched locally. ${f.localOnly}` } : { id: f.id, name: f.name, status: 'skipped', fetchedAt: prev?.fetchedAt ?? new Date().toISOString(), message: f.localOnly };
+      continue;
+    }
     if (f.needs?.some((n) => failedIds.has(n))) {
       console.log(`- ${f.name}: skipped, depends on a failed source`);
       continue;
