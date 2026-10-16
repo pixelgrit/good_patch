@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16T23:31:31.886Z",
+  "updatedAt": "2026-10-16T23:53:11.621Z",
   "sources": {
     "abs-boundaries": {
       "id": "abs-boundaries",
@@ -43,9 +43,9 @@
     "vgv": {
       "id": "vgv",
       "name": "Valuer-General Victoria median prices by suburb",
-      "status": "skipped",
+      "status": "failed",
       "fetchedAt": "2026-10-16T23:09:16.417Z",
-      "message": "land.vic.gov.au blocks GitHub Actions servers (HTTP 403). Run `npm run fetch -- --only=vgv` on your own computer after each quarterly release."
+      "message": "no Internet Archive copy of https://www.land.vic.gov.au/__data/assets/excel_doc/0033/775617/houses-by-suburb-2015-2025.xlsx after requesting one"
     },
     "homesvic": {
       "id": "homesvic",
