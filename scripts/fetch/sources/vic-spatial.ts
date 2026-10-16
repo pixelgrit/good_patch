@@ -53,8 +53,9 @@ export const vicmapPlanning: Fetcher = {
     const sal = readJsonOut<FeatureCollection<Polygon | MultiPolygon, { code: string; name: string }>>('sal-metro.geojson');
     if (!sal) throw new Error('needs abs-boundaries output first');
     const [minx, miny, maxx, maxy] = turf.bbox(sal);
-    // WFS 2.0 with EPSG:4326 uses lat/lon axis order in BBOX filters.
-    const bbox = `BBOX(geom,${miny},${minx},${maxy},${maxx},'EPSG:4326')`;
+    // The layers are stored in GDA2020 (EPSG:7844, latitude first); a BBOX
+    // without a CRS argument uses that native order. Naming a CRS matches nothing.
+    const bbox = `BBOX(geom,${miny},${minx},${maxy},${maxx})`;
     const zones = await wfsAll('open-data-platform:plan_zone', `${bbox} AND (zone_code LIKE 'NRZ%' OR zone_code LIKE 'GRZ%' OR zone_code LIKE 'RGZ%')`);
     const overlays = await wfsAll('open-data-platform:plan_overlay', `${bbox} AND (zone_code LIKE 'LSIO%' OR zone_code LIKE 'FO%' OR zone_code LIKE 'SBO%' OR zone_code LIKE 'BMO%' OR zone_code LIKE 'HO%')`);
     if (zones.length < 100) throw new Error(`only ${zones.length} zone polygons`);

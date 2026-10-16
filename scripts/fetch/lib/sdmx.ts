@@ -1,4 +1,4 @@
-import { getText } from './http';
+import { getJson, getText } from './http';
 
 const BASE = 'https://api.data.abs.gov.au';
 
@@ -20,6 +20,53 @@ export async function fetchSdmx(dataflow: string, opts: { key?: string; startPer
   const url = `${BASE}/data/ABS,${dataflow}/${opts.key ?? 'all'}?${params}`;
   const text = await getText(url, { headers: { Accept: 'application/vnd.sdmx.data+csv;labels=both' }, timeoutMs: 600_000 });
   return parseSdmxCsv(text);
+}
+
+export interface SdmxDimension {
+  id: string;
+  position: number;
+  codes: { id: string; name: string }[];
+}
+
+/** Dimensions of a dataflow, in key order, with their code lists. */
+export async function fetchStructure(dataflow: string): Promise<SdmxDimension[]> {
+  type Named = { id: string; name?: string | Record<string, string>; names?: Record<string, string> };
+  const label = (n: Named) => (typeof n.name === 'string' ? n.name : (n.name?.en ?? n.names?.en ?? Object.values(n.name ?? n.names ?? {})[0] ?? n.id));
+  const doc = await getJson<{
+    data: {
+      dataStructures: { dataStructureComponents: { dimensionList: { dimensions: { id: string; position: number; localRepresentation?: { enumeration?: string } }[] } } }[];
+      codelists?: (Named & { codes?: Named[] })[];
+    };
+  }>(`${BASE}/dataflow/ABS/${dataflow}/latest?references=all`, { headers: { Accept: 'application/vnd.sdmx.structure+json' } });
+  const lists = new Map((doc.data.codelists ?? []).map((c) => [c.id, (c.codes ?? []).map((x) => ({ id: x.id, name: label(x) }))]));
+  const dims = doc.data.dataStructures[0].dataStructureComponents.dimensionList.dimensions;
+  return dims
+    .map((d) => {
+      const listId = d.localRepresentation?.enumeration?.match(/=\w+:([^()]+)\(/)?.[1] ?? '';
+      return { id: d.id, position: d.position, codes: lists.get(listId) ?? [] };
+    })
+    .sort((a, b) => a.position - b.position);
+}
+
+/**
+ * Build a data key that selects one member per dimension using the same
+ * label preferences as pickMembers, leaving `wildcard` dimensions (and any it
+ * can't decide) open. Keeps ABS responses small enough not to time out.
+ */
+export function buildKey(dims: SdmxDimension[], wildcard: string[], prefer: Record<string, RegExp[]> = {}): { key: string; chosen: Record<string, string> } {
+  const chosen: Record<string, string> = {};
+  const parts = dims.map((d) => {
+    if (wildcard.includes(d.id) || d.codes.length <= 1 || d.codes.length > 300) return '';
+    for (const p of [...(prefer[d.id] ?? []), /^total/i, /\btotal\b/i]) {
+      const hit = d.codes.find((c) => p.test(c.name));
+      if (hit) {
+        chosen[d.id] = `${hit.id} (${hit.name})`;
+        return hit.id;
+      }
+    }
+    return '';
+  });
+  return { key: parts.join('.'), chosen };
 }
 
 export function parseSdmxCsv(text: string): SdmxRow[] {

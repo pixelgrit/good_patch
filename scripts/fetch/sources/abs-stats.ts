@@ -11,7 +11,7 @@ import path from 'node:path';
 import type { FeatureCollection, MultiPolygon, Polygon } from 'geojson';
 import { cache, CACHE_DIR, parseNumber, readJsonOut, writeCsv } from '../lib/common';
 import { download } from '../lib/http';
-import { fetchSdmx, pickMembers, type SdmxRow } from '../lib/sdmx';
+import { buildKey, fetchSdmx, fetchStructure, pickMembers, type SdmxRow } from '../lib/sdmx';
 import { sa2ToSal } from './abs-geo';
 import type { Fetcher } from './types';
 
@@ -128,6 +128,19 @@ function apportionment() {
   return sa2ToSal(sal.features, sa2.features);
 }
 
+/** A narrow data key from the dataflow's structure, or "all" if the structure can't be read. */
+async function structuredKey(dataflow: string, prefer: Record<string, RegExp[]>): Promise<{ key: string; chosen: Record<string, string> }> {
+  try {
+    const dims = await fetchStructure(dataflow);
+    // Leave the region dimension open (thousands of codes).
+    const regionDims = dims.filter((d) => d.codes.length > 300 || /ASGS|REGION$|SA2/.test(d.id) && !/TYPE/.test(d.id)).map((d) => d.id);
+    return buildKey(dims, regionDims, prefer);
+  } catch (err) {
+    console.warn(`  structure for ${dataflow} unavailable, requesting all: ${(err as Error).message}`);
+    return { key: 'all', chosen: {} };
+  }
+}
+
 /** The dimension that holds SA2 codes (9 digits). */
 function regionDim(rows: SdmxRow[]): string {
   const dims = Object.keys(rows[0]?.dims ?? {});
@@ -154,19 +167,25 @@ export const absApprovals: Fetcher = {
   cadence: 'monthly',
   needs: ['abs-boundaries'],
   async run() {
-    const raw = await fetchSdmx('BA_SA2', { startPeriod: monthsAgo(14) });
-    if (!raw.length) throw new Error('BA_SA2 returned no rows');
-    const region = regionDim(raw);
-    const { rows, chosen } = pickMembers(raw.filter((r) => r.dims[region].code.startsWith('2')), [region], {
+    const prefer = {
       MEASURE: [/dwelling/i, /number/i],
       BUILDING_TYPE: [/total residential/i, /^total/i],
       TYPE_OF_BUILDING: [/total residential/i, /^total/i],
+      BUILDING_CLASS: [/total residential/i, /^total/i],
       WORK_TYPE: [/^total/i, /new/i],
       TYPE_OF_WORK: [/^total/i, /new/i],
       SECTOR: [/^total/i],
       SECTOR_OF_OWNERSHIP: [/^total/i],
+      REGION_TYPE: [/SA2|statistical area level 2/i],
       FREQ: [/month/i],
-    });
+    };
+    const key = await structuredKey('BA_SA2', prefer);
+    const raw = await fetchSdmx('BA_SA2', { key: key.key, startPeriod: monthsAgo(14) });
+    if (!raw.length) throw new Error('BA_SA2 returned no rows');
+    const region = regionDim(raw);
+    const picked = pickMembers(raw.filter((r) => r.dims[region].code.startsWith('2')), [region], prefer);
+    const rows = picked.rows;
+    const chosen = { ...key.chosen, ...picked.chosen };
     const periods = [...new Set(rows.map((r) => r.period))].sort();
     const last12 = new Set(periods.slice(-12));
     const asAt = periodToDate(periods[periods.length - 1]);
@@ -198,14 +217,18 @@ export const absPopulation: Fetcher = {
   needs: ['abs-boundaries'],
   async run() {
     const year = new Date().getUTCFullYear();
-    const raw = await fetchSdmx('ABS_ANNUAL_ERP_ASGS2021', { startPeriod: String(year - 4) });
+    const prefer = { MEASURE: [/estimated resident population/i, /\berp\b/i], REGION_TYPE: [/SA2|statistical area level 2/i], SEX: [/persons/i, /^total/i], FREQ: [/annual/i] };
+    const key = await structuredKey('ABS_ANNUAL_ERP_ASGS2021', prefer);
+    const raw = await fetchSdmx('ABS_ANNUAL_ERP_ASGS2021', { key: key.key, startPeriod: String(year - 4) });
     if (!raw.length) throw new Error('ERP returned no rows');
     const region = regionDim(raw);
-    const { rows, chosen } = pickMembers(
+    const picked = pickMembers(
       raw.filter((r) => /^2\d{8}$/.test(r.dims[region].code)),
       [region],
-      { MEASURE: [/estimated resident population/i, /\berp\b/i], REGION_TYPE: [/SA2|statistical area level 2/i], SEX: [/persons/i, /^total/i], FREQ: [/annual/i] },
+      prefer,
     );
+    const rows = picked.rows;
+    const chosen = { ...key.chosen, ...picked.chosen };
     const periods = [...new Set(rows.map((r) => r.period))].sort();
     if (periods.length < 2) throw new Error('need at least two years of ERP');
     const [prev, last] = periods.slice(-2);

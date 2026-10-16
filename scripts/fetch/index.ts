@@ -11,6 +11,7 @@
  */
 import fs from 'node:fs';
 import { out, type ManifestEntry } from './lib/common';
+import { describe } from './lib/http';
 import { absBoundaries, absSeifa } from './sources/abs-geo';
 import { absApprovals, absCensus, absPopulation } from './sources/abs-stats';
 import { homesVicRents, vgvPrices } from './sources/vic-market';
@@ -55,7 +56,7 @@ async function main() {
     } catch (err) {
       failures++;
       failedIds.add(f.id);
-      const message = err instanceof Error ? err.message : String(err);
+      const message = describe(err);
       // Keep the last good result's files and date; record the failure.
       results[f.id] = { ...(prev ?? { id: f.id, name: f.name, fetchedAt: new Date().toISOString() }), status: 'failed', message, id: f.id, name: f.name };
       console.error(`  FAILED: ${message}`);
