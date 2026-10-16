@@ -1,0 +1,69 @@
+Fitzroy|20924
+Collingwood|20616
+Abbotsford|20002
+Richmond|22170
+Clifton Hill|20574
+Fitzroy North|20925
+Carlton|20495
+Carlton North|20496
+Parkville|22038
+North Melbourne|21966
+West Melbourne|22757
+East Melbourne|20830
+Docklands|20766
+Southbank|22315
+Northcote|21971
+Thornbury|22508
+Preston|22121
+Reservoir|22161
+Fairfield|20901
+Alphington|20034
+Ivanhoe|21246
+Heidelberg|21167
+Brunswick|20361
+Brunswick East|20362
+Brunswick West|20363
+Coburg|20596
+Pascoe Vale|22041
+Essendon|20885
+Moonee Ponds|21742
+Ascot Vale|20075
+Flemington|20929
+Kensington|21327
+Footscray|20935
+Seddon|22256
+Yarraville|22917
+Maidstone|21575
+Sunshine|22395
+Williamstown|22792
+Port Melbourne|22107
+South Melbourne|22310
+Albert Park|20018
+St Kilda|22343
+St Kilda East|22344
+Balaclava|20105
+Elwood|20867
+Prahran|22118
+Windsor|22805
+South Yarra|22314
+Toorak|22547
+Armadale|20066
+Malvern|21586
+Malvern East|21587
+Caulfield North|20523
+Caulfield|20521
+Elsternwick|20864
+Carnegie|20498
+Murrumbeena|21849
+Bentleigh|20214
+Brighton|20337
+Hawthorn|21152
+Hawthorn East|21153
+Kew|21336
+Camberwell|20453
+Glen Iris|21010
+Ashburton|20077
+Balwyn|20123
+Surrey Hills|22399
+Box Hill|20314
+Burwood|20426

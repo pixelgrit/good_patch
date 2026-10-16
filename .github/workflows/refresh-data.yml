@@ -1,0 +1,67 @@
+# Refresh the free data sources on a schedule, rebuild the app's data, and
+# commit the result. Runs every Monday morning Melbourne time, and on demand
+# from the Actions tab ("Run workflow").
+name: Refresh data
+
+on:
+  schedule:
+    - cron: '17 20 * * 0' # 20:17 UTC Sunday = early Monday in Melbourne
+  workflow_dispatch:
+    inputs:
+      all:
+        description: 'Refetch every source, ignoring cadence'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Check parsers
+        run: npm run test:fetch
+
+      - name: Fetch sources
+        id: fetch
+        continue-on-error: true
+        run: npm run fetch -- ${{ inputs.all && '--all' || '' }}
+
+      - name: Build app data
+        run: npm run data
+
+      - name: Check the app still builds
+        run: npm run build
+
+      - name: Commit changes
+        run: |
+          git config user.name "propa-data-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/sources public/data
+          if git diff --cached --quiet; then
+            echo "No data changes."
+          else
+            git commit -m "Refresh data $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Report failed sources
+        if: steps.fetch.outcome == 'failure'
+        run: |
+          echo "One or more sources failed to update; the last good data was kept. See the job summary."
+          exit 1

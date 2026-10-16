@@ -1,0 +1,36 @@
+{
+  "name": "propa",
+  "version": "0.1.0",
+  "description": "Melbourne suburb investment heat map",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit -p tsconfig.json && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "data": "tsx scripts/build-data/index.ts",
+    "data:mock": "tsx scripts/build-data/index.ts --mock-only",
+    "fetch": "tsx scripts/fetch/index.ts",
+    "test:fetch": "tsx scripts/fetch/test/parsers.test.ts",
+    "refresh": "npm run fetch; npm run data"
+  },
+  "dependencies": {
+    "maplibre-gl": "^6.14.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@turf/turf": "^7.4.0",
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4",
+    "xlsx": "^0.18.5"
+  },
+  "private": true,
+  "type": "module"
+}

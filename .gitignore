@@ -1,0 +1,7 @@
+node_modules
+dist
+.env
+.env.local
+data/raw/*
+!data/raw/README.md
+data/cache
