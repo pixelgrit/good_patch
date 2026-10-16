@@ -1,11 +1,18 @@
 # Refresh the free data sources on a schedule, rebuild the app's data, and
-# commit the result. Runs every Monday morning Melbourne time, and on demand
-# from the Actions tab ("Run workflow").
+# commit the result. Runs every Monday morning Melbourne time, whenever the
+# data scripts change, and on demand from the Actions tab ("Run workflow").
 name: Refresh data
 
 on:
   schedule:
     - cron: '17 20 * * 0' # 20:17 UTC Sunday = early Monday in Melbourne
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/fetch/**'
+      - 'scripts/build-data/**'
+      - 'data/real/**'
+      - '.github/workflows/refresh-data.yml'
   workflow_dispatch:
     inputs:
       all:
