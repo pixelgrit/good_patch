@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16T23:26:07.919Z",
+  "updatedAt": "2026-10-16T23:28:41.638Z",
   "sources": {
     "abs-boundaries": {
       "id": "abs-boundaries",
@@ -64,16 +64,28 @@
     "abs-approvals": {
       "id": "abs-approvals",
       "name": "ABS Building Approvals by SA2 (monthly)",
-      "fetchedAt": "2026-10-16T23:15:11.594Z",
-      "status": "failed",
-      "message": "fetch failed <- ENOTFOUND: getaddrinfo ENOTFOUND api.data.abs.gov.au (https://api.data.abs.gov.au/data/ABS,BA_SA2/all?detail=dataonly&startPeriod=2025-08)"
+      "status": "ok",
+      "fetchedAt": "2026-10-16T23:28:30.555Z",
+      "asAt": "2026-08-31",
+      "url": "https://data.api.abs.gov.au/rest/data/ABS,BA_SA2",
+      "rows": 450,
+      "files": [
+        "approvals-sal.csv"
+      ],
+      "message": "12 months to 2026-08-31; {\"MEASURE\":\"1 (Number of dwelling units)\",\"SECTOR\":\"9 (Total Sectors)\",\"WORK_TYPE\":\"TOT (Total Work)\",\"BUILDING_TYPE\":\"100 (Total Residential)\",\"REGION_TYPE\":\"SA2 (Statistical Area Level 2)\",\"FREQ\":\"M (Monthly)\"}"
     },
     "abs-population": {
       "id": "abs-population",
       "name": "ABS Estimated Resident Population by SA2 (annual)",
-      "fetchedAt": "2026-10-16T23:15:42.501Z",
-      "status": "failed",
-      "message": "fetch failed <- ENOTFOUND: getaddrinfo ENOTFOUND api.data.abs.gov.au (https://api.data.abs.gov.au/data/ABS,ABS_ANNUAL_ERP_ASGS2021/all?detail=dataonly&startPeriod=2022)"
+      "status": "ok",
+      "fetchedAt": "2026-10-16T23:28:41.638Z",
+      "asAt": "2025-06-30",
+      "url": "https://data.api.abs.gov.au/rest/data/ABS,ABS_ANNUAL_ERP_ASGS2021",
+      "rows": 447,
+      "files": [
+        "population-sal.csv"
+      ],
+      "message": "2024 to 2025; {\"REGION_TYPE\":\"SA2 (Statistical Area Level 2)\",\"FREQ\":\"A (Annual)\"}"
     },
     "vicmap-planning": {
       "id": "vicmap-planning",
