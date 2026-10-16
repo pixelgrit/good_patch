@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16T23:30:01.098Z",
+  "updatedAt": "2026-10-16T23:31:31.886Z",
   "sources": {
     "abs-boundaries": {
       "id": "abs-boundaries",
@@ -43,9 +43,9 @@
     "vgv": {
       "id": "vgv",
       "name": "Valuer-General Victoria median prices by suburb",
+      "status": "skipped",
       "fetchedAt": "2026-10-16T23:09:16.417Z",
-      "status": "failed",
-      "message": "HTTP 403 for https://www.land.vic.gov.au/__data/assets/excel_doc/0037/777961/median-house-march-quarter-2026.xls; curl also failed: Command failed: curl -fsSL --compressed --retry 2 -o /home/runner/work/propa/propa/data/cache/vgv-houses-quarter.xls -H User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15 propa-data-refresh/1.0 -H Accept-Language: en-AU,en;q=0.9 -H Accept: application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/html;q=0.9,*/*;q=0.8 -H Referer: https://www.land.vic.gov.au/valuations/resources-and-reports/property-sales-statistics -H Sec-Fetch-Dest: document -H Sec-Fetch-Mode: navigate -H Sec-Fetch-Site: same-origin -H Upgrade-Insecure-Requests: 1 https://www.land.vic.gov.au/__data/assets/excel_doc/0037/777961/median-house-march-quarter-2026.xls"
+      "message": "land.vic.gov.au blocks GitHub Actions servers (HTTP 403). Run `npm run fetch -- --only=vgv` on your own computer after each quarterly release."
     },
     "homesvic": {
       "id": "homesvic",
