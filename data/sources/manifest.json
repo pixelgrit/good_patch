@@ -1,0 +1,93 @@
+{
+  "updatedAt": "2026-10-16T23:16:10.652Z",
+  "sources": {
+    "abs-boundaries": {
+      "id": "abs-boundaries",
+      "name": "ABS SAL and SA2 boundaries (ASGS 2021)",
+      "status": "ok",
+      "fetchedAt": "2026-10-16T23:09:10.052Z",
+      "asAt": "2021-07-01",
+      "url": "https://geo.abs.gov.au/arcgis/rest/services/ASGS2021/SAL/MapServer/0",
+      "rows": 450,
+      "files": [
+        "sal-metro.geojson",
+        "sa2-metro.geojson"
+      ],
+      "message": "450 suburbs, 348 SA2s"
+    },
+    "abs-seifa": {
+      "id": "abs-seifa",
+      "name": "ABS SEIFA 2021 by suburb",
+      "status": "ok",
+      "fetchedAt": "2026-10-16T23:09:10.588Z",
+      "asAt": "2021-08-10",
+      "url": "https://geo.abs.gov.au/arcgis/rest/services/Hosted/ABS_Socio_Economic_Indexes_for_Areas_SEIFA_by_2021_SAL/FeatureServer/0",
+      "rows": 440,
+      "files": [
+        "seifa-sal.csv"
+      ]
+    },
+    "abs-census": {
+      "id": "abs-census",
+      "name": "ABS Census General Community Profile by suburb",
+      "status": "ok",
+      "fetchedAt": "2026-10-16T23:09:15.079Z",
+      "asAt": "2021-08-10",
+      "url": "https://www.abs.gov.au/census/find-census-data/datapacks/download/2021_GCP_SAL_for_VIC_short-header.zip",
+      "rows": 2946,
+      "files": [
+        "census-sal.csv"
+      ],
+      "message": "Census 2021"
+    },
+    "vgv": {
+      "id": "vgv",
+      "name": "Valuer-General Victoria median prices by suburb",
+      "fetchedAt": "2026-10-16T23:09:16.417Z",
+      "status": "failed",
+      "message": "HTTP 403 for https://www.land.vic.gov.au/__data/assets/excel_doc/0037/777961/median-house-march-quarter-2026.xls"
+    },
+    "homesvic": {
+      "id": "homesvic",
+      "name": "Homes Victoria Rental Report, moving annual rents by suburb",
+      "fetchedAt": "2026-10-16T23:14:40.632Z",
+      "status": "failed",
+      "message": "fetch failed"
+    },
+    "abs-approvals": {
+      "id": "abs-approvals",
+      "name": "ABS Building Approvals by SA2 (monthly)",
+      "fetchedAt": "2026-10-16T23:15:11.594Z",
+      "status": "failed",
+      "message": "fetch failed"
+    },
+    "abs-population": {
+      "id": "abs-population",
+      "name": "ABS Estimated Resident Population by SA2 (annual)",
+      "fetchedAt": "2026-10-16T23:15:42.501Z",
+      "status": "failed",
+      "message": "fetch failed"
+    },
+    "vicmap-planning": {
+      "id": "vicmap-planning",
+      "name": "Vicmap Planning zones and overlays",
+      "fetchedAt": "2026-10-16T23:15:43.709Z",
+      "status": "failed",
+      "message": "only 0 zone polygons"
+    },
+    "ptv-gtfs": {
+      "id": "ptv-gtfs",
+      "name": "PTV GTFS Schedule (metro tram and train)",
+      "status": "ok",
+      "fetchedAt": "2026-10-16T23:16:10.652Z",
+      "asAt": "2026-10-16",
+      "url": "https://opendata.transport.vic.gov.au/dataset/3f4e292e-7f8a-4ffe-831f-1953be0fe448/resource/fb152201-859f-4882-9206-b768060b50ad/download/gtfs.zip",
+      "rows": 1927,
+      "files": [
+        "transport-lines.geojson",
+        "transport-stops.geojson"
+      ],
+      "message": "83 route shapes, 1844 stops"
+    }
+  }
+}
