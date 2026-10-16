@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16T23:53:11.621Z",
+  "updatedAt": "2026-10-16T23:55:44.171Z",
   "sources": {
     "abs-boundaries": {
       "id": "abs-boundaries",
@@ -43,9 +43,16 @@
     "vgv": {
       "id": "vgv",
       "name": "Valuer-General Victoria median prices by suburb",
-      "status": "failed",
-      "fetchedAt": "2026-10-16T23:09:16.417Z",
-      "message": "no Internet Archive copy of https://www.land.vic.gov.au/__data/assets/excel_doc/0033/775617/houses-by-suburb-2015-2025.xlsx after requesting one"
+      "status": "ok",
+      "fetchedAt": "2026-10-16T23:55:44.170Z",
+      "asAt": "2026-03-31",
+      "url": "https://discover.data.vic.gov.au/dataset/victorian-property-sales-report-median-house-by-suburb",
+      "rows": 1219,
+      "files": [
+        "vgv-medians.csv",
+        "vgv-series.json"
+      ],
+      "message": "houses quarter: March 2026 Quarter (sheet \"Sheet1\", median col \"Jan-Mar\", sales col \"No. of\"); houses series:  Houses by suburb 2015-2025 (sheet \"Sheet1\", years 2015–2025); units quarter: March 2026 Quarter (sheet \"Sheet1\", median col \"Jan-Mar\", sales col \"No. of\"); units series: Units by suburb 2015-2025 (sheet \"Sheet1\", years 2015–2025)"
     },
     "homesvic": {
       "id": "homesvic",
