@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16T23:16:10.652Z",
+  "updatedAt": "2026-10-16T23:26:07.919Z",
   "sources": {
     "abs-boundaries": {
       "id": "abs-boundaries",
@@ -50,30 +50,43 @@
     "homesvic": {
       "id": "homesvic",
       "name": "Homes Victoria Rental Report, moving annual rents by suburb",
-      "fetchedAt": "2026-10-16T23:14:40.632Z",
-      "status": "failed",
-      "message": "fetch failed"
+      "status": "ok",
+      "fetchedAt": "2026-10-16T23:22:26.533Z",
+      "asAt": "2025-09-30",
+      "url": "https://www.dffh.vic.gov.au/moving-annual-rent-suburb-september-quarter-2025-excel",
+      "rows": 426,
+      "files": [
+        "homesvic-rents.csv",
+        "homesvic-series.json"
+      ],
+      "message": " Rental Report - Moving Annual Rents by LGA Sep 2025; houses: sheet \"3 bedroom house\", 206 quarters to 2025-09-30, 143 groups; units: sheet \"2 bedroom flat\", 206 quarters to 2025-09-30, 146 groups"
     },
     "abs-approvals": {
       "id": "abs-approvals",
       "name": "ABS Building Approvals by SA2 (monthly)",
       "fetchedAt": "2026-10-16T23:15:11.594Z",
       "status": "failed",
-      "message": "fetch failed"
+      "message": "fetch failed <- ENOTFOUND: getaddrinfo ENOTFOUND api.data.abs.gov.au (https://api.data.abs.gov.au/data/ABS,BA_SA2/all?detail=dataonly&startPeriod=2025-08)"
     },
     "abs-population": {
       "id": "abs-population",
       "name": "ABS Estimated Resident Population by SA2 (annual)",
       "fetchedAt": "2026-10-16T23:15:42.501Z",
       "status": "failed",
-      "message": "fetch failed"
+      "message": "fetch failed <- ENOTFOUND: getaddrinfo ENOTFOUND api.data.abs.gov.au (https://api.data.abs.gov.au/data/ABS,ABS_ANNUAL_ERP_ASGS2021/all?detail=dataonly&startPeriod=2022)"
     },
     "vicmap-planning": {
       "id": "vicmap-planning",
       "name": "Vicmap Planning zones and overlays",
-      "fetchedAt": "2026-10-16T23:15:43.709Z",
-      "status": "failed",
-      "message": "only 0 zone polygons"
+      "status": "ok",
+      "fetchedAt": "2026-10-16T23:26:07.919Z",
+      "asAt": "2026-10-16",
+      "url": "https://opendata.maps.vic.gov.au/geoserver/wfs",
+      "rows": 450,
+      "files": [
+        "planning-sal.csv"
+      ],
+      "message": "3699 zone and 14932 overlay polygons"
     },
     "ptv-gtfs": {
       "id": "ptv-gtfs",

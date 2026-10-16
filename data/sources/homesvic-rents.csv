@@ -1,0 +1,427 @@
+suburb_group,suburb,key,type,median_rent,median_rent_1y_ago,median_rent_3y_ago,as_at
+Albert Park-Middle Park-West St Kilda,Albert Park,ALBERT PARK,houses,1150,1095,1140,2025-09-30
+Albert Park-Middle Park-West St Kilda,Middle Park,MIDDLE PARK,houses,1150,1095,1140,2025-09-30
+Albert Park-Middle Park-West St Kilda,West St Kilda,ST KILDA WEST,houses,1150,1095,1140,2025-09-30
+Armadale,Armadale,ARMADALE,houses,1100,1100,1050,2025-09-30
+Carlton North,Carlton North,CARLTON NORTH,houses,950,900,900,2025-09-30
+Carlton-Parkville,Carlton,CARLTON,houses,950,900,823,2025-09-30
+Carlton-Parkville,Parkville,PARKVILLE,houses,950,900,823,2025-09-30
+Collingwood-Abbotsford,Collingwood,COLLINGWOOD,houses,950,950,878,2025-09-30
+Collingwood-Abbotsford,Abbotsford,ABBOTSFORD,houses,950,950,878,2025-09-30
+East Melbourne,East Melbourne,EAST MELBOURNE,houses,1100,1295,1100,2025-09-30
+East St Kilda,East St Kilda,ST KILDA EAST,houses,900,938,900,2025-09-30
+Elwood,Elwood,ELWOOD,houses,1095,1000,1100,2025-09-30
+Fitzroy,Fitzroy,FITZROY,houses,1100,1080,995,2025-09-30
+Fitzroy North-Clifton Hill,Fitzroy North,FITZROY NORTH,houses,998,970,900,2025-09-30
+Fitzroy North-Clifton Hill,Clifton Hill,CLIFTON HILL,houses,998,970,900,2025-09-30
+Flemington-Kensington,Flemington,FLEMINGTON,houses,760,750,733,2025-09-30
+Flemington-Kensington,Kensington,KENSINGTON,houses,760,750,733,2025-09-30
+North Melbourne-West Melbourne,North Melbourne,NORTH MELBOURNE,houses,853,850,823,2025-09-30
+North Melbourne-West Melbourne,West Melbourne,WEST MELBOURNE,houses,853,850,823,2025-09-30
+Port Melbourne,Port Melbourne,PORT MELBOURNE,houses,980,975,950,2025-09-30
+Prahran-Windsor,Prahran,PRAHRAN,houses,975,963,950,2025-09-30
+Prahran-Windsor,Windsor,WINDSOR,houses,975,963,950,2025-09-30
+Richmond-Burnley,Richmond,RICHMOND,houses,990,975,915,2025-09-30
+Richmond-Burnley,Burnley,BURNLEY,houses,990,975,915,2025-09-30
+South Melbourne,South Melbourne,SOUTH MELBOURNE,houses,950,980,955,2025-09-30
+South Yarra,South Yarra,SOUTH YARRA,houses,1100,1100,1050,2025-09-30
+St Kilda,St Kilda,ST KILDA,houses,950,950,900,2025-09-30
+Toorak,Toorak,TOORAK,houses,1250,1225,1273,2025-09-30
+Balwyn,Balwyn,BALWYN,houses,750,700,700,2025-09-30
+Blackburn,Blackburn,BLACKBURN,houses,620,600,550,2025-09-30
+Box Hill,Box Hill,BOX HILL,houses,650,640,600,2025-09-30
+Bulleen-Templestowe-Doncaster,Bulleen,BULLEEN,houses,660,650,600,2025-09-30
+Bulleen-Templestowe-Doncaster,Templestowe,TEMPLESTOWE,houses,660,650,600,2025-09-30
+Bulleen-Templestowe-Doncaster,Doncaster,DONCASTER,houses,660,650,600,2025-09-30
+Burwood-Ashburton,Burwood,BURWOOD,houses,650,650,600,2025-09-30
+Burwood-Ashburton,Ashburton,ASHBURTON,houses,650,650,600,2025-09-30
+Camberwell-Glen Iris,Camberwell,CAMBERWELL,houses,838,835,800,2025-09-30
+Camberwell-Glen Iris,Glen Iris,GLEN IRIS,houses,838,835,800,2025-09-30
+Canterbury-Surrey Hills-Mont Albert,Canterbury,CANTERBURY,houses,800,800,750,2025-09-30
+Canterbury-Surrey Hills-Mont Albert,Surrey Hills,SURREY HILLS,houses,800,800,750,2025-09-30
+Canterbury-Surrey Hills-Mont Albert,Mont Albert,MONT ALBERT,houses,800,800,750,2025-09-30
+Chadstone-Oakleigh,Chadstone,CHADSTONE,houses,630,633,590,2025-09-30
+Chadstone-Oakleigh,Oakleigh,OAKLEIGH,houses,630,633,590,2025-09-30
+Clayton,Clayton,CLAYTON,houses,603,600,550,2025-09-30
+Doncaster East-Donvale,Doncaster East,DONCASTER EAST,houses,680,650,620,2025-09-30
+Doncaster East-Donvale,Donvale,DONVALE,houses,680,650,620,2025-09-30
+East Hawthorn,East Hawthorn,HAWTHORN EAST,houses,898,825,850,2025-09-30
+Glen Waverley-Mulgrave,Glen Waverley,GLEN WAVERLEY,houses,640,630,585,2025-09-30
+Glen Waverley-Mulgrave,Mulgrave,MULGRAVE,houses,640,630,585,2025-09-30
+Hawthorn,Hawthorn,HAWTHORN,houses,950,920,900,2025-09-30
+Kew,Kew,KEW,houses,850,820,830,2025-09-30
+Mount Waverley,Mount Waverley,MT WAVERLEY,houses,660,650,600,2025-09-30
+Nunawading-Mitcham,Nunawading,NUNAWADING,houses,625,600,560,2025-09-30
+Nunawading-Mitcham,Mitcham,MITCHAM,houses,625,600,560,2025-09-30
+Vermont-Forest Hill-Burwood East,Vermont,VERMONT,houses,630,600,565,2025-09-30
+Vermont-Forest Hill-Burwood East,Forest Hill,FOREST HILL,houses,630,600,565,2025-09-30
+Vermont-Forest Hill-Burwood East,Burwood East,BURWOOD EAST,houses,630,600,565,2025-09-30
+Aspendale-Chelsea-Carrum,Aspendale,ASPENDALE,houses,680,675,610,2025-09-30
+Aspendale-Chelsea-Carrum,Chelsea,CHELSEA,houses,680,675,610,2025-09-30
+Aspendale-Chelsea-Carrum,Carrum,CARRUM,houses,680,675,610,2025-09-30
+Bentleigh,Bentleigh,BENTLEIGH,houses,735,725,690,2025-09-30
+Brighton,Brighton,BRIGHTON,houses,1150,1100,1050,2025-09-30
+Brighton East,Brighton East,BRIGHTON EAST,houses,940,898,843,2025-09-30
+Carnegie,Carnegie,CARNEGIE,houses,750,745,700,2025-09-30
+Caulfield,Caulfield,CAULFIELD,houses,850,850,800,2025-09-30
+Cheltenham,Cheltenham,CHELTENHAM,houses,720,700,670,2025-09-30
+Elsternwick,Elsternwick,ELSTERNWICK,houses,900,900,888,2025-09-30
+Hampton-Beaumaris,Hampton,HAMPTON,houses,895,875,875,2025-09-30
+Hampton-Beaumaris,Beaumaris,BEAUMARIS,houses,895,875,875,2025-09-30
+Malvern,Malvern,MALVERN,houses,1000,1000,860,2025-09-30
+Malvern East,Malvern East,MALVERN EAST,houses,750,780,700,2025-09-30
+Mentone-Parkdale-Mordialloc,Mentone,MENTONE,houses,750,735,700,2025-09-30
+Mentone-Parkdale-Mordialloc,Parkdale,PARKDALE,houses,750,735,700,2025-09-30
+Mentone-Parkdale-Mordialloc,Mordialloc,MORDIALLOC,houses,750,735,700,2025-09-30
+Murrumbeena-Hughesdale,Murrumbeena,MURRUMBEENA,houses,730,720,650,2025-09-30
+Murrumbeena-Hughesdale,Hughesdale,HUGHESDALE,houses,730,720,650,2025-09-30
+Altona,Altona,ALTONA,houses,530,525,480,2025-09-30
+Footscray,Footscray,FOOTSCRAY,houses,640,638,605,2025-09-30
+Keilor East-Avondale Heights,Keilor East,KEILOR EAST,houses,580,570,500,2025-09-30
+Keilor East-Avondale Heights,Avondale Heights,AVONDALE HEIGHTS,houses,580,570,500,2025-09-30
+Melton,Melton,MELTON,houses,420,420,390,2025-09-30
+Newport-Spotswood,Newport,NEWPORT,houses,700,700,675,2025-09-30
+Newport-Spotswood,Spotswood,SPOTSWOOD,houses,700,700,675,2025-09-30
+St Albans-Deer Park,St Albans,ST ALBANS,houses,470,460,420,2025-09-30
+St Albans-Deer Park,Deer Park,DEER PARK,houses,470,460,420,2025-09-30
+Sunshine,Sunshine,SUNSHINE,houses,495,480,440,2025-09-30
+Sydenham,Sydenham,SYDENHAM,houses,480,480,450,2025-09-30
+Werribee-Hoppers Crossing,Werribee,WERRIBEE,houses,460,470,440,2025-09-30
+Werribee-Hoppers Crossing,Hoppers Crossing,HOPPERS CROSSING,houses,460,470,440,2025-09-30
+West Footscray,West Footscray,FOOTSCRAY WEST,houses,600,600,540,2025-09-30
+Williamstown,Williamstown,WILLIAMSTOWN,houses,800,780,710,2025-09-30
+Yarraville-Seddon,Yarraville,YARRAVILLE,houses,720,700,650,2025-09-30
+Yarraville-Seddon,Seddon,SEDDON,houses,720,700,650,2025-09-30
+Broadmeadows-Roxburgh Park,Broadmeadows,BROADMEADOWS,houses,506,500,450,2025-09-30
+Broadmeadows-Roxburgh Park,Roxburgh Park,ROXBURGH PARK,houses,506,500,450,2025-09-30
+Brunswick,Brunswick,BRUNSWICK,houses,850,830,800,2025-09-30
+Coburg-Pascoe Vale South,Coburg,COBURG,houses,710,700,650,2025-09-30
+Coburg-Pascoe Vale South,Pascoe Vale South,PASCOE VALE SOUTH,houses,710,700,650,2025-09-30
+Craigieburn,Craigieburn,CRAIGIEBURN,houses,500,500,460,2025-09-30
+East Brunswick,East Brunswick,BRUNSWICK EAST,houses,880,880,790,2025-09-30
+Essendon,Essendon,ESSENDON,houses,650,650,585,2025-09-30
+Gladstone Park-Tullamarine,Gladstone Park,GLADSTONE PARK,houses,530,520,480,2025-09-30
+Gladstone Park-Tullamarine,Tullamarine,TULLAMARINE,houses,530,520,480,2025-09-30
+Keilor,Keilor,KEILOR,houses,630,550,510,2025-09-30
+Moonee Ponds-Ascot Vale,Moonee Ponds,MOONEE PONDS,houses,750,724,700,2025-09-30
+Moonee Ponds-Ascot Vale,Ascot Vale,ASCOT VALE,houses,750,724,700,2025-09-30
+Oak Park-Glenroy-Fawkner,Oak Park,OAK PARK,houses,551,550,510,2025-09-30
+Oak Park-Glenroy-Fawkner,Glenroy,GLENROY,houses,551,550,510,2025-09-30
+Oak Park-Glenroy-Fawkner,Fawkner,FAWKNER,houses,551,550,510,2025-09-30
+Pascoe Vale-Coburg North,Pascoe Vale,PASCOE VALE,houses,620,620,580,2025-09-30
+Pascoe Vale-Coburg North,Coburg North,COBURG NORTH,houses,620,620,580,2025-09-30
+Sunbury,Sunbury,SUNBURY,houses,490,480,440,2025-09-30
+West Brunswick,West Brunswick,BRUNSWICK WEST,houses,755,750,720,2025-09-30
+Bundoora-Greensborough-Hurstbridge,Bundoora,BUNDOORA,houses,570,560,510,2025-09-30
+Bundoora-Greensborough-Hurstbridge,Greensborough,GREENSBOROUGH,houses,570,560,510,2025-09-30
+Bundoora-Greensborough-Hurstbridge,Hurstbridge,HURSTBRIDGE,houses,570,560,510,2025-09-30
+Eltham-Research-Montmorency,Eltham,ELTHAM,houses,650,650,600,2025-09-30
+Eltham-Research-Montmorency,Research,RESEARCH,houses,650,650,600,2025-09-30
+Eltham-Research-Montmorency,Montmorency,MONTMORENCY,houses,650,650,600,2025-09-30
+Fairfield-Alphington,Fairfield,FAIRFIELD,houses,850,850,800,2025-09-30
+Fairfield-Alphington,Alphington,ALPHINGTON,houses,850,850,800,2025-09-30
+Heidelberg-Heidelberg West,Heidelberg,HEIDELBERG,houses,600,600,570,2025-09-30
+Heidelberg-Heidelberg West,Heidelberg West,HEIDELBERG WEST,houses,600,600,570,2025-09-30
+Ivanhoe-Ivanhoe East,Ivanhoe,IVANHOE,houses,750,735,690,2025-09-30
+Ivanhoe-Ivanhoe East,Ivanhoe East,IVANHOE EAST,houses,750,735,690,2025-09-30
+Mill Park-Epping,Mill Park,MILL PARK,houses,530,520,480,2025-09-30
+Mill Park-Epping,Epping,EPPING,houses,530,520,480,2025-09-30
+Northcote,Northcote,NORTHCOTE,houses,850,850,840,2025-09-30
+Preston,Preston,PRESTON,houses,675,650,650,2025-09-30
+Reservoir,Reservoir,RESERVOIR,houses,560,550,500,2025-09-30
+Thomastown-Lalor,Thomastown,THOMASTOWN,houses,510,500,450,2025-09-30
+Thomastown-Lalor,Lalor,LALOR,houses,510,500,450,2025-09-30
+Thornbury,Thornbury,THORNBURY,houses,798,775,750,2025-09-30
+Whittlesea,Whittlesea,WHITTLESEA,houses,510,510,475,2025-09-30
+Bayswater,Bayswater,BAYSWATER,houses,590,580,520,2025-09-30
+Boronia,Boronia,BORONIA,houses,590,580,500,2025-09-30
+Croydon-Lilydale,Croydon,CROYDON,houses,600,597,540,2025-09-30
+Croydon-Lilydale,Lilydale,LILYDALE,houses,600,597,540,2025-09-30
+Ferntree Gully,Ferntree Gully,FERNTREE GULLY,houses,600,590,520,2025-09-30
+Ringwood,Ringwood,RINGWOOD,houses,600,600,550,2025-09-30
+Rowville,Rowville,ROWVILLE,houses,600,600,540,2025-09-30
+Wantirna-Scoresby,Wantirna,WANTIRNA,houses,597,580,550,2025-09-30
+Wantirna-Scoresby,Scoresby,SCORESBY,houses,597,580,550,2025-09-30
+Yarra Ranges,Yarra Ranges,YARRA RANGES,houses,595,580,530,2025-09-30
+Berwick,Berwick,BERWICK,houses,560,550,500,2025-09-30
+Cranbourne,Cranbourne,CRANBOURNE,houses,550,545,490,2025-09-30
+Dandenong,Dandenong,DANDENONG,houses,560,550,520,2025-09-30
+Dandenong North-Endeavour Hills,Dandenong North,DANDENONG NORTH,houses,530,530,470,2025-09-30
+Dandenong North-Endeavour Hills,Endeavour Hills,ENDEAVOUR HILLS,houses,530,530,470,2025-09-30
+Narre Warren-Hampton Park,Narre Warren,NARRE WARREN,houses,550,540,480,2025-09-30
+Narre Warren-Hampton Park,Hampton Park,HAMPTON PARK,houses,550,540,480,2025-09-30
+Noble Park,Noble Park,NOBLE PARK,houses,550,550,495,2025-09-30
+Pakenham,Pakenham,PAKENHAM,houses,530,520,470,2025-09-30
+Springvale,Springvale,SPRINGVALE,houses,570,560,530,2025-09-30
+Dromana-Portsea,Dromana,DROMANA,houses,570,550,530,2025-09-30
+Dromana-Portsea,Portsea,PORTSEA,houses,570,550,530,2025-09-30
+Frankston,Frankston,FRANKSTON,houses,570,560,520,2025-09-30
+Hastings-Flinders,Hastings,HASTINGS,houses,595,575,530,2025-09-30
+Hastings-Flinders,Flinders,FLINDERS,houses,595,575,530,2025-09-30
+Mt Eliza-Mornington-Mt Martha,Mt Eliza,MT ELIZA,houses,675,675,630,2025-09-30
+Mt Eliza-Mornington-Mt Martha,Mornington,MORNINGTON,houses,675,675,630,2025-09-30
+Mt Eliza-Mornington-Mt Martha,Mt Martha,MT MARTHA,houses,675,675,630,2025-09-30
+Seaford-Carrum Downs,Seaford,SEAFORD,houses,560,550,500,2025-09-30
+Seaford-Carrum Downs,Carrum Downs,CARRUM DOWNS,houses,560,550,500,2025-09-30
+Belmont-Grovedale,Belmont,BELMONT,houses,500,490,475,2025-09-30
+Belmont-Grovedale,Grovedale,GROVEDALE,houses,500,490,475,2025-09-30
+Corio,Corio,CORIO,houses,420,400,385,2025-09-30
+Geelong-Newcombe,Geelong,GEELONG,houses,480,460,450,2025-09-30
+Geelong-Newcombe,Newcombe,NEWCOMBE,houses,480,460,450,2025-09-30
+Herne Hill-Geelong West,Herne Hill,HERNE HILL,houses,520,500,500,2025-09-30
+Herne Hill-Geelong West,Geelong West,GEELONG WEST,houses,520,500,500,2025-09-30
+Lara,Lara,LARA,houses,500,490,480,2025-09-30
+Newtown,Newtown,NEWTOWN,houses,570,550,520,2025-09-30
+North Geelong,North Geelong,GEELONG NORTH,houses,495,480,450,2025-09-30
+Ballarat,Ballarat,BALLARAT,houses,410,400,390,2025-09-30
+Mount Clear-Buninyong,Mount Clear,MT CLEAR,houses,430,410,388,2025-09-30
+Mount Clear-Buninyong,Buninyong,BUNINYONG,houses,430,410,388,2025-09-30
+Sebastopol-Delacombe,Sebastopol,SEBASTOPOL,houses,400,390,385,2025-09-30
+Sebastopol-Delacombe,Delacombe,DELACOMBE,houses,400,390,385,2025-09-30
+Wendouree-Alfredton,Wendouree,WENDOUREE,houses,410,403,390,2025-09-30
+Wendouree-Alfredton,Alfredton,ALFREDTON,houses,410,403,390,2025-09-30
+Bendigo,Bendigo,BENDIGO,houses,480,470,440,2025-09-30
+Flora Hill-Bendigo East,Flora Hill,FLORA HILL,houses,475,460,440,2025-09-30
+Flora Hill-Bendigo East,Bendigo East,BENDIGO EAST,houses,475,460,440,2025-09-30
+Golden Square-Kangaroo Flat,Golden Square,GOLDEN SQUARE,houses,480,460,440,2025-09-30
+Golden Square-Kangaroo Flat,Kangaroo Flat,KANGAROO FLAT,houses,480,460,440,2025-09-30
+North Bendigo,North Bendigo,BENDIGO NORTH,houses,480,460,430,2025-09-30
+Bairnsdale,Bairnsdale,BAIRNSDALE,houses,460,450,433,2025-09-30
+Benalla,Benalla,BENALLA,houses,450,450,420,2025-09-30
+Castlemaine,Castlemaine,CASTLEMAINE,houses,500,480,470,2025-09-30
+Echuca,Echuca,ECHUCA,houses,520,500,453,2025-09-30
+Hamilton,Hamilton,HAMILTON,houses,390,380,360,2025-09-30
+Horsham,Horsham,HORSHAM,houses,430,400,400,2025-09-30
+Mildura,Mildura,MILDURA,houses,480,465,410,2025-09-30
+Moe-Newborough,Moe,MOE,houses,420,400,370,2025-09-30
+Moe-Newborough,Newborough,NEWBOROUGH,houses,420,400,370,2025-09-30
+Morwell,Morwell,MORWELL,houses,400,390,360,2025-09-30
+Ocean Grove-Barwon Heads,Ocean Grove,OCEAN GROVE,houses,550,540,530,2025-09-30
+Ocean Grove-Barwon Heads,Barwon Heads,BARWON HEADS,houses,550,540,530,2025-09-30
+Portland,Portland,PORTLAND,houses,430,420,420,2025-09-30
+Sale-Maffra,Sale,SALE,houses,450,450,420,2025-09-30
+Sale-Maffra,Maffra,MAFFRA,houses,450,450,420,2025-09-30
+Seymour,Seymour,SEYMOUR,houses,420,410,395,2025-09-30
+Shepparton,Shepparton,SHEPPARTON,houses,475,450,425,2025-09-30
+Swan Hill,Swan Hill,SWAN HILL,houses,475,440,400,2025-09-30
+Torquay,Torquay,TORQUAY,houses,650,650,620,2025-09-30
+Traralgon,Traralgon,TRARALGON,houses,460,448,425,2025-09-30
+Wanagaratta,Wanagaratta,WANAGARATTA,houses,480,450,420,2025-09-30
+Warragul,Warragul,WARRAGUL,houses,483,470,440,2025-09-30
+Warrnambool,Warrnambool,WARRNAMBOOL,houses,550,540,500,2025-09-30
+Wodonga,Wodonga,WODONGA,houses,500,480,450,2025-09-30
+Albert Park-Middle Park-West St Kilda,Albert Park,ALBERT PARK,units,643,640,600,2025-09-30
+Albert Park-Middle Park-West St Kilda,Middle Park,MIDDLE PARK,units,643,640,600,2025-09-30
+Albert Park-Middle Park-West St Kilda,West St Kilda,ST KILDA WEST,units,643,640,600,2025-09-30
+Armadale,Armadale,ARMADALE,units,650,648,570,2025-09-30
+Carlton North,Carlton North,CARLTON NORTH,units,600,575,550,2025-09-30
+Carlton-Parkville,Carlton,CARLTON,units,670,660,620,2025-09-30
+Carlton-Parkville,Parkville,PARKVILLE,units,670,660,620,2025-09-30
+CBD-St Kilda Rd,CBD,CBD,units,735,730,700,2025-09-30
+CBD-St Kilda Rd,St Kilda Rd,ST KILDA RD,units,735,730,700,2025-09-30
+Collingwood-Abbotsford,Collingwood,COLLINGWOOD,units,695,680,650,2025-09-30
+Collingwood-Abbotsford,Abbotsford,ABBOTSFORD,units,695,680,650,2025-09-30
+Docklands,Docklands,DOCKLANDS,units,763,750,700,2025-09-30
+East Melbourne,East Melbourne,EAST MELBOURNE,units,690,670,630,2025-09-30
+East St Kilda,East St Kilda,ST KILDA EAST,units,575,575,550,2025-09-30
+Elwood,Elwood,ELWOOD,units,608,600,565,2025-09-30
+Fitzroy,Fitzroy,FITZROY,units,750,730,700,2025-09-30
+Fitzroy North-Clifton Hill,Fitzroy North,FITZROY NORTH,units,690,650,600,2025-09-30
+Fitzroy North-Clifton Hill,Clifton Hill,CLIFTON HILL,units,690,650,600,2025-09-30
+Flemington-Kensington,Flemington,FLEMINGTON,units,560,530,500,2025-09-30
+Flemington-Kensington,Kensington,KENSINGTON,units,560,530,500,2025-09-30
+North Melbourne-West Melbourne,North Melbourne,NORTH MELBOURNE,units,660,650,650,2025-09-30
+North Melbourne-West Melbourne,West Melbourne,WEST MELBOURNE,units,660,650,650,2025-09-30
+Port Melbourne,Port Melbourne,PORT MELBOURNE,units,745,710,695,2025-09-30
+Prahran-Windsor,Prahran,PRAHRAN,units,650,625,600,2025-09-30
+Prahran-Windsor,Windsor,WINDSOR,units,650,625,600,2025-09-30
+Richmond-Burnley,Richmond,RICHMOND,units,700,695,650,2025-09-30
+Richmond-Burnley,Burnley,BURNLEY,units,700,695,650,2025-09-30
+South Melbourne,South Melbourne,SOUTH MELBOURNE,units,700,680,650,2025-09-30
+South Yarra,South Yarra,SOUTH YARRA,units,700,700,650,2025-09-30
+Southbank,Southbank,SOUTHBANK,units,720,720,695,2025-09-30
+St Kilda,St Kilda,ST KILDA,units,630,620,580,2025-09-30
+Toorak,Toorak,TOORAK,units,650,650,588,2025-09-30
+Balwyn,Balwyn,BALWYN,units,588,580,520,2025-09-30
+Blackburn,Blackburn,BLACKBURN,units,550,550,488,2025-09-30
+Box Hill,Box Hill,BOX HILL,units,610,600,580,2025-09-30
+Bulleen-Templestowe-Doncaster,Bulleen,BULLEEN,units,595,580,550,2025-09-30
+Bulleen-Templestowe-Doncaster,Templestowe,TEMPLESTOWE,units,595,580,550,2025-09-30
+Bulleen-Templestowe-Doncaster,Doncaster,DONCASTER,units,595,580,550,2025-09-30
+Burwood-Ashburton,Burwood,BURWOOD,units,570,575,500,2025-09-30
+Burwood-Ashburton,Ashburton,ASHBURTON,units,570,575,500,2025-09-30
+Camberwell-Glen Iris,Camberwell,CAMBERWELL,units,600,583,550,2025-09-30
+Camberwell-Glen Iris,Glen Iris,GLEN IRIS,units,600,583,550,2025-09-30
+Canterbury-Surrey Hills-Mont Albert,Canterbury,CANTERBURY,units,570,550,540,2025-09-30
+Canterbury-Surrey Hills-Mont Albert,Surrey Hills,SURREY HILLS,units,570,550,540,2025-09-30
+Canterbury-Surrey Hills-Mont Albert,Mont Albert,MONT ALBERT,units,570,550,540,2025-09-30
+Chadstone-Oakleigh,Chadstone,CHADSTONE,units,580,570,520,2025-09-30
+Chadstone-Oakleigh,Oakleigh,OAKLEIGH,units,580,570,520,2025-09-30
+Clayton,Clayton,CLAYTON,units,590,570,550,2025-09-30
+Doncaster East-Donvale,Doncaster East,DONCASTER EAST,units,575,575,525,2025-09-30
+Doncaster East-Donvale,Donvale,DONVALE,units,575,575,525,2025-09-30
+East Hawthorn,East Hawthorn,HAWTHORN EAST,units,610,600,560,2025-09-30
+Glen Waverley-Mulgrave,Glen Waverley,GLEN WAVERLEY,units,640,640,560,2025-09-30
+Glen Waverley-Mulgrave,Mulgrave,MULGRAVE,units,640,640,560,2025-09-30
+Hawthorn,Hawthorn,HAWTHORN,units,600,578,560,2025-09-30
+Kew,Kew,KEW,units,575,556,530,2025-09-30
+Mount Waverley,Mount Waverley,MT WAVERLEY,units,540,520,500,2025-09-30
+Nunawading-Mitcham,Nunawading,NUNAWADING,units,520,500,460,2025-09-30
+Nunawading-Mitcham,Mitcham,MITCHAM,units,520,500,460,2025-09-30
+Vermont-Forest Hill-Burwood East,Vermont,VERMONT,units,578,560,550,2025-09-30
+Vermont-Forest Hill-Burwood East,Forest Hill,FOREST HILL,units,578,560,550,2025-09-30
+Vermont-Forest Hill-Burwood East,Burwood East,BURWOOD EAST,units,578,560,550,2025-09-30
+Aspendale-Chelsea-Carrum,Aspendale,ASPENDALE,units,545,520,470,2025-09-30
+Aspendale-Chelsea-Carrum,Chelsea,CHELSEA,units,545,520,470,2025-09-30
+Aspendale-Chelsea-Carrum,Carrum,CARRUM,units,545,520,470,2025-09-30
+Bentleigh,Bentleigh,BENTLEIGH,units,590,575,530,2025-09-30
+Brighton,Brighton,BRIGHTON,units,680,640,620,2025-09-30
+Brighton East,Brighton East,BRIGHTON EAST,units,630,620,600,2025-09-30
+Carnegie,Carnegie,CARNEGIE,units,595,590,550,2025-09-30
+Caulfield,Caulfield,CAULFIELD,units,630,600,580,2025-09-30
+Cheltenham,Cheltenham,CHELTENHAM,units,550,550,504,2025-09-30
+Elsternwick,Elsternwick,ELSTERNWICK,units,600,600,550,2025-09-30
+Hampton-Beaumaris,Hampton,HAMPTON,units,650,620,600,2025-09-30
+Hampton-Beaumaris,Beaumaris,BEAUMARIS,units,650,620,600,2025-09-30
+Malvern,Malvern,MALVERN,units,600,598,550,2025-09-30
+Malvern East,Malvern East,MALVERN EAST,units,600,600,560,2025-09-30
+Mentone-Parkdale-Mordialloc,Mentone,MENTONE,units,550,540,495,2025-09-30
+Mentone-Parkdale-Mordialloc,Parkdale,PARKDALE,units,550,540,495,2025-09-30
+Mentone-Parkdale-Mordialloc,Mordialloc,MORDIALLOC,units,550,540,495,2025-09-30
+Murrumbeena-Hughesdale,Murrumbeena,MURRUMBEENA,units,570,550,525,2025-09-30
+Murrumbeena-Hughesdale,Hughesdale,HUGHESDALE,units,570,550,525,2025-09-30
+Altona,Altona,ALTONA,units,475,470,420,2025-09-30
+Footscray,Footscray,FOOTSCRAY,units,560,570,550,2025-09-30
+Keilor East-Avondale Heights,Keilor East,KEILOR EAST,units,520,510,490,2025-09-30
+Keilor East-Avondale Heights,Avondale Heights,AVONDALE HEIGHTS,units,520,510,490,2025-09-30
+Melton,Melton,MELTON,units,365,350,330,2025-09-30
+Newport-Spotswood,Newport,NEWPORT,units,575,590,545,2025-09-30
+Newport-Spotswood,Spotswood,SPOTSWOOD,units,575,590,545,2025-09-30
+St Albans-Deer Park,St Albans,ST ALBANS,units,420,405,370,2025-09-30
+St Albans-Deer Park,Deer Park,DEER PARK,units,420,405,370,2025-09-30
+Sunshine,Sunshine,SUNSHINE,units,410,420,380,2025-09-30
+Sydenham,Sydenham,SYDENHAM,units,450,443,420,2025-09-30
+Werribee-Hoppers Crossing,Werribee,WERRIBEE,units,405,410,365,2025-09-30
+Werribee-Hoppers Crossing,Hoppers Crossing,HOPPERS CROSSING,units,405,410,365,2025-09-30
+West Footscray,West Footscray,FOOTSCRAY WEST,units,475,475,445,2025-09-30
+Williamstown,Williamstown,WILLIAMSTOWN,units,523,535,520,2025-09-30
+Yarraville-Seddon,Yarraville,YARRAVILLE,units,520,500,480,2025-09-30
+Yarraville-Seddon,Seddon,SEDDON,units,520,500,480,2025-09-30
+Broadmeadows-Roxburgh Park,Broadmeadows,BROADMEADOWS,units,470,465,410,2025-09-30
+Broadmeadows-Roxburgh Park,Roxburgh Park,ROXBURGH PARK,units,470,465,410,2025-09-30
+Brunswick,Brunswick,BRUNSWICK,units,600,590,550,2025-09-30
+Coburg-Pascoe Vale South,Coburg,COBURG,units,550,550,490,2025-09-30
+Coburg-Pascoe Vale South,Pascoe Vale South,PASCOE VALE SOUTH,units,550,550,490,2025-09-30
+Craigieburn,Craigieburn,CRAIGIEBURN,units,440,440,400,2025-09-30
+East Brunswick,East Brunswick,BRUNSWICK EAST,units,625,620,570,2025-09-30
+Essendon,Essendon,ESSENDON,units,510,500,480,2025-09-30
+Gladstone Park-Tullamarine,Gladstone Park,GLADSTONE PARK,units,450,450,420,2025-09-30
+Gladstone Park-Tullamarine,Tullamarine,TULLAMARINE,units,450,450,420,2025-09-30
+Keilor,Keilor,KEILOR,units,185,185,,2001-12-31
+Moonee Ponds-Ascot Vale,Moonee Ponds,MOONEE PONDS,units,550,540,500,2025-09-30
+Moonee Ponds-Ascot Vale,Ascot Vale,ASCOT VALE,units,550,540,500,2025-09-30
+Oak Park-Glenroy-Fawkner,Oak Park,OAK PARK,units,490,480,450,2025-09-30
+Oak Park-Glenroy-Fawkner,Glenroy,GLENROY,units,490,480,450,2025-09-30
+Oak Park-Glenroy-Fawkner,Fawkner,FAWKNER,units,490,480,450,2025-09-30
+Pascoe Vale-Coburg North,Pascoe Vale,PASCOE VALE,units,500,500,460,2025-09-30
+Pascoe Vale-Coburg North,Coburg North,COBURG NORTH,units,500,500,460,2025-09-30
+Sunbury,Sunbury,SUNBURY,units,440,420,400,2025-09-30
+West Brunswick,West Brunswick,BRUNSWICK WEST,units,500,510,480,2025-09-30
+Bundoora-Greensborough-Hurstbridge,Bundoora,BUNDOORA,units,490,480,450,2025-09-30
+Bundoora-Greensborough-Hurstbridge,Greensborough,GREENSBOROUGH,units,490,480,450,2025-09-30
+Bundoora-Greensborough-Hurstbridge,Hurstbridge,HURSTBRIDGE,units,490,480,450,2025-09-30
+Eltham-Research-Montmorency,Eltham,ELTHAM,units,500,480,440,2025-09-30
+Eltham-Research-Montmorency,Research,RESEARCH,units,500,480,440,2025-09-30
+Eltham-Research-Montmorency,Montmorency,MONTMORENCY,units,500,480,440,2025-09-30
+Fairfield-Alphington,Fairfield,FAIRFIELD,units,575,570,520,2025-09-30
+Fairfield-Alphington,Alphington,ALPHINGTON,units,575,570,520,2025-09-30
+Heidelberg-Heidelberg West,Heidelberg,HEIDELBERG,units,530,540,480,2025-09-30
+Heidelberg-Heidelberg West,Heidelberg West,HEIDELBERG WEST,units,530,540,480,2025-09-30
+Ivanhoe-Ivanhoe East,Ivanhoe,IVANHOE,units,600,580,540,2025-09-30
+Ivanhoe-Ivanhoe East,Ivanhoe East,IVANHOE EAST,units,600,580,540,2025-09-30
+Mill Park-Epping,Mill Park,MILL PARK,units,450,450,420,2025-09-30
+Mill Park-Epping,Epping,EPPING,units,450,450,420,2025-09-30
+Northcote,Northcote,NORTHCOTE,units,600,600,553,2025-09-30
+Preston,Preston,PRESTON,units,550,530,500,2025-09-30
+Reservoir,Reservoir,RESERVOIR,units,500,490,440,2025-09-30
+Thomastown-Lalor,Thomastown,THOMASTOWN,units,450,450,400,2025-09-30
+Thomastown-Lalor,Lalor,LALOR,units,450,450,400,2025-09-30
+Thornbury,Thornbury,THORNBURY,units,520,500,483,2025-09-30
+Whittlesea,Whittlesea,WHITTLESEA,units,440,450,400,2025-09-30
+Bayswater,Bayswater,BAYSWATER,units,493,480,440,2025-09-30
+Boronia,Boronia,BORONIA,units,500,495,450,2025-09-30
+Croydon-Lilydale,Croydon,CROYDON,units,500,495,450,2025-09-30
+Croydon-Lilydale,Lilydale,LILYDALE,units,500,495,450,2025-09-30
+Ferntree Gully,Ferntree Gully,FERNTREE GULLY,units,520,500,450,2025-09-30
+Ringwood,Ringwood,RINGWOOD,units,520,500,460,2025-09-30
+Rowville,Rowville,ROWVILLE,units,530,530,490,2025-09-30
+Wantirna-Scoresby,Wantirna,WANTIRNA,units,510,530,490,2025-09-30
+Wantirna-Scoresby,Scoresby,SCORESBY,units,510,530,490,2025-09-30
+Yarra Ranges,Yarra Ranges,YARRA RANGES,units,488,445,410,2025-09-30
+Berwick,Berwick,BERWICK,units,500,495,440,2025-09-30
+Cranbourne,Cranbourne,CRANBOURNE,units,460,450,400,2025-09-30
+Dandenong,Dandenong,DANDENONG,units,450,440,380,2025-09-30
+Dandenong North-Endeavour Hills,Dandenong North,DANDENONG NORTH,units,468,465,420,2025-09-30
+Dandenong North-Endeavour Hills,Endeavour Hills,ENDEAVOUR HILLS,units,468,465,420,2025-09-30
+Narre Warren-Hampton Park,Narre Warren,NARRE WARREN,units,470,470,420,2025-09-30
+Narre Warren-Hampton Park,Hampton Park,HAMPTON PARK,units,470,470,420,2025-09-30
+Noble Park,Noble Park,NOBLE PARK,units,495,480,440,2025-09-30
+Pakenham,Pakenham,PAKENHAM,units,450,438,400,2025-09-30
+Springvale,Springvale,SPRINGVALE,units,520,500,470,2025-09-30
+Dromana-Portsea,Dromana,DROMANA,units,478,450,440,2025-09-30
+Dromana-Portsea,Portsea,PORTSEA,units,478,450,440,2025-09-30
+Frankston,Frankston,FRANKSTON,units,475,450,430,2025-09-30
+Hastings-Flinders,Hastings,HASTINGS,units,470,450,430,2025-09-30
+Hastings-Flinders,Flinders,FLINDERS,units,470,450,430,2025-09-30
+Mt Eliza-Mornington-Mt Martha,Mt Eliza,MT ELIZA,units,535,525,495,2025-09-30
+Mt Eliza-Mornington-Mt Martha,Mornington,MORNINGTON,units,535,525,495,2025-09-30
+Mt Eliza-Mornington-Mt Martha,Mt Martha,MT MARTHA,units,535,525,495,2025-09-30
+Seaford-Carrum Downs,Seaford,SEAFORD,units,470,460,425,2025-09-30
+Seaford-Carrum Downs,Carrum Downs,CARRUM DOWNS,units,470,460,425,2025-09-30
+Belmont-Grovedale,Belmont,BELMONT,units,430,425,415,2025-09-30
+Belmont-Grovedale,Grovedale,GROVEDALE,units,430,425,415,2025-09-30
+Corio,Corio,CORIO,units,380,370,350,2025-09-30
+Geelong-Newcombe,Geelong,GEELONG,units,460,478,450,2025-09-30
+Geelong-Newcombe,Newcombe,NEWCOMBE,units,460,478,450,2025-09-30
+Herne Hill-Geelong West,Herne Hill,HERNE HILL,units,410,410,390,2025-09-30
+Herne Hill-Geelong West,Geelong West,GEELONG WEST,units,410,410,390,2025-09-30
+Lara,Lara,LARA,units,415,410,380,2025-09-30
+Newtown,Newtown,NEWTOWN,units,440,430,420,2025-09-30
+North Geelong,North Geelong,GEELONG NORTH,units,420,420,400,2025-09-30
+Ballarat,Ballarat,BALLARAT,units,360,350,340,2025-09-30
+Mount Clear-Buninyong,Mount Clear,MT CLEAR,units,360,350,320,2025-09-30
+Mount Clear-Buninyong,Buninyong,BUNINYONG,units,360,350,320,2025-09-30
+Sebastopol-Delacombe,Sebastopol,SEBASTOPOL,units,350,340,330,2025-09-30
+Sebastopol-Delacombe,Delacombe,DELACOMBE,units,350,340,330,2025-09-30
+Wendouree-Alfredton,Wendouree,WENDOUREE,units,350,348,330,2025-09-30
+Wendouree-Alfredton,Alfredton,ALFREDTON,units,350,348,330,2025-09-30
+Bendigo,Bendigo,BENDIGO,units,400,400,388,2025-09-30
+Flora Hill-Bendigo East,Flora Hill,FLORA HILL,units,380,370,350,2025-09-30
+Flora Hill-Bendigo East,Bendigo East,BENDIGO EAST,units,380,370,350,2025-09-30
+Golden Square-Kangaroo Flat,Golden Square,GOLDEN SQUARE,units,380,380,350,2025-09-30
+Golden Square-Kangaroo Flat,Kangaroo Flat,KANGAROO FLAT,units,380,380,350,2025-09-30
+North Bendigo,North Bendigo,BENDIGO NORTH,units,398,380,360,2025-09-30
+Bairnsdale,Bairnsdale,BAIRNSDALE,units,370,368,340,2025-09-30
+Benalla,Benalla,BENALLA,units,370,360,340,2025-09-30
+Castlemaine,Castlemaine,CASTLEMAINE,units,390,385,380,2025-09-30
+Echuca,Echuca,ECHUCA,units,420,400,380,2025-09-30
+Hamilton,Hamilton,HAMILTON,units,320,300,290,2025-09-30
+Horsham,Horsham,HORSHAM,units,320,300,300,2025-09-30
+Mildura,Mildura,MILDURA,units,350,340,300,2025-09-30
+Moe-Newborough,Moe,MOE,units,310,295,290,2025-09-30
+Moe-Newborough,Newborough,NEWBOROUGH,units,310,295,290,2025-09-30
+Morwell,Morwell,MORWELL,units,320,300,280,2025-09-30
+Ocean Grove-Barwon Heads,Ocean Grove,OCEAN GROVE,units,468,450,448,2025-09-30
+Ocean Grove-Barwon Heads,Barwon Heads,BARWON HEADS,units,468,450,448,2025-09-30
+Portland,Portland,PORTLAND,units,350,350,340,2025-09-30
+Sale-Maffra,Sale,SALE,units,360,360,360,2025-09-30
+Sale-Maffra,Maffra,MAFFRA,units,360,360,360,2025-09-30
+Seymour,Seymour,SEYMOUR,units,360,350,310,2025-09-30
+Shepparton,Shepparton,SHEPPARTON,units,385,370,320,2025-09-30
+Swan Hill,Swan Hill,SWAN HILL,units,355,350,320,2025-09-30
+Torquay,Torquay,TORQUAY,units,500,495,493,2025-09-30
+Traralgon,Traralgon,TRARALGON,units,365,363,340,2025-09-30
+Wanagaratta,Wanagaratta,WANAGARATTA,units,350,350,300,2025-09-30
+Warragul,Warragul,WARRAGUL,units,410,390,360,2025-09-30
+Warrnambool,Warrnambool,WARRNAMBOOL,units,420,400,380,2025-09-30
+Wodonga,Wodonga,WODONGA,units,385,360,340,2025-09-30
