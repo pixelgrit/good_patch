@@ -30,7 +30,7 @@ const VGV_HEADERS = {
 async function fetchSheets(dataset: string, file: string) {
   const res = await latestResource(dataset, ['xls', 'xlsx']);
   const ext = res.url.toLowerCase().includes('.xlsx') || res.format.toLowerCase() === 'xlsx' ? 'xlsx' : 'xls';
-  const p = await download(res.url, cache(`${file}.${ext}`), { headers: VGV_HEADERS });
+  const p = await download(res.url, cache(`${file}.${ext}`), { headers: VGV_HEADERS, archiveFallback: true });
   return { res, sheets: readWorkbook(p) };
 }
 
@@ -38,7 +38,6 @@ export const vgvPrices: Fetcher = {
   id: 'vgv',
   name: 'Valuer-General Victoria median prices by suburb',
   cadence: 'quarterly',
-  localOnly: 'land.vic.gov.au blocks GitHub Actions servers (HTTP 403). Run `npm run fetch -- --only=vgv` on your own computer after each quarterly release.',
   async run() {
     const out: Record<string, string | number | null>[] = [];
     const series: Record<string, Record<string, { t: string; v: number }[]>> = {};

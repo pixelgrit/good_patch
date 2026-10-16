@@ -8,7 +8,7 @@ Every source Propa uses, how it's fetched, how often the publisher updates it, a
 
 | Source | Publisher | Endpoint | Publisher updates | Fetcher checks | Feeds |
 | --- | --- | --- | --- | --- | --- |
-| Median house and unit prices by suburb, quarterly | Valuer-General Victoria (via DataVic) | DataVic catalogue `victorian-property-sales-report-median-house-by-suburb`, `…-median-unit-by-suburb` (XLS) | Quarterly | Monthly | Median price |
+| Median house and unit prices by suburb, quarterly | Valuer-General Victoria (via DataVic; Internet Archive copy when blocked) | DataVic catalogue `victorian-property-sales-report-median-house-by-suburb`, `…-median-unit-by-suburb` (XLS) | Quarterly | Monthly | Median price |
 | Median house and unit prices by suburb, yearly time series | Valuer-General Victoria (via DataVic) | `…-median-house-by-suburb-time-series`, `…-median-unit-by-suburb-time-series` (XLSX) | Yearly | Monthly | 1, 3, 5 and 10-year growth; price trend |
 | Rental Report, moving annual rents by suburb | Homes Victoria (DFFH, via DataVic) | `rental-report-quarterly-moving-annual-rents-by-suburb` (XLSX) | Quarterly | Monthly | Median rent (3-bedroom house, 2-bedroom flat), 1 and 3-year rent growth, rent trend |
 | Building Approvals by SA2 | ABS | Data API `ABS,BA_SA2` (data.api.abs.gov.au/rest) (SDMX-CSV) | Monthly | Monthly | Approvals in last 12 months, approvals ratio |
@@ -23,21 +23,9 @@ SA2 figures (approvals, population) are apportioned to suburbs by area overlap: 
 
 "Fetcher checks" is how often the scheduled job looks for a new release. Fetching is idempotent: an unchanged file produces no commit.
 
-## Run locally: Valuer-General prices
+## Valuer-General prices via the Internet Archive
 
-land.vic.gov.au's firewall rejects requests from GitHub's servers (HTTP 403, whatever the client or headers), so the scheduled job skips the Valuer-General fetcher. After each quarterly release (usually about three months after the quarter ends), run it from your own computer and push:
-
-```bash
-git pull
-npm install
-npm run fetch -- --only=vgv
-npm run data
-git add data/sources public/data
-git commit -m "Valuer-General prices"
-git push
-```
-
-Until it has run once, prices come from the Cotality snapshot for 69 suburbs, and the map shows only suburbs with a price. The app flags the prices as stale six months after their "as at" date.
+land.vic.gov.au's firewall rejects requests from GitHub's servers (HTTP 403, whatever the client or headers). When that happens the fetcher asks the Internet Archive for the same file: each release has its own address, so a snapshot of that exact URL is the published spreadsheet. If the archive has no copy yet, the fetcher asks it to save one (its crawler isn't blocked) and waits up to four minutes. If that also fails, the source is marked failed and the previous prices are kept; running `npm run fetch -- --only=vgv` from your own computer is the manual fallback.
 
 ## Hand-collected snapshot
 

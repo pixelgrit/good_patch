@@ -17,6 +17,8 @@ export interface GetOptions {
   headers?: Record<string, string>;
   timeoutMs?: number;
   retries?: number;
+  /** If the publisher refuses us (403), fetch the identical file from the Internet Archive instead. */
+  archiveFallback?: boolean;
 }
 
 /** Error message including the network-level cause Node hides behind "fetch failed". */
@@ -72,7 +74,7 @@ export async function getText(url: string, opts?: GetOptions): Promise<string> {
 
 /**
  * Download to a file. If the server refuses with 403 (some agency firewalls
- * fingerprint Node's HTTP client), retry once with curl and the same headers.
+ * block cloud servers), retry with curl, then optionally via the Internet Archive.
  */
 export async function download(url: string, dest: string, opts?: GetOptions): Promise<string> {
   fs.mkdirSync(path.dirname(dest), { recursive: true });
@@ -87,8 +89,49 @@ export async function download(url: string, dest: string, opts?: GetOptions): Pr
     try {
       execFileSync('curl', args, { stdio: ['ignore', 'ignore', 'pipe'] });
       return dest;
-    } catch (curlErr) {
-      throw new Error(`${(err as Error).message}; curl also failed: ${String((curlErr as Error).message).split('\n')[0]}`);
+    } catch {
+      if (!opts?.archiveFallback) throw err;
+      console.log(`  ${new URL(url).hostname} refused the download; using the Internet Archive copy`);
+      return archiveDownload(url, dest);
     }
   }
+}
+
+/* ------------------------------------------------------------------ */
+/* Internet Archive fallback                                            */
+/* ------------------------------------------------------------------ */
+
+async function latestSnapshot(url: string): Promise<string | null> {
+  const res = await getJson<{ archived_snapshots?: { closest?: { available?: boolean; status?: string; timestamp?: string } } }>(
+    `https://archive.org/wayback/available?url=${encodeURIComponent(url)}`,
+  );
+  const c = res.archived_snapshots?.closest;
+  return c?.available && c.status === '200' && c.timestamp ? c.timestamp : null;
+}
+
+/**
+ * Publishers put each release at a new address, so any snapshot of that exact
+ * URL is the published file. If there's no snapshot yet, ask the archive to
+ * capture it (its crawler isn't blocked) and wait for it to appear.
+ */
+async function archiveDownload(url: string, dest: string): Promise<string> {
+  let ts = await latestSnapshot(url);
+  if (!ts) {
+    try {
+      await get(`https://web.archive.org/save/${url}`, { timeoutMs: 180_000, retries: 1 });
+    } catch (err) {
+      console.warn(`  archive save request: ${describe(err)}`);
+    }
+    for (let i = 0; i < 12 && !ts; i++) {
+      await new Promise((r) => setTimeout(r, 20_000));
+      ts = await latestSnapshot(url);
+    }
+  }
+  if (!ts) throw new Error(`no Internet Archive copy of ${url} after requesting one`);
+  // "id_" returns the original bytes rather than the archive's wrapped page.
+  const res = await get(`https://web.archive.org/web/${ts}id_/${url}`, { timeoutMs: 300_000 });
+  const buf = Buffer.from(await res.arrayBuffer());
+  if (buf.length < 10_000) throw new Error(`Internet Archive copy of ${url} is only ${buf.length} bytes`);
+  fs.writeFileSync(dest, buf);
+  return dest;
 }
