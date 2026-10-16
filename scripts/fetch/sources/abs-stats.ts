@@ -206,7 +206,7 @@ export const absApprovals: Fetcher = {
     }
     if (out.length < 100) throw new Error(`only ${out.length} suburbs with approvals`);
     writeCsv('approvals-sal.csv', out);
-    return { asAt, url: 'https://api.data.abs.gov.au/data/ABS,BA_SA2', rows: out.length, files: ['approvals-sal.csv'], message: `12 months to ${asAt}; ${JSON.stringify(chosen)}` };
+    return { asAt, url: 'https://data.api.abs.gov.au/rest/data/ABS,BA_SA2', rows: out.length, files: ['approvals-sal.csv'], message: `12 months to ${asAt}; ${JSON.stringify(chosen)}` };
   },
 };
 
@@ -256,6 +256,6 @@ export const absPopulation: Fetcher = {
     }
     if (out.length < 100) throw new Error(`only ${out.length} suburbs with population growth`);
     writeCsv('population-sal.csv', out);
-    return { asAt: periodToDate(last), url: 'https://api.data.abs.gov.au/data/ABS,ABS_ANNUAL_ERP_ASGS2021', rows: out.length, files: ['population-sal.csv'], message: `${prev} to ${last}; ${JSON.stringify(chosen)}` };
+    return { asAt: periodToDate(last), url: 'https://data.api.abs.gov.au/rest/data/ABS,ABS_ANNUAL_ERP_ASGS2021', rows: out.length, files: ['population-sal.csv'], message: `${prev} to ${last}; ${JSON.stringify(chosen)}` };
   },
 };

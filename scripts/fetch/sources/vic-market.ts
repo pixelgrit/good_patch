@@ -17,10 +17,20 @@ const VGV = {
   unitSeries: 'victorian-property-sales-report-median-unit-by-suburb-time-series',
 };
 
+/** land.vic.gov.au's firewall rejects bare requests; send what a browser following the report page's link would. */
+const VGV_HEADERS = {
+  Accept: 'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/html;q=0.9,*/*;q=0.8',
+  Referer: 'https://www.land.vic.gov.au/valuations/resources-and-reports/property-sales-statistics',
+  'Sec-Fetch-Dest': 'document',
+  'Sec-Fetch-Mode': 'navigate',
+  'Sec-Fetch-Site': 'same-origin',
+  'Upgrade-Insecure-Requests': '1',
+};
+
 async function fetchSheets(dataset: string, file: string) {
   const res = await latestResource(dataset, ['xls', 'xlsx']);
   const ext = res.url.toLowerCase().includes('.xlsx') || res.format.toLowerCase() === 'xlsx' ? 'xlsx' : 'xls';
-  const p = await download(res.url, cache(`${file}.${ext}`));
+  const p = await download(res.url, cache(`${file}.${ext}`), { headers: VGV_HEADERS });
   return { res, sheets: readWorkbook(p) };
 }
 

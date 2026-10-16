@@ -1,6 +1,6 @@
 import { getJson, getText } from './http';
 
-const BASE = 'https://api.data.abs.gov.au';
+const BASE = 'https://data.api.abs.gov.au/rest';
 
 export interface SdmxRow {
   /** Dimension id -> { code, label } */
