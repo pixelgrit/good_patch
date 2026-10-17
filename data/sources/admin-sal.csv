@@ -1,0 +1,451 @@
+SAL_CODE_2021,lga,postcode
+20002,Yarra,3067
+20003,Moonee Valley,3040
+20011,Melton,3336
+20015,Moonee Valley,3042
+20017,Brimbank,3021
+20018,Port Phillip,3206
+20021,Brimbank,3020
+20034,Yarra,3078
+20035,Hobsons Bay,3018
+20036,Hobsons Bay,3028
+20037,Hobsons Bay,3025
+20062,Brimbank,3022
+20066,Stonnington,3143
+20071,Nillumbik,3099
+20075,Moonee Valley,3032
+20077,Boroondara,3147
+20078,Monash,3147
+20079,Kingston,3195
+20080,Kingston,3195
+20082,Hume,3049
+20089,Moonee Valley,3034
+20105,Port Phillip,3183
+20123,Boroondara,3103
+20124,Boroondara,3104
+20131,Greater Dandenong,3175
+20169,Mornington Peninsula,3911
+20173,Knox,3153
+20174,Maroondah,3153
+20175,Cardinia,3807
+20176,Cardinia,3808
+20182,Bayside,3193
+20188,Yarra Ranges,3160
+20189,Yarra Ranges,3160
+20190,Yarra Ranges,3160
+20193,Greater Geelong,3223
+20198,Banyule,3081
+20207,Nillumbik,3097
+20214,Glen Eira,3204
+20215,Glen Eira,3165
+20224,Casey,3806
+20251,Bayside,3193
+20252,Whitehorse,3130
+20253,Whitehorse,3130
+20254,Whitehorse,3130
+20260,Casey,3980
+20278,Kingston,3196
+20282,Melton,3335
+20304,Knox,3155
+20307,Casey,3977
+20314,Whitehorse,3128
+20315,Whitehorse,3129
+20316,Whitehorse,3128
+20320,Kingston,3195
+20324,Maribyrnong,3019
+20331,Banyule,3088
+20337,Bayside,3186
+20338,Bayside,3187
+20346,Hume,3047
+20351,Melton,3338
+20352,Brimbank,3012
+20361,Merri-Bek,3056
+20362,Merri-Bek,3057
+20363,Merri-Bek,3055
+20381,Hume,3428
+20386,Manningham,3105
+20399,Whittlesea,3083
+20418,Yarra,3121
+20419,Melton,3023
+20420,Melton,3023
+20426,Whitehorse,3125
+20427,Whitehorse,3151
+20441,Brimbank,3023
+20442,Brimbank,3037
+20453,Boroondara,3124
+20455,Hume,3061
+20466,Casey,3977
+20468,Boroondara,3126
+20487,Cardinia,3978
+20495,Melbourne,3053
+20496,Yarra,3054
+20498,Glen Eira,3163
+20500,Melton,3023
+20507,Kingston,3197
+20508,Frankston,3201
+20521,Glen Eira,3162
+20522,Glen Eira,3145
+20523,Glen Eira,3161
+20524,Glen Eira,3162
+20528,Monash,3148
+20537,Kingston,3196
+20538,Kingston,3196
+20539,Kingston,3192
+20556,Yarra Ranges,3116
+20559,Nillumbik,3775
+20566,Kingston,3169
+20569,Monash,3168
+20570,Kingston,3169
+20572,Cardinia,3782
+20574,Yarra,3068
+20575,Greater Geelong,3222
+20581,Casey,3978
+20582,Casey,3978
+20590,Melton,3338
+20596,Merri-Bek,3058
+20597,Merri-Bek,3058
+20601,Wyndham,3030
+20605,Moorabool,3340
+20613,Yarra Ranges,3770
+20616,Yarra,3066
+20624,Hume,3048
+20654,Nillumbik,3099
+20661,Hume,3064
+20662,Casey,3977
+20663,Casey,3977
+20664,Casey,3977
+20665,Casey,3977
+20666,Casey,3977
+20670,Yarra,3121
+20682,Maroondah,3136
+20683,Maroondah,3136
+20684,Maroondah,3136
+20685,Maroondah,3136
+20697,Greater Geelong,3222
+20702,Hume,3047
+20703,Cardinia,3981
+20707,Greater Dandenong,3175
+20708,Greater Dandenong,3175
+20709,Greater Dandenong,3175
+20724,Melton,3336
+20728,Boroondara,3103
+20729,Brimbank,3023
+20731,Brimbank,3037
+20743,Brimbank,3026
+20748,Casey,3977
+20750,Cardinia,3808
+20752,Nillumbik,3089
+20754,Melton,3427
+20758,Kingston,3172
+20762,Yarra Ranges,3775
+20766,Melbourne,3008
+20771,Manningham,3108
+20772,Manningham,3109
+20773,Whittlesea,3064
+20774,Manningham,3111
+20779,Nillumbik,3754
+20783,Casey,3177
+20802,Greater Geelong,3222
+20825,Banyule,3084
+20830,Melbourne,3002
+20848,Kingston,3196
+20864,Glen Eira,3185
+20865,Nillumbik,3095
+20866,Nillumbik,3095
+20867,Port Phillip,3184
+20868,Cardinia,3782
+20871,Casey,3802
+20878,Whittlesea,3076
+20885,Moonee Valley,3040
+20886,Moonee Valley,3041
+20887,Moonee Valley,3041
+20888,Moonee Valley,3040
+20889,Casey,3177
+20898,Melton,3338
+20899,Melton,3338
+20901,Yarra,3078
+20909,Merri-Bek,3060
+20917,Knox,3156
+20918,Yarra Ranges,3786
+20924,Yarra,3065
+20925,Yarra,3068
+20929,Melbourne,3031
+20935,Maribyrnong,3011
+20937,Whitehorse,3131
+20947,Frankston,3199
+20948,Frankston,3200
+20949,Frankston,3199
+20950,Melton,3335
+20965,Glen Eira,3185
+21001,Macedon Ranges,3437
+21002,Macedon Ranges,3437
+21004,Hume,3043
+21009,Glen Eira,3163
+21010,Boroondara,3146
+21013,Monash,3150
+21047,Merri-Bek,3046
+21079,Merri-Bek,3043
+21087,Melton,3335
+21104,Banyule,3088
+21105,Hume,3059
+21115,Yarra Ranges,3770
+21121,Cardinia,3807
+21124,Merri-Bek,3046
+21125,Casey,3803
+21131,Bayside,3188
+21132,Bayside,3188
+21133,Casey,3976
+21139,Casey,3806
+21140,Melton,3337
+21152,Boroondara,3122
+21153,Boroondara,3123
+21163,Kingston,3202
+21165,Maroondah,3135
+21167,Banyule,3084
+21168,Banyule,3081
+21169,Banyule,3081
+21185,Bayside,3190
+21193,Melton,3037
+21203,Wyndham,3029
+21214,Monash,3166
+21218,Monash,3166
+21223,Nillumbik,3099
+21229,Greater Geelong,3223
+21246,Banyule,3079
+21247,Banyule,3079
+21248,Hume,3047
+21277,Casey,3977
+21286,Yarra Ranges,3791
+21287,Yarra Ranges,3766
+21294,Nillumbik,3097
+21312,Brimbank,3021
+21314,Brimbank,3036
+21315,Brimbank,3038
+21316,Moonee Valley,3033
+21317,Brimbank,3038
+21318,Brimbank,3036
+21319,Brimbank,3042
+21327,Melbourne,3031
+21336,Boroondara,3101
+21337,Boroondara,3102
+21339,Greater Dandenong,3173
+21354,Yarra Ranges,3137
+21355,Maroondah,3137
+21358,Murrindindi,3763
+21362,Brimbank,3021
+21363,Darebin,3083
+21365,Maribyrnong,3012
+21374,Knox,3180
+21380,Cardinia,3981
+21393,Stonnington,3144
+21411,Melton,3337
+21452,Whittlesea,3075
+21467,Frankston,3910
+21468,Frankston,3911
+21476,Hobsons Bay,3028
+21477,Wyndham,3026
+21504,Yarra Ranges,3140
+21520,Greater Geelong,3211
+21547,Banyule,3093
+21554,Casey,3975
+21555,Greater Dandenong,3975
+21558,Yarra Ranges,3156
+21559,Casey,3156
+21564,Banyule,3085
+21575,Maribyrnong,3012
+21586,Stonnington,3144
+21587,Stonnington,3145
+21588,Wyndham,3024
+21594,Greater Geelong,3222
+21597,Wyndham,3024
+21604,Maribyrnong,3032
+21629,Glen Eira,3204
+21635,Hume,3048
+21640,Melbourne,3004
+21641,Hume,3045
+21642,Melton,3337
+21643,Melton,3338
+21644,Melton,3337
+21648,Kingston,3194
+21649,Yarra Ranges,3159
+21659,Whittlesea,3754
+21675,Hume,3064
+21677,Port Phillip,3206
+21683,Whittlesea,3082
+21706,Whitehorse,3132
+21727,Yarra Ranges,3793
+21732,Whitehorse,3127
+21733,Whitehorse,3129
+21735,Banyule,3094
+21736,Yarra Ranges,3765
+21742,Moonee Valley,3039
+21746,Kingston,3189
+21747,Kingston,3194
+21755,Yarra Ranges,3138
+21760,Kingston,3195
+21786,Melton,3024
+21787,Yarra Ranges,3767
+21793,Mornington Peninsula,3930
+21795,Yarra Ranges,3796
+21816,Monash,3149
+21827,Monash,3170
+21849,Glen Eira,3163
+21893,Casey,3805
+21894,Yarra Ranges,3804
+21895,Casey,3804
+21896,Casey,3805
+21934,Hobsons Bay,3015
+21942,Moonee Valley,3042
+21952,Greater Dandenong,3174
+21953,Greater Dandenong,3174
+21966,Melbourne,3051
+21969,Nillumbik,3113
+21971,Darebin,3070
+21974,Monash,3168
+21985,Whitehorse,3131
+21991,Nillumbik,3099
+21998,Merri-Bek,3046
+21999,Hume,3063
+22000,Monash,3166
+22001,Monash,3166
+22002,Monash,3167
+22006,Cardinia,3809
+22007,Cardinia,3809
+22009,Yarra Ranges,3788
+22016,Glen Eira,3204
+22027,Cardinia,3810
+22032,Nillumbik,3759
+22036,Manningham,3114
+22037,Kingston,3195
+22038,Melbourne,3052
+22041,Merri-Bek,3044
+22042,Merri-Bek,3044
+22047,Kingston,3197
+22050,Casey,3912
+22084,Nillumbik,3090
+22085,Melton,3335
+22086,Wyndham,3030
+22089,Greater Geelong,3212
+22107,Melbourne,3207
+22109,Greater Geelong,3223
+22118,Stonnington,3181
+22121,Darebin,3072
+22122,Yarra,3054
+22132,Wyndham,3030
+22141,Melton,3023
+22160,Nillumbik,3095
+22161,Darebin,3073
+22170,Yarra,3121
+22174,Maroondah,3134
+22175,Maroondah,3135
+22176,Maroondah,3134
+22179,Port Phillip,3185
+22186,Melton,3335
+22194,Banyule,3084
+22207,Knox,3178
+22208,Hume,3064
+22221,Cardinia,3810
+22232,Frankston,3977
+22234,Bayside,3191
+22239,Yarra Ranges,3787
+22242,Knox,3179
+22247,Hobsons Bay,3028
+22249,Frankston,3198
+22250,Hobsons Bay,3018
+22256,Maribyrnong,3011
+22258,Yarra Ranges,3159
+22263,Yarra Ranges,3139
+22278,Yarra Ranges,3789
+22281,Yarra Ranges,3795
+22291,Frankston,3977
+22295,Nillumbik,3760
+22304,Hume,3062
+22309,Hobsons Bay,3015
+22310,Port Phillip,3205
+22311,Whittlesea,3752
+22313,Melbourne,3006
+22314,Stonnington,3141
+22315,Melbourne,3006
+22319,Hobsons Bay,3015
+22328,Greater Dandenong,3171
+22329,Greater Dandenong,3172
+22330,Brimbank,3021
+22332,Nillumbik,3761
+22339,Banyule,3088
+22343,Port Phillip,3182
+22344,Port Phillip,3183
+22345,Port Phillip,3182
+22346,Greater Geelong,3223
+22355,Yarra Ranges,3775
+22375,Nillumbik,3099
+22380,Moonee Valley,3041
+22381,Moonee Valley,3041
+22382,Melton,3338
+22391,Hume,3429
+22395,Brimbank,3020
+22396,Brimbank,3020
+22397,Brimbank,3020
+22399,Boroondara,3127
+22404,Greater Geelong,3225
+22414,Brimbank,3037
+22451,Wyndham,3029
+22457,Yarra Ranges,3775
+22473,Melton,3037
+22474,Brimbank,3038
+22476,Yarra Ranges,3160
+22483,Manningham,3106
+22484,Manningham,3107
+22496,Knox,3154
+22501,Yarra Ranges,3792
+22504,Whittlesea,3074
+22508,Darebin,3071
+22509,Melton,3335
+22536,Murrindindi,3777
+22537,Melton,3337
+22546,Casey,3980
+22547,Stonnington,3142
+22556,Maribyrnong,3012
+22572,Moonee Valley,3032
+22576,Yarra Ranges,3785
+22582,Melton,3029
+22586,Hume,3043
+22614,Knox,3156
+22620,Yarra Ranges,3158
+22627,Whitehorse,3133
+22628,Whitehorse,3133
+22633,Banyule,3084
+22672,Yarra Ranges,3139
+22673,Yarra Ranges,3139
+22685,Knox,3152
+22686,Knox,3152
+22702,Manningham,3113
+22703,Manningham,3134
+22704,Maroondah,3134
+22720,Kingston,3195
+22721,Banyule,3087
+22722,Banyule,3087
+22723,Nillumbik,3097
+22727,Nillumbik,3096
+22740,Melton,3338
+22750,Wyndham,3030
+22751,Wyndham,3030
+22756,Maribyrnong,3012
+22757,Melbourne,3003
+22761,Hume,3049
+22766,Monash,3150
+22784,Hume,3429
+22791,Wyndham,3027
+22792,Hobsons Bay,3016
+22793,Hobsons Bay,3016
+22805,Stonnington,3181
+22820,Whittlesea,3750
+22825,Manningham,3115
+22843,Whittlesea,3751
+22883,Wyndham,3024
+22892,Banyule,3085
+22898,Whittlesea,3755
+22910,Yarra Ranges,3775
+22916,Nillumbik,3091
+22917,Maribyrnong,3013
+22930,Yarra Ranges,3770
+22941,Hume,3063
