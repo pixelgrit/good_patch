@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T02:02:24.517Z",
+  "updatedAt": "2026-10-17T02:07:15.271Z",
   "sources": {
     "abs-boundaries": {
       "id": "abs-boundaries",
@@ -127,14 +127,15 @@
       "id": "vicmap-admin",
       "name": "Vicmap Admin council and postcode areas",
       "status": "ok",
-      "fetchedAt": "2026-10-17T02:02:24.517Z",
+      "fetchedAt": "2026-10-17T02:07:15.270Z",
       "asAt": "2026-10-17",
       "url": "https://opendata.maps.vic.gov.au/geoserver/wfs",
       "rows": 450,
       "files": [
         "admin-sal.csv"
       ],
-      "message": "39 council and 277 postcode polygons (fields lga_name, postcode)"
+      "message": "39 council and 277 postcode polygons (fields lga_name, postcode)",
+      "version": 2
     }
   }
 }

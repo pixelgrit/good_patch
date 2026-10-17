@@ -1,7 +1,7 @@
 SAL_CODE_2021,lga,postcode
 20002,Yarra,3067
 20003,Moonee Valley,3040
-20011,Melton,3336
+20011,Melton,"3335, 3336"
 20015,Moonee Valley,3042
 20017,Brimbank,3021
 20018,Port Phillip,3206
@@ -45,7 +45,7 @@ SAL_CODE_2021,lga,postcode
 20254,Whitehorse,3130
 20260,Casey,3980
 20278,Kingston,3196
-20282,Melton,3335
+20282,Melton,"3335, 3336"
 20304,Knox,3155
 20307,Casey,3977
 20314,Whitehorse,3128
@@ -138,10 +138,10 @@ SAL_CODE_2021,lga,postcode
 20754,Melton,3427
 20758,Kingston,3172
 20762,Yarra Ranges,3775
-20766,Melbourne,3008
+20766,Melbourne,"3003, 3008"
 20771,Manningham,3108
 20772,Manningham,3109
-20773,Whittlesea,3064
+20773,Whittlesea,"3064, 3751"
 20774,Manningham,3111
 20779,Nillumbik,3754
 20783,Casey,3177
@@ -175,7 +175,7 @@ SAL_CODE_2021,lga,postcode
 20947,Frankston,3199
 20948,Frankston,3200
 20949,Frankston,3199
-20950,Melton,3335
+20950,Melton,"3335, 3336"
 20965,Glen Eira,3185
 21001,Macedon Ranges,3437
 21002,Macedon Ranges,3437
@@ -261,7 +261,7 @@ SAL_CODE_2021,lga,postcode
 21604,Maribyrnong,3032
 21629,Glen Eira,3204
 21635,Hume,3048
-21640,Melbourne,3004
+21640,Melbourne,"3000, 3004"
 21641,Hume,3045
 21642,Melton,3337
 21643,Melton,3338
@@ -395,7 +395,7 @@ SAL_CODE_2021,lga,postcode
 22476,Yarra Ranges,3160
 22483,Manningham,3106
 22484,Manningham,3107
-22496,Knox,3154
+22496,Knox,"3154, 3787"
 22501,Yarra Ranges,3792
 22504,Whittlesea,3074
 22508,Darebin,3071
