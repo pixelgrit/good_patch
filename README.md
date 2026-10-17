@@ -1,5 +1,7 @@
 # Propa
 
+**Live site:** https://pixelgrit.github.io/propa/
+
 A heat map of Melbourne suburbs for property investors. Every suburb is coloured by a composite investment score built from the metrics buyers' advocates use — price, yield, supply, demand, momentum, quality and risk — and every score breaks down into its parts with the source and date of each number.
 
 > Scores are a research aid, not financial advice.
@@ -25,6 +27,10 @@ npm run build        # typecheck and production build to dist/
 ```
 
 `npm run fetch -- --all` refetches everything regardless of schedule; `--only=vgv,homesvic` runs named sources. Every source, its publisher, endpoint and update cadence is listed in [docs/data-sources.md](docs/data-sources.md).
+
+### Deployment
+
+`.github/workflows/deploy.yml` builds the app and publishes it to the `gh-pages` branch after every push to `main` and after each data refresh, so the site always shows the latest data.
 
 ### Keeping the data current
 
