@@ -17,8 +17,9 @@ import { absApprovals, absCensus, absPopulation } from './sources/abs-stats';
 import { homesVicRents, vgvPrices } from './sources/vic-market';
 import { ptvGtfs, vicmapAdmin, vicmapPlanning } from './sources/vic-spatial';
 import type { Cadence, Fetcher } from './sources/types';
+import { wikipedia } from './sources/wikipedia';
 
-const FETCHERS: Fetcher[] = [absBoundaries, vicmapAdmin, absSeifa, absCensus, vgvPrices, homesVicRents, absApprovals, absPopulation, vicmapPlanning, ptvGtfs];
+const FETCHERS: Fetcher[] = [absBoundaries, vicmapAdmin, absSeifa, absCensus, vgvPrices, homesVicRents, absApprovals, absPopulation, vicmapPlanning, ptvGtfs, wikipedia];
 
 /** Refetch when the last success is older than this many days. */
 const DUE_AFTER_DAYS: Record<Cadence, number> = { weekly: 6, monthly: 25, quarterly: 25, yearly: 60, static: Infinity };

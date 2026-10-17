@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { LISTING_PRICE_DEFAULT } from './lib/listings';
 import { weightsFor, type CategoryWeights, type FocusId, type GoalId } from './lib/presets';
 import type { CategoryId, Dataset, PropertyType } from './lib/types';
 
@@ -38,6 +39,8 @@ interface State {
   applyPenalties: boolean;
   filters: Filters;
   layers: { tram: boolean; tramCatchment: boolean; train: boolean };
+  /** Price cap for the for-sale links. */
+  listingMaxPrice: number;
   hovered: string | null;
   selected: string | null;
   pinned: string[];
@@ -56,6 +59,7 @@ interface State {
   setFilters(f: Partial<Filters>): void;
   resetFilters(): void;
   toggleLayer(k: keyof State['layers']): void;
+  setListingMaxPrice(v: number): void;
   setHovered(c: string | null): void;
   select(c: string | null, fly?: boolean): void;
   togglePin(c: string): void;
@@ -74,6 +78,7 @@ export const useStore = create<State>((set, get) => ({
   applyPenalties: false,
   filters: { ...EMPTY_FILTERS },
   layers: { tram: false, tramCatchment: true, train: false },
+  listingMaxPrice: LISTING_PRICE_DEFAULT,
   hovered: null,
   selected: null,
   pinned: [],
@@ -101,6 +106,7 @@ export const useStore = create<State>((set, get) => ({
   setFilters: (f) => set((s) => ({ filters: { ...s.filters, ...f } })),
   resetFilters: () => set({ filters: { ...EMPTY_FILTERS } }),
   toggleLayer: (k) => set((s) => ({ layers: { ...s.layers, [k]: !s.layers[k] } })),
+  setListingMaxPrice: (listingMaxPrice) => set({ listingMaxPrice }),
   setHovered: (hovered) => set({ hovered }),
   select: (selected, fly = false) =>
     set({ selected, drawerOpen: false, flyTo: fly && selected ? { code: selected, nonce: Date.now() } : get().flyTo }),

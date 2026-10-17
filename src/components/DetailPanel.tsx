@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
+import { useAbout } from '../hooks/useAbout';
 import { useAvailableMetrics, useSuburbByCode } from '../hooks/useDerived';
 import { formatDate, formatDistance, formatMetric, formatScore, formatValue } from '../lib/format';
 import { METRIC_BY_KEY } from '../lib/metrics';
@@ -6,8 +7,8 @@ import { FOCUS, GOALS } from '../lib/presets';
 import { getMetric, type SuburbScore } from '../lib/scoring';
 import { isStale, SOURCES } from '../lib/sources';
 import { rampColor } from '../lib/colors';
-import { listingLinks } from '../lib/listings';
-import { PROPERTY_TYPES, TYPE_LABEL, TYPE_SINGULAR, type MetricValue, type SeriesKey, type Suburb } from '../lib/types';
+import { formatListingPrice, LISTING_PRICE_MAX, LISTING_PRICE_STEP, listingLinks } from '../lib/listings';
+import { PROPERTY_TYPES, TYPE_LABEL, TYPE_SINGULAR, type MetricValue, type PropertyType, type SeriesKey, type Suburb } from '../lib/types';
 import { MAX_PINNED, TRAM_SUBURB_SHARE, useStore } from '../store';
 import { Pill, Sparkline } from './ui';
 
@@ -53,7 +54,9 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
   const setType = useStore((st) => st.setType);
   // Where this type has no sales, offer the first type that does.
   const other = PROPERTY_TYPES.find((t) => t !== type && s[t].metrics.medianPrice?.value != null);
-  const links = listingLinks(s, type);
+  const maxPrice = useStore((st) => st.listingMaxPrice);
+  const setMaxPrice = useStore((st) => st.setListingMaxPrice);
+  const links = listingLinks(s, type, maxPrice);
   const [showAll, setShowAll] = useState(false);
   const available = useAvailableMetrics();
   const figures = KEY_FIGURES.filter((k) => available.has(k)).slice(0, 8);
@@ -113,6 +116,22 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
 
       <section className="detail__section">
         <h3>For sale now</h3>
+        <div className="slider">
+          <div className="slider__head">
+            <label htmlFor="listing-price">Up to</label>
+            <span className="muted">{formatListingPrice(maxPrice)}</span>
+          </div>
+          <input
+            id="listing-price"
+            type="range"
+            min={0}
+            max={LISTING_PRICE_MAX}
+            step={LISTING_PRICE_STEP}
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(Number(e.target.value))}
+            aria-valuetext={formatListingPrice(maxPrice)}
+          />
+        </div>
         <div className="pill-row">
           {links.map((l) => (
             <a key={l.site} className="pill" href={l.url} target="_blank" rel="noopener noreferrer">
@@ -169,7 +188,7 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
       )}
 
       <section className="detail__section">
-        <h3>Five-year trend</h3>
+        <h3>Trends</h3>
         {!hasSeries ? (
           <p className="muted note">Price, rent, vacancy and days-on-market history isn't loaded yet. It needs the Valuer-General, Homes Victoria and SQM files.</p>
         ) : (
@@ -182,7 +201,7 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
               return (
                 <div className="trend" key={x.key}>
                   <div className="trend__label muted">{x.label}</div>
-                  <Sparkline values={pts.map((p) => p.v)} label={`${x.label} over five years`} />
+                  <Sparkline values={pts.map((p) => p.v)} label={`${x.label} since ${pts[0]?.t.slice(0, 4) ?? ''}`} />
                   <div className="trend__value">
                     {formatValue(x.unit, last)}
                     {change != null && <span className="muted"> {formatValue('pct', change, { signed: true })}</span>}
@@ -193,6 +212,10 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
           </div>
         )}
       </section>
+
+      <SalesHistory s={s} type={type} />
+
+      <AboutSection code={s.code} />
 
       <section className="detail__section">
         <h3>Tram and train access</h3>
@@ -302,5 +325,79 @@ function Provenance({ mv }: { mv: MetricValue | undefined }) {
       {mv.mock ? ' (mock)' : mv.approx ? ' (approximate)' : ''} · as at {formatDate(mv.asAt)}
       {stale && <span className="stale"> · over {src.staleAfterMonths} months old</span>}
     </div>
+  );
+}
+
+/** Median sale price by year, and how many sold recently. */
+function SalesHistory({ s, type }: { s: Suburb; type: PropertyType }) {
+  const pts = s[type].series.price ?? [];
+  const quarter = s[type].metrics.salesQuarter;
+  const year = s[type].metrics.sales12m;
+  if (pts.length < 2 && quarter?.value == null) return null;
+  const first = pts[0];
+  const last = pts[pts.length - 1];
+  const change = first && last && first.v ? ((last.v - first.v) / first.v) * 100 : null;
+  const noun = TYPE_SINGULAR[type] === 'land' ? 'land' : `${TYPE_SINGULAR[type]}s`;
+  return (
+    <section className="detail__section">
+      <h3>Sales history</h3>
+      {first && last && pts.length > 1 && (
+        <p className="note">
+          The median {TYPE_SINGULAR[type] === 'land' ? 'vacant land' : TYPE_SINGULAR[type]} price went from {formatValue('aud', first.v)} in {first.t.slice(0, 4)} to {formatValue('aud', last.v)} in {last.t.slice(0, 4)}
+          {change != null ? `, ${formatValue('pct', change, { signed: true })}` : ''}.
+        </p>
+      )}
+      <dl className="kv">
+        {quarter?.value != null && (
+          <>
+            <dt>Sold in the latest quarter</dt>
+            <dd>
+              {quarter.value} {noun} · {formatDate(quarter.asAt)}
+            </dd>
+          </>
+        )}
+        {year?.value != null && (
+          <>
+            <dt>Sold in the last 12 months</dt>
+            <dd>
+              {year.value} {noun} · {SOURCES[year.source]?.name ?? year.source}
+            </dd>
+          </>
+        )}
+        {[...pts].reverse().map((p) => (
+          <Fragment key={p.t}>
+            <dt>Median, {p.t.slice(0, 4)}</dt>
+            <dd>{formatValue('aud', p.v)}</dd>
+          </Fragment>
+        ))}
+      </dl>
+      <p className="muted note">Valuer-General Victoria yearly medians. Yearly sale counts aren't published free, so only recent counts are shown.</p>
+    </section>
+  );
+}
+
+/** History and character of the locality, from its Wikipedia article. */
+function AboutSection({ code }: { code: string }) {
+  const about = useAbout(code);
+  if (!about) return null;
+  return (
+    <section className="detail__section">
+      <h3>About</h3>
+      {about.extract
+        .split(/\n+/)
+        .filter(Boolean)
+        .map((para, i) => (
+          <p className="note" key={i}>
+            {para}
+          </p>
+        ))}
+      <p className="muted note">
+        From{' '}
+        <a href={about.url} target="_blank" rel="noopener noreferrer">
+          {about.title} on Wikipedia
+        </a>
+        , CC BY-SA 4.0.
+      </p>
+    </section>
   );
 }

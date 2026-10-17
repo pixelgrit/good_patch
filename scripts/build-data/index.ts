@@ -10,7 +10,7 @@ import * as turf from '@turf/turf';
 import type { Feature } from 'geojson';
 import { applyPercentiles } from '../../src/lib/scoring';
 import type { Dataset } from '../../src/lib/types';
-import { emptySuburb, OUT_DIR, round, SOURCES_DIR, type BuildContext } from './context';
+import { emptySuburb, OUT_DIR, rawExists, readJson, round, SOURCES_DIR, type BuildContext } from './context';
 import { licensedAdapters } from './adapters/licensed';
 import { mockBoundaries, mockMetrics, mockTransport } from './adapters/mock';
 import { curatedCensus, curatedMarket, curatedSeifa } from './adapters/curated';
@@ -109,6 +109,11 @@ async function main() {
     if (catchments.c800) bands.push({ ...roundFeature(catchments.c800), properties: { band: 800 } });
     if (catchments.c400) bands.push({ ...roundFeature(catchments.c400), properties: { band: 400 } });
     write('tram-catchment.geojson', turf.featureCollection(bands));
+  }
+  // Locality summaries (Wikipedia), loaded by the detail panel on demand.
+  if (rawExists('wikipedia-sal.json')) {
+    const about = readJson<Record<string, unknown>>('wikipedia-sal.json');
+    write('about.json', Object.fromEntries(ctx.suburbs.filter((s) => about[s.code]).map((s) => [s.code, about[s.code]])));
   }
   write('vic-mask.geojson', turf.featureCollection([vicMask(VIC_OUTLINE)]));
 

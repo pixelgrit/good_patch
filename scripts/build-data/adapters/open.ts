@@ -117,7 +117,7 @@ export const vgvMedians: Adapter = {
       put('growth10y', pctChange(last, num(r.median_10y_ago)), yearEnd);
       const pts = series[r.key]?.[type];
       if (pts?.length) {
-        setSeries(s, type, 'price', pts.slice(-6));
+        setSeries(s, type, 'price', pts.slice(-11));
         put('volatility', volatility(pts.slice(-11)), pts[pts.length - 1].t);
       }
       n++;
