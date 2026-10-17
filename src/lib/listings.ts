@@ -22,13 +22,20 @@ const DOMAIN_TYPE: Record<PropertyType, string> = {
   land: 'vacant-land',
 };
 
+/** In rural localities, land searches also take in acreage and rural property. */
+const REA_RURAL_LAND = 'property-land-acreage-rural';
+const DOMAIN_RURAL_LAND = 'vacant-land,acreage-semi-rural,rural';
+
 export function listingLinks(s: Suburb, type: PropertyType): ListingLink[] {
+  const ruralLand = type === 'land' && !!s.rural;
+  const reaType = ruralLand ? REA_RURAL_LAND : REA_TYPE[type];
+  const domainType = ruralLand ? DOMAIN_RURAL_LAND : DOMAIN_TYPE[type];
   const postcode = s.postcode.split(/,\s*/)[0] ?? '';
   const name = s.name.toLowerCase();
   const rea = `${name.replace(/\s+/g, '+')},+vic+${postcode}`.replace(/\+$/, '');
   const domain = `${name.replace(/\s+/g, '-')}-vic-${postcode}`.replace(/-$/, '');
   return [
-    { site: 'realestate.com.au', url: `https://www.realestate.com.au/buy/${REA_TYPE[type]}-in-${rea}/list-1` },
-    { site: 'Domain', url: `https://www.domain.com.au/sale/${domain}/?ptype=${DOMAIN_TYPE[type]}` },
+    { site: 'realestate.com.au', url: `https://www.realestate.com.au/buy/${reaType}-in-${rea}/list-1` },
+    { site: 'Domain', url: `https://www.domain.com.au/sale/${domain}/?ptype=${domainType}` },
   ];
 }

@@ -77,7 +77,18 @@ export function applyGeo(ctx: BuildContext, catchments: Catchments): void {
 }
 
 /** Gross yield and price-to-income, from the joined inputs. */
+/** Dwellings per square kilometre below which a locality counts as rural. */
+const RURAL_DENSITY = 100;
+
 export function applyDerived(ctx: BuildContext): void {
+  const byCode = new Map(ctx.boundaries.map((b) => [b.properties.code, b]));
+  for (const s of ctx.suburbs) {
+    const b = byCode.get(s.code);
+    if (!b) continue;
+    s.areaKm2 = round(turf.area(b) / 1e6, 2);
+    const dw = s.common.dwellings?.value;
+    if (dw != null && s.areaKm2 > 0) s.rural = dw / s.areaKm2 < RURAL_DENSITY;
+  }
   estimateMissingRents(ctx);
   for (const s of ctx.suburbs) {
     for (const type of ['houses', 'units', 'land'] as const) {

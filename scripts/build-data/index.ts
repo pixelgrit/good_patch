@@ -3,7 +3,6 @@
  *
  *   npm run data            real figures from data/real/ plus any source files in data/raw/
  *   npm run data:mock       the old mock seed, for testing the UI without real data
- *   flags: --all-vic        keep every Victorian SAL, not just metro Melbourne
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -79,13 +78,10 @@ async function main() {
     }
   }
 
-  // Keep suburbs with a median price for houses, units or land: without one
-  // there's nothing to score, and comparing them against priced suburbs would mislead.
-  const before = ctx.suburbs.length;
-  ctx.suburbs = ctx.suburbs.filter((s) => s.houses.metrics.medianPrice?.value != null || s.units.metrics.medianPrice?.value != null || s.land.metrics.medianPrice?.value != null);
-  ctx.byCode = new Map(ctx.suburbs.map((s) => [s.code, s]));
-  ctx.boundaries = ctx.boundaries.filter((b) => ctx.byCode.has(b.properties.code));
-  if (before !== ctx.suburbs.length) console.log(`- kept ${ctx.suburbs.length} of ${before} suburbs with a median price`);
+  // Every locality stays on the map, priced or not: rural areas with too few sales
+  // for a median still show what's for sale. Unpriced types are never scored.
+  const priced = ctx.suburbs.filter((s) => s.houses.metrics.medianPrice?.value != null || s.units.metrics.medianPrice?.value != null || s.land.metrics.medianPrice?.value != null).length;
+  console.log(`- ${ctx.suburbs.length} localities, ${priced} with a median price`);
 
   console.log('- tram catchments and access');
   const catchments = ctx.transport ? tramCatchments(ctx.transport.tramStops) : { c400: null, c800: null };

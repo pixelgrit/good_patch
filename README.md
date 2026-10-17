@@ -2,11 +2,11 @@
 
 **Live site:** https://pixelgrit.github.io/good_patch/
 
-A heat map of Melbourne suburbs for property investors. Every suburb is coloured by a composite investment score built for your goal (a 3–5 year buy and sell, a long-term investment or a home to live in) from yield, growth, value, supply, demand, location and risk, and every score breaks down into its parts with the source and date of each number.
+A heat map of Melbourne and the surrounding region, out to about two hours' drive, for property buyers and investors. Every suburb is coloured by a composite investment score built for your goal (a 3–5 year buy and sell, a long-term investment or a home to live in) from yield, growth, value, supply, demand, location and risk, and every score breaks down into its parts with the source and date of each number.
 
 > Scores are a research aid, not financial advice.
 
-The repo ships with **real figures for 69 inner and middle-ring Melbourne suburbs**, collected in October 2026 and stored as plain text in `data/real/` (see "Where the numbers come from" below). Suburb boundaries and the tram and train network are still approximate until you add the official ABS and DTP files to `data/raw/`.
+It covers every suburb and locality whose centre is within 160 km of the Melbourne GPO: metro Melbourne plus Geelong, Ballarat, Bendigo, the Macedon Ranges, the Yarra Valley, Gippsland to Traralgon, and the Bass and Surf coasts. The data refreshes itself every week on GitHub from free government sources (see `docs/data-sources.md`).
 
 ## Quick start
 
@@ -36,16 +36,15 @@ npm run build        # typecheck and production build to dist/
 
 `.github/workflows/refresh-data.yml` runs `fetch` and `data` every Monday, checks the app still builds, and commits any changed data. Once the project is in a GitHub repository it runs on its own; trigger it by hand from the Actions tab. A source that fails keeps its last good data, and the job reports the failure after committing whatever did update. Valuer-General's server blocks GitHub, so those files come from the Internet Archive's copy of the same release (see [docs/data-sources.md](docs/data-sources.md#valuer-general-prices-via-the-internet-archive)). GitHub pauses scheduled workflows in repositories with no activity for 60 days, but the weekly data commits count as activity.
 
-`npm run data` flag: `--all-vic` keeps every Victorian suburb rather than just metro Melbourne.
 
 The basemap is a built-in Apple Maps–style light style (`src/lib/basemap.ts`) drawn from OpenStreetMap vector tiles served free by OpenFreeMap: soft land tones, green parks, blue water, yellow motorways and white streets with names, and buildings from zoom 15. Suburb colour sits under the water, roads and labels so the street network reads through it. Set `VITE_MAP_STYLE` in `.env` to use any other MapLibre style instead. If the tiles can't be reached, the map falls back to a plain background.
 
 ## What's in the app
 
-- **Map**: opens on Melbourne with the rest of Australia muted. Suburbs are filled on a colour-blind-safe viridis-family ramp (brighter is stronger). Grey means "not enough data" — a suburb missing more than 35% of its weighted inputs is never coloured as if scored.
+- **Map**: opens on Melbourne; zoom out for the region. Localities too quiet for a median price are still shown, so you can open their for-sale links. Suburbs are filled on a colour-blind-safe viridis-family ramp (brighter is stronger). Grey means "not enough data" — a suburb missing more than 35% of its weighted inputs is never coloured as if scored.
 - **Colour by**: the investment score or any single metric (price, rent, yield, growth, value gap, discount to neighbours, volatility, turnover, approvals ratio, owner-occupiers, SEIFA, distance, tram share, and vacancy, days on market, stock and clearance when a licensed feed is connected). For single metrics the colour follows the metric's goodness percentile, so brighter is always better; the legend shows the raw values.
 - **Houses / units / land** switch: every type-specific metric and percentile is computed separately. Land uses the Valuer-General's median vacant land prices; it earns no rent, so yield drops out and the other categories are reweighted.
-- **For sale now**: each suburb's panel links to the live search on realestate.com.au and Domain for that suburb and property type. Good patch doesn't copy listings: both sites' terms prohibit scraping. Domain offers a paid listings API, which could be added as a licensed source.
+- **For sale now**: each suburb's panel links to the live search on realestate.com.au and Domain for that suburb and property type. In rural localities (under 100 dwellings per km²), land searches also include acreage and rural property. Good patch doesn't copy listings: both sites' terms prohibit scraping. Domain offers a paid listings API, which could be added as a licensed source.
 - **Buying for**: 3–5 year buy and sell, long-term investment or owner-occupier. Each goal weights the categories and metrics differently (see [docs/scoring.md](docs/scoring.md)).
 - **Focus**: Balanced, Cashflow (yield and rent growth weighted up) or Growth (growth, value and supply weighted up), applied on top of the goal. The weights sliders let you set your own mix; the map recolours live. An optional toggle deducts points for risk flags.
 - **Hover** shows the score and the two strongest and two weakest factors. **Click** opens the detail panel: key figures with source and "as at" date (flagged when stale), category breakdown, a full metric table (raw value, percentile, weight, points), five-year sparklines, tram and train access, risk flags and zoning.
@@ -152,7 +151,7 @@ Weights are the default share within each category, before a goal's multipliers.
 | Metric | Key | Source | Direction | Weight in category | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Distance to CBD | `distanceCbd` | Derived | Lower is better | 36% | Straight-line distance from the suburb centre to the Melbourne GPO. Over decades, Melbourne suburbs closer to the CBD have grown faster. |
-| Distance to train | `distanceTrain` | DTP Public Transport Lines and Stops | Lower is better | 18% | Distance from suburb centroid to the nearest metro train station. |
+| Distance to train | `distanceTrain` | DTP Public Transport Lines and Stops | Lower is better | 18% | Distance from the suburb centre to the nearest train station, metro or V/Line. |
 | SEIFA IRSAD decile | `seifa` | ABS SEIFA 2021 (IRSAD) | Higher is better | 27% | Index of relative socio-economic advantage and disadvantage, Victorian decile. |
 | Owner-occupier ratio | `ownerOccupier` | ABS Census 2021 | Higher is better | 18% | Share of occupied dwellings owned outright or with a mortgage. Above ~70% suggests a settled community and steady demand. |
 

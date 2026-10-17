@@ -70,7 +70,7 @@ export const METRICS: MetricDef[] = [
 
   // Location and amenity
   { key: 'distanceCbd', label: 'Distance to CBD', short: 'To CBD', category: 'location', direction: 'low', unit: 'km', scope: 'common', weight: 2, source: 'derived', types: all, description: 'Straight-line distance from the suburb centre to the Melbourne GPO.', guide: 'Over decades, Melbourne suburbs closer to the CBD have grown faster.' },
-  { key: 'distanceTrain', label: 'Distance to train', short: 'To train', category: 'location', direction: 'low', unit: 'km', scope: 'common', weight: 1, source: 'dtp-transport', types: all, description: 'Distance from suburb centroid to the nearest metro train station.' },
+  { key: 'distanceTrain', label: 'Distance to train', short: 'To train', category: 'location', direction: 'low', unit: 'km', scope: 'common', weight: 1, source: 'dtp-transport', types: all, description: 'Distance from the suburb centre to the nearest train station, metro or V/Line.' },
   { key: 'seifa', label: 'SEIFA IRSAD decile', short: 'SEIFA', category: 'location', direction: 'high', unit: 'decile', scope: 'common', weight: 1.5, source: 'abs-seifa', types: all, description: 'Index of relative socio-economic advantage and disadvantage, Victorian decile.' },
   { key: 'ownerOccupier', label: 'Owner-occupier ratio', short: 'Owner-occ.', category: 'location', direction: 'high', unit: 'pct', scope: 'common', weight: 1, source: 'abs-census', types: all, description: 'Share of occupied dwellings owned outright or with a mortgage.', guide: 'Above ~70% suggests a settled community and steady demand.' },
 

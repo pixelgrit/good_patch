@@ -194,7 +194,7 @@ export const vicmapPlanning: Fetcher = {
 
 const GTFS_URL = 'https://opendata.transport.vic.gov.au/dataset/3f4e292e-7f8a-4ffe-831f-1953be0fe448/resource/fb152201-859f-4882-9206-b768060b50ad/download/gtfs.zip';
 /** Folders inside the PTV GTFS zip: 2 = metropolitan train, 3 = metropolitan tram. */
-const MODES = { '2': 'METRO TRAIN', '3': 'METRO TRAM' } as const;
+const MODES = { '1': 'REGIONAL TRAIN', '2': 'METRO TRAIN', '3': 'METRO TRAM' } as const;
 
 function readGtfs(file: string): Record<string, string>[] {
   if (!fs.existsSync(file)) return [];
@@ -231,8 +231,10 @@ function splitLine(l: string): string[] {
 
 export const ptvGtfs: Fetcher = {
   id: 'ptv-gtfs',
-  name: 'PTV GTFS Schedule (metro tram and train)',
+  name: 'PTV GTFS Schedule (tram, metro and V/Line train)',
   cadence: 'monthly',
+  // 2: adds V/Line regional trains.
+  version: 2,
   async run() {
     const zip = await download(GTFS_URL, cache('gtfs.zip'), { timeoutMs: 900_000 });
     const root = path.join(CACHE_DIR, 'gtfs');
@@ -278,7 +280,7 @@ export const ptvGtfs: Fetcher = {
       }
       for (const s of readGtfs(path.join(dir, 'stops.txt'))) {
         // Trains: one point per station (parent stations), trams: every stop.
-        if (mode === 'METRO TRAIN' && s.location_type !== '1' && s.parent_station) continue;
+        if (mode !== 'METRO TRAM' && s.location_type !== '1' && s.parent_station) continue;
         stops.push(turf.point([Number(Number(s.stop_lon).toFixed(5)), Number(Number(s.stop_lat).toFixed(5))], { MODE: mode, STOP_NAME: s.stop_name, ROUTEUSSP: '' }));
       }
     }

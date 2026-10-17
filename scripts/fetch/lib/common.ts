@@ -7,8 +7,12 @@ export const SOURCES_DIR = path.join(ROOT, 'data/sources');
 /** Large raw downloads (git-ignored). */
 export const CACHE_DIR = path.join(ROOT, 'data/cache');
 
-/** Metro Melbourne extent [minLng, minLat, maxLng, maxLat]. */
-export const METRO_BBOX: [number, number, number, number] = [144.55, -38.2, 145.45, -37.55];
+/** Melbourne GPO [lng, lat]. */
+export const GPO: [number, number] = [144.9631, -37.8136];
+/** Localities whose centre is within this distance of the GPO are mapped: about two hours' drive. */
+export const REGION_RADIUS_KM = 160;
+/** Box around that circle [minLng, minLat, maxLng, maxLat], for server-side queries. */
+export const REGION_BBOX: [number, number, number, number] = [143.1, -39.25, 146.8, -36.35];
 
 export function out(file: string): string {
   fs.mkdirSync(SOURCES_DIR, { recursive: true });

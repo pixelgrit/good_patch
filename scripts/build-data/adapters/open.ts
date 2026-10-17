@@ -65,11 +65,13 @@ export const dtpTransport: Adapter = {
     const stops = readJson<FeatureCollection<Point, Record<string, string>>>('transport-stops.geojson');
     const toLine = (f: (typeof lines.features)[number]) => ({ ...f, properties: { route: f.properties.SHORT_NAME || f.properties.LONG_NAME, name: f.properties.LONG_NAME } });
     const tramLines = turf.featureCollection(lines.features.filter((f) => f.properties.MODE === 'METRO TRAM').map(toLine));
-    const trainLines = turf.featureCollection(lines.features.filter((f) => f.properties.MODE === 'METRO TRAIN').map(toLine));
+    // Metro and V/Line regional trains together: outside Melbourne the nearest station is usually V/Line.
+    const isTrain = (m: string) => m === 'METRO TRAIN' || m === 'REGIONAL TRAIN';
+    const trainLines = turf.featureCollection(lines.features.filter((f) => isTrain(f.properties.MODE)).map(toLine));
     const tramStops = turf.featureCollection(stops.features.filter((f) => f.properties.MODE === 'METRO TRAM').map((f) => turf.point(f.geometry.coordinates, { name: f.properties.STOP_NAME, routes: f.properties.ROUTEUSSP })));
     const trainStations = turf.featureCollection(
       stops.features
-        .filter((f) => f.properties.MODE === 'METRO TRAIN')
+        .filter((f) => isTrain(f.properties.MODE))
         .map((f) => turf.point(f.geometry.coordinates, { name: f.properties.STOP_NAME.replace(/ (Railway )?Station.*$/i, ''), line: f.properties.ROUTEUSSP })),
     );
     ctx.transport = { tramLines, tramStops, trainLines, trainStations } as BuildContext['transport'];

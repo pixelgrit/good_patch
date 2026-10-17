@@ -121,7 +121,7 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
           ))}
         </div>
         <p className="muted note">
-          {TYPE_LABEL[type]} for sale in {s.name}, live on each site. Good patch links to the listings rather than copying them.
+          {type === 'land' && s.rural ? 'Land, acreage and rural property' : TYPE_LABEL[type]} for sale in {s.name}, live on each site. Good patch links to the listings rather than copying them.
         </p>
       </section>
 

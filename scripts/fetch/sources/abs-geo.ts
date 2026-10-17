@@ -7,7 +7,7 @@
 import * as turf from '@turf/turf';
 import type { Feature, MultiPolygon, Polygon } from 'geojson';
 import { queryAll } from '../lib/arcgis';
-import { METRO_BBOX, writeCsv, writeJson } from '../lib/common';
+import { GPO, REGION_BBOX, REGION_RADIUS_KM, writeCsv, writeJson } from '../lib/common';
 import type { Fetcher } from './types';
 
 const SAL = 'https://geo.abs.gov.au/arcgis/rest/services/ASGS2021/SAL/MapServer/0';
@@ -20,10 +20,12 @@ export const absBoundaries: Fetcher = {
   id: 'abs-boundaries',
   name: 'ABS SAL and SA2 boundaries (ASGS 2021)',
   cadence: 'static',
+  // 2: about two hours around Melbourne rather than metro only.
+  version: 2,
   async run() {
     const sal = await queryAll(SAL, {
       where: "state_code_2021='2'",
-      bbox: METRO_BBOX,
+      bbox: REGION_BBOX,
       outFields: ['sal_code_2021', 'sal_name_2021'],
       geometry: true,
       maxAllowableOffset: 0.0002,
@@ -31,6 +33,8 @@ export const absBoundaries: Fetcher = {
     });
     const salOut = sal
       .filter((f) => f.geometry && (f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon'))
+      // The box is square; keep localities whose centre falls in the circle.
+      .filter((f) => turf.distance(turf.pointOnFeature(f as Feature<Polygon | MultiPolygon>), GPO, { units: 'kilometers' }) <= REGION_RADIUS_KM)
       .map((f) => ({
         type: 'Feature' as const,
         geometry: round(f.geometry as Polygon | MultiPolygon),
@@ -41,7 +45,7 @@ export const absBoundaries: Fetcher = {
 
     const sa2 = await queryAll(SA2, {
       where: "state_code_2021='2'",
-      bbox: METRO_BBOX,
+      bbox: REGION_BBOX,
       outFields: ['sa2_code_2021', 'sa2_name_2021'],
       geometry: true,
       maxAllowableOffset: 0.0003,
@@ -65,8 +69,9 @@ export const absSeifa: Fetcher = {
   id: 'abs-seifa',
   name: 'ABS SEIFA 2021 by suburb',
   cadence: 'static',
+  version: 2,
   async run() {
-    const rows = await queryAll(SEIFA, { bbox: METRO_BBOX, outFields: ['sal_code_2021', 'irsad_state_decile'], pageSize: 1000 });
+    const rows = await queryAll(SEIFA, { bbox: REGION_BBOX, outFields: ['sal_code_2021', 'irsad_state_decile'], pageSize: 1000 });
     const out = rows
       .filter((f) => f.properties.irsad_state_decile != null)
       .map((f) => ({ SAL_CODE_2021: String(f.properties.sal_code_2021), irsad_state_decile: Number(f.properties.irsad_state_decile), as_at: '2021-08-10' }));

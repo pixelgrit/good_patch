@@ -32,6 +32,8 @@ async function main() {
   const previous: Record<string, ManifestEntry> = fs.existsSync(manifestPath) ? JSON.parse(fs.readFileSync(manifestPath, 'utf8')).sources ?? {} : {};
   const results: Record<string, ManifestEntry> = { ...previous };
   const failedIds = new Set<string>();
+  /** Sources fetched in this run: anything that depends on one refetches too. */
+  const refreshedIds = new Set<string>();
   let failures = 0;
 
   for (const f of FETCHERS) {
@@ -40,7 +42,8 @@ async function main() {
     const outputsExist = prev?.files?.every((file) => fs.existsSync(out(file)));
     const age = prev?.status === 'ok' ? (Date.now() - Date.parse(prev.fetchedAt)) / 86_400_000 : Infinity;
     const sameVersion = (prev?.version ?? 1) === (f.version ?? 1);
-    if (!all && !only && outputsExist && sameVersion && age < DUE_AFTER_DAYS[f.cadence]) {
+    const inputsChanged = f.needs?.some((n) => refreshedIds.has(n)) ?? false;
+    if (!all && !only && outputsExist && sameVersion && !inputsChanged && age < DUE_AFTER_DAYS[f.cadence]) {
       console.log(`- ${f.name}: up to date (${prev!.asAt ?? 'fetched ' + prev!.fetchedAt.slice(0, 10)})`);
       continue;
     }
@@ -58,6 +61,7 @@ async function main() {
     try {
       const r = await f.run();
       results[f.id] = { id: f.id, name: f.name, status: 'ok', fetchedAt: new Date().toISOString(), ...r, ...(f.version ? { version: f.version } : {}) };
+      refreshedIds.add(f.id);
       console.log(`  ok in ${((Date.now() - t0) / 1000).toFixed(0)}s: ${r.rows ?? 0} rows, as at ${r.asAt ?? '—'}${r.message ? ` (${r.message})` : ''}`);
     } catch (err) {
       failures++;
