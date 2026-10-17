@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16T23:55:44.171Z",
+  "updatedAt": "2026-10-17T00:38:53.475Z",
   "sources": {
     "abs-boundaries": {
       "id": "abs-boundaries",
@@ -31,14 +31,15 @@
       "id": "abs-census",
       "name": "ABS Census General Community Profile by suburb",
       "status": "ok",
-      "fetchedAt": "2026-10-16T23:09:15.079Z",
+      "fetchedAt": "2026-10-17T00:38:53.474Z",
       "asAt": "2021-08-10",
       "url": "https://www.abs.gov.au/census/find-census-data/datapacks/download/2021_GCP_SAL_for_VIC_short-header.zip",
       "rows": 2946,
       "files": [
         "census-sal.csv"
       ],
-      "message": "Census 2021"
+      "message": "Census 2021",
+      "version": 2
     },
     "vgv": {
       "id": "vgv",
