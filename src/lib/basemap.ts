@@ -63,24 +63,32 @@ interface RoadClass {
   id: string;
   classes: string[];
   fill: string;
+  /** Fill opacity. Streets are translucent white, so over a coloured suburb they read as a lighter shade of that suburb. */
+  opacity: number;
+  /** Casing opacity (a faint dark edge, also translucent so it takes on the suburb's colour). */
+  casingOpacity: number;
   casing: string;
   width: [number, number][];
   minzoom: number;
 }
 
+const TINT = '#ffffff';
+const EDGE = '#2b2a26';
+
 const ROADS: RoadClass[] = [
-  { id: 'path', classes: ['path', 'track'], fill: C.path, casing: C.path, width: [[14, 0.6], [18, 2]], minzoom: 14 },
-  { id: 'service', classes: ['service'], fill: C.minor, casing: C.minorCase, width: [[14, 0.8], [18, 6]], minzoom: 14 },
-  { id: 'minor', classes: ['minor'], fill: C.minor, casing: C.minorCase, width: [[12, 0.6], [14, 2.2], [18, 14]], minzoom: 12 },
-  { id: 'tertiary', classes: ['tertiary'], fill: C.major, casing: C.majorCase, width: [[10, 0.6], [13, 2.4], [18, 18]], minzoom: 10 },
-  { id: 'secondary', classes: ['secondary'], fill: C.major, casing: C.majorCase, width: [[9, 0.7], [13, 3], [18, 22]], minzoom: 9 },
-  { id: 'primary', classes: ['primary'], fill: C.major, casing: C.majorCase, width: [[8, 0.8], [13, 3.6], [18, 26]], minzoom: 7 },
-  { id: 'trunk', classes: ['trunk'], fill: C.trunk, casing: C.trunkCase, width: [[6, 0.8], [13, 4], [18, 28]], minzoom: 5 },
-  { id: 'motorway', classes: ['motorway'], fill: C.motorway, casing: C.motorwayCase, width: [[5, 0.8], [13, 4.4], [18, 30]], minzoom: 4 },
+  { id: 'path', classes: ['path', 'track'], fill: TINT, opacity: 0.35, casing: EDGE, casingOpacity: 0, width: [[14, 0.6], [18, 2]], minzoom: 14 },
+  { id: 'service', classes: ['service'], fill: TINT, opacity: 0.35, casing: EDGE, casingOpacity: 0.05, width: [[14, 0.8], [18, 6]], minzoom: 14 },
+  { id: 'minor', classes: ['minor'], fill: TINT, opacity: 0.42, casing: EDGE, casingOpacity: 0.06, width: [[12, 0.6], [14, 2.2], [18, 14]], minzoom: 12 },
+  { id: 'tertiary', classes: ['tertiary'], fill: TINT, opacity: 0.5, casing: EDGE, casingOpacity: 0.07, width: [[10, 0.6], [13, 2.4], [18, 18]], minzoom: 10 },
+  { id: 'secondary', classes: ['secondary'], fill: TINT, opacity: 0.55, casing: EDGE, casingOpacity: 0.08, width: [[9, 0.7], [13, 3], [18, 22]], minzoom: 9 },
+  { id: 'primary', classes: ['primary'], fill: TINT, opacity: 0.6, casing: EDGE, casingOpacity: 0.09, width: [[8, 0.8], [13, 3.6], [18, 26]], minzoom: 7 },
+  // Freeways keep a softened yellow so main routes still stand out.
+  { id: 'trunk', classes: ['trunk'], fill: C.trunk, opacity: 0.7, casing: C.trunkCase, casingOpacity: 0.5, width: [[6, 0.8], [13, 4], [18, 28]], minzoom: 5 },
+  { id: 'motorway', classes: ['motorway'], fill: C.motorway, opacity: 0.75, casing: C.motorwayCase, casingOpacity: 0.55, width: [[5, 0.8], [13, 4.4], [18, 30]], minzoom: 4 },
 ];
 
 function roadLayers(): LayerSpecification[] {
-  const casings: LayerSpecification[] = ROADS.map((r) => ({
+  const casings: LayerSpecification[] = ROADS.filter((r) => r.casingOpacity > 0).map((r) => ({
     id: `road-${r.id}-casing`,
     type: 'line',
     source: 'osm',
@@ -90,7 +98,10 @@ function roadLayers(): LayerSpecification[] {
     layout: { 'line-cap': 'round', 'line-join': 'round' },
     paint: {
       'line-color': r.casing,
-      'line-width': w(...r.width.map(([z, v]) => [z, v + (z >= 14 ? 2 : 1)] as [number, number])),
+      'line-opacity': r.casingOpacity,
+      'line-width': w([11, 0.4], [14, 0.8], [18, 1.5]),
+      // Draw the edge outside the street only, so it doesn't darken the tinted fill.
+      'line-gap-width': w(...r.width),
     },
   }));
   const fills: LayerSpecification[] = ROADS.map((r) => ({
@@ -103,6 +114,7 @@ function roadLayers(): LayerSpecification[] {
     layout: { 'line-cap': 'round', 'line-join': 'round' },
     paint: {
       'line-color': r.fill,
+      'line-opacity': r.opacity,
       'line-width': w(...r.width),
       ...(r.id === 'path' ? { 'line-dasharray': [2, 1.5] } : {}),
     },
