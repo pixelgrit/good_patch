@@ -77,7 +77,8 @@ export const vgvPrices: Fetcher = {
       let q: Awaited<ReturnType<typeof fetchSheets>>;
       let quarter: ReturnType<typeof parseVgvQuarterly>;
       try {
-        q = await fetchSheets(ds.quarter, `vgv-${type}-quarter`);
+        // Land isn't always archived promptly: take the newest of the last three quarters that can be fetched.
+        q = type === 'land' ? await fetchNewestAvailable(ds.quarter, `vgv-${type}-quarter`) : await fetchSheets(ds.quarter, `vgv-${type}-quarter`);
         quarter = parseVgvQuarterly(q.sheets, ds.minRows);
       } catch (err) {
         if (type !== 'land') throw err;
