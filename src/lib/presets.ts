@@ -31,7 +31,7 @@ export const GOALS: Record<GoalId, Goal> = {
     label: 'Long-term investment',
     description: 'Hold for 10 years or more and rent it out. Weights rental yield and the lasting drivers of growth: location, scarce land and limited new supply. Long-run growth counts most; last year’s growth very little.',
     categories: { yield: 20, growth: 15, value: 10, supply: 15, demand: 5, location: 25, risk: 10, tram: 0 },
-    metricMultipliers: { growth1y: 0.25, growth3y: 0.5, growth5y: 1, growth10y: 2, rentGrowth1y: 0.5, rentGrowth3y: 1.5, nrzShare: 2, landToAsset: 2, turnover: 0 },
+    metricMultipliers: { growth1y: 0.25, growth3y: 0.5, growth5y: 1, growth10y: 2, rentGrowth1y: 0.5, rentGrowth3y: 1.5, nrzShare: 2, landToAsset: 2, townhouseShare: 2, highriseShare: 1.5, turnover: 0 },
   },
   home: {
     id: 'home',

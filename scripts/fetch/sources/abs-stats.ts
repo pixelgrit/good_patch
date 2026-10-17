@@ -42,8 +42,8 @@ export const absCensus: Fetcher = {
   id: 'abs-census',
   name: 'ABS Census General Community Profile by suburb',
   cadence: 'static',
-  // 2: adds median weekly rent.
-  version: 2,
+  // 2: adds median weekly rent. 3: adds the townhouse / low-rise / high-rise mix.
+  version: 3,
   async run() {
     // Try the newest Census first; the 2026 DataPacks are due in 2027.
     let year = 0;
@@ -96,7 +96,14 @@ export const absCensus: Fetcher = {
     };
     const flats = optional([/Flt_apart.*Tot.*Dw/i, /Flat.*apart.*Tot/i, /Flt_apart/i], 'flats and apartments');
     const occupied = optional([/^OPDs_Tot_OPDs_Dwellings$/i, /^OPDs_Tot/i, /^Total_OPDs/i], 'occupied private dwellings');
+    // Dwelling mix among occupied private dwellings: what a "unit" means in each suburb.
+    const semi = optional([/^OPDs_SD_r_t_h_th_Tot/i, /SD_r_t_h_th.*Tot/i, /Semi.*Tot/i], 'semi-detached, row or townhouse');
+    const low = optional([/^OPDs_F_ap_I_1or2_sty/i, /F_ap.*1or2_sty/i, /1_or_2_sty/i], 'flats in 1–2 storey blocks');
+    const mid = optional([/^OPDs_F_ap_I_3_sty/i, /F_ap.*_3_sty/i], 'flats in 3 storey blocks');
+    const high = optional([/^OPDs_F_ap_I_4_or_more_sty/i, /F_ap.*4_or_more_sty/i, /4_or_more_sty/i], 'flats in 4+ storey blocks');
+    if (!semi || !high) console.warn(`  G36 columns: ${c36.join(', ')}`);
 
+    const share = (d: Record<string, string> | undefined, col: string | null, occ: number | null) => (d && col && occ ? ((parseNumber(d[col]) ?? 0) / occ).toFixed(4) : '');
     const by = (rows: Record<string, string>[]) => new Map(rows.map((r) => [r[codeCol(rows)].replace(/^SAL/, ''), r]));
     const m02 = by(g02);
     const m36 = by(g36);
@@ -112,6 +119,10 @@ export const absCensus: Fetcher = {
         owner_occupier_share: stated > 0 ? (own / stated).toFixed(4) : '',
         renter_share: stated > 0 ? (rent / stated).toFixed(4) : '',
         unit_share: d && occ && flats ? ((parseNumber(d[flats]) ?? 0) / occ).toFixed(4) : '',
+        semi_share: share(d, semi, occ),
+        flat_lowrise_share: share(d, low, occ),
+        flat_midrise_share: share(d, mid, occ),
+        flat_highrise_share: share(d, high, occ),
         median_household_income_weekly: m02.get(code)?.[inc] ?? '',
         median_rent_weekly: rentCol ? (m02.get(code)?.[rentCol] ?? '') : '',
         dwellings: d?.[dwellings] ?? '',

@@ -38,9 +38,24 @@ Some things the research supports were already in the model and stay:
 
 ## The value model
 
-For each property type, log median price is regressed on log household income, SEIFA decile, log distance to the CBD, log distance to a train station, the apartment share, and flood and bushfire overlays. The value gap is the residual as a percentage. The model is refitted on every data build, and the build log prints its R² (about 0.67 for houses and 0.41 for units in October 2026). The unit fit is weaker because unit medians mix apartments with townhouses, so treat unit value gaps with more caution.
+For each property type, log median price is regressed on log household income, SEIFA decile, log distance to the CBD, log distance to a train station, the apartment share, and flood and bushfire overlays. The value gap is the residual as a percentage. The model is refitted on every data build, and the build log prints its R².
+
+Units need more care, because a suburb's unit median can be a studio in a tower or a three-bedroom townhouse. The unit model therefore adds:
+
+- **The suburb's median house price.** This captures land value and amenity the other measures miss. It lifts the fit from R² 0.41 to 0.54.
+- **The Census dwelling mix.** Townhouses and semis, and flats in 1–2, 3 and 4+ storey blocks, as shares of occupied dwellings.
+
+Suburbs missing an input fall back to the simpler model. The house model fits at about R² 0.67.
 
 A negative gap (cheaper than the model expects) can also reflect something the model can't see, such as a main road, an industrial edge or a new estate without mature amenities. Use it as a prompt to look closer, not as a verdict.
+
+## Units
+
+Besides the value model, three things make unit scores more like-for-like:
+
+- **Rent benchmark.** Homes Victoria's unit benchmark is the 2-bedroom flat. In townhouse suburbs, unit rents are blended with the 2-bedroom house rent in proportion to the townhouse share of units, so yields aren't understated where the median unit is a townhouse.
+- **Townhouse share of units** (Supply). Units with their own land carry more land content and face less competing new supply. It is weighted ×2 for long-term holds.
+- **High-rise share of units** (Risk). Tower-heavy unit markets carry more oversupply and building-defect risk, and apartments have grown more slowly than houses (about 1.2 points a year slower in the RBA's 1993–2010 comparison).
 
 ## Limits
 

@@ -117,10 +117,15 @@ const RENT_SHEETS: Record<'houses' | 'units', RegExp[]> = {
   units: [/2\s*b(ed)?r?(oo)?m?\w*\s*flat/i, /flat|unit/i],
 };
 
+/** Optional: 2-bedroom house rents, blended into unit rents where townhouses are common. */
+const TOWNHOUSE_SHEET = /2\s*b(ed)?r?(oo)?m?\w*\s*house/i;
+
 export const homesVicRents: Fetcher = {
   id: 'homesvic',
   name: 'Homes Victoria Rental Report, moving annual rents by suburb',
   cadence: 'quarterly',
+  // 2: adds 2-bedroom house rents.
+  version: 2,
   async run() {
     const res = await latestResource(RENT_DATASET, ['xlsx', 'xls']);
     const sheets = readWorkbook(await download(res.url, cache('homesvic-rents.xlsx')));
@@ -145,6 +150,22 @@ export const homesVicRents: Fetcher = {
           rows.push({ suburb_group: g.group, suburb: member, key, type, median_rent: last.v, median_rent_1y_ago: back(4), median_rent_3y_ago: back(12), as_at: last.t });
           (series[key] ??= {})[type] = pts.slice(-21);
         }
+      }
+    }
+    const th = sheets.find((s) => TOWNHOUSE_SHEET.test(s.name));
+    if (th) {
+      try {
+        const { series: groups, detail } = parseRentSheet(th);
+        notes.push(`2-bed houses: ${detail}`);
+        for (const g of groups) {
+          const last = g.points[g.points.length - 1];
+          for (const member of g.group.split(/\s*[-–\/]\s*|\s+&\s+/)) {
+            const key = suburbKey(member);
+            if (key) rows.push({ suburb_group: g.group, suburb: member, key, type: 'house2', median_rent: last.v, median_rent_1y_ago: '', median_rent_3y_ago: '', as_at: last.t });
+          }
+        }
+      } catch (err) {
+        notes.push(`2-bed houses unavailable: ${(err as Error).message}`);
       }
     }
     writeCsv('homesvic-rents.csv', rows);

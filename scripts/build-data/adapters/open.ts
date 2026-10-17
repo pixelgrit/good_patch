@@ -147,11 +147,24 @@ export const homesVicRents: Adapter = {
     const idx = byKey(ctx);
     const series = rawExists('homesvic-series.json') ? readJson<Record<string, Partial<Record<PropertyType, SeriesPoint[]>>>>('homesvic-series.json') : {};
     let n = 0;
-    for (const r of readCsv('homesvic-rents.csv')) {
+    const rows = readCsv('homesvic-rents.csv');
+    const house2 = new Map(rows.filter((r) => r.type === 'house2').map((r) => [r.key, num(r.median_rent)]));
+    let blended = 0;
+    for (const r of rows) {
       const s = idx.get(r.key || key(r.suburb));
       const type = r.type as PropertyType;
       if (!s || (type !== 'houses' && type !== 'units')) continue;
-      const rent = num(r.median_rent);
+      let rent = num(r.median_rent);
+      // Unit medians include townhouses; blend the 2-bed flat rent with the 2-bed house
+      // rent in proportion to the suburb's townhouse share of units.
+      const h2 = type === 'units' ? house2.get(r.key) : null;
+      const m = s.dwellingMix;
+      if (rent != null && h2 && m) {
+        const units = m.semi + m.lowrise + m.midrise + m.highrise;
+        const t = units > 0 ? m.semi / units : 0;
+        rent = Math.round(rent * (1 - t) + h2 * t);
+        blended++;
+      }
       setMetric(s, 'medianRent', rent, 'homesvic', r.as_at, type);
       setMetric(s, 'rentGrowth1y', pctChange(rent, num(r.median_rent_1y_ago)), 'homesvic', r.as_at, type);
       setMetric(s, 'rentGrowth3y', pctChange(rent, num(r.median_rent_3y_ago)), 'homesvic', r.as_at, type);
@@ -159,7 +172,7 @@ export const homesVicRents: Adapter = {
       if (pts?.length) setSeries(s, type, 'rent', pts);
       n++;
     }
-    ctx.log(`  ${n} suburb rows joined`);
+    ctx.log(`  ${n} suburb rows joined${blended ? `, ${blended} unit rents blended with 2-bed house rents by townhouse share` : ''}`);
   },
 };
 
@@ -185,6 +198,9 @@ export const absCensus: Adapter = {
       if (renter != null) s.renterShare = renter;
       const units = num(r.unit_share);
       if (units != null) s.unitShare = units;
+      const semi = num(r.semi_share);
+      const high = num(r.flat_highrise_share);
+      if (semi != null && high != null) s.dwellingMix = { semi, lowrise: num(r.flat_lowrise_share) ?? 0, midrise: num(r.flat_midrise_share) ?? 0, highrise: high };
       const rentWeekly = num(r.median_rent_weekly);
       if (rentWeekly) setMetric(s, 'censusRent', rentWeekly, 'abs-census', asAt);
       const weekly = num(r.median_household_income_weekly);

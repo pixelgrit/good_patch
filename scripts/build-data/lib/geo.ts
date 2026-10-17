@@ -99,6 +99,16 @@ export function applyDerived(ctx: BuildContext): void {
       setMetric(s, 'turnover', round(((sales.reduce((x, y) => x + y, 0) * 4) / dw) * 100, 2), 'vgv', s.houses.metrics.salesQuarter?.asAt ?? s.units.metrics.salesQuarter?.asAt ?? '');
     }
   }
+  // What kind of units a suburb has: land-rich townhouses or high-rise towers.
+  for (const s of ctx.suburbs) {
+    const m = s.dwellingMix;
+    if (!m || !s.units.metrics.medianPrice?.value) continue;
+    const units = m.semi + m.lowrise + m.midrise + m.highrise;
+    if (units < 0.03) continue;
+    const at = s.common.dwellings?.asAt ?? '';
+    setMetric(s, 'townhouseShare', round((m.semi / units) * 100, 1), 'abs-census', at, 'units');
+    setMetric(s, 'highriseShare', round((m.highrise / units) * 100, 1), 'abs-census', at, 'units');
+  }
   for (const type of ['houses', 'units'] as const) {
     valueGap(ctx, type);
     neighbourGap(ctx, type);
@@ -141,39 +151,74 @@ function estimateMissingRents(ctx: BuildContext): void {
 
 /**
  * Price against fundamentals: the residual of a log-linear regression of median
- * price on household income, SEIFA, distance to the CBD and to a train station
- * the share of apartments and flood and bushfire overlays,
- * fitted across all suburbs. +10 means 10% dearer than the model expects.
+ * price on household income, SEIFA, distance to the CBD and to a train station,
+ * the share of apartments and flood and bushfire overlays, fitted across all
+ * suburbs. +10 means 10% dearer than the model expects.
+ *
+ * Unit medians mix studio flats with three-bedroom townhouses, so the unit model
+ * also uses the suburb's house price (land value and amenity the other measures
+ * miss) and the Census dwelling mix (townhouses, low-rise and high-rise flats).
+ * Suburbs missing those inputs fall back to the simpler model.
  */
 function valueGap(ctx: BuildContext, type: 'houses' | 'units'): void {
-  const rows: { s: (typeof ctx.suburbs)[number]; x: number[]; y: number }[] = [];
-  for (const s of ctx.suburbs) {
-    const p = s[type].metrics.medianPrice?.value;
+  type S = (typeof ctx.suburbs)[number];
+  const base = (s: S): number[] | null => {
     const inc = s.common.medianIncome?.value;
     const seifa = s.common.seifa?.value;
     const cbd = s.common.distanceCbd?.value;
     const train = s.common.distanceTrain?.value;
-    const flats = s.unitShare;
-    if (!p || !inc || seifa == null || cbd == null || train == null || flats == null) continue;
-    // Apartment share separates apartment-dominated unit markets from townhouse and villa markets;
-    // hazard overlays are a fundamental too (insurance, building costs, risk).
-    const flood = s.overlays?.flood ? 1 : 0;
-    const fire = s.overlays?.bushfire ? 1 : 0;
-    rows.push({ s, x: [1, Math.log(inc), seifa, Math.log(cbd + 1), Math.log(train + 0.5), flats, flood, fire], y: Math.log(p) });
+    if (!inc || seifa == null || cbd == null || train == null || s.unitShare == null) return null;
+    // Hazard overlays are a fundamental too (insurance, building costs, risk).
+    return [1, Math.log(inc), seifa, Math.log(cbd + 1), Math.log(train + 0.5), s.unitShare, s.overlays?.flood ? 1 : 0, s.overlays?.bushfire ? 1 : 0];
+  };
+  const unitModel = (s: S): number[] | null => {
+    const b = base(s);
+    const house = s.houses.metrics.medianPrice?.value;
+    const mix = s.dwellingMix;
+    if (!b || !house || !mix) return null;
+    // Replace the single apartment share with the finer mix.
+    return [...b.slice(0, 5), ...b.slice(6), Math.log(house), mix.semi, mix.lowrise, mix.midrise, mix.highrise];
+  };
+  const withHouse = (s: S): number[] | null => {
+    const b = base(s);
+    const house = s.houses.metrics.medianPrice?.value;
+    return b && house ? [...b, Math.log(house)] : null;
+  };
+  const models: { name: string; features: (s: S) => number[] | null }[] =
+    type === 'units'
+      ? [
+          { name: 'house price and dwelling mix', features: unitModel },
+          { name: 'house price', features: withHouse },
+          { name: 'base', features: base },
+        ]
+      : [{ name: 'base', features: base }];
+
+  const done = new Set<S>();
+  for (const m of models) {
+    const rows: { s: S; x: number[]; y: number }[] = [];
+    for (const s of ctx.suburbs) {
+      const p = s[type].metrics.medianPrice?.value;
+      const x = p ? m.features(s) : null;
+      if (p && x) rows.push({ s, x, y: Math.log(p) });
+    }
+    if (rows.length < 40) continue;
+    const beta = ols(rows.map((r) => r.x), rows.map((r) => r.y));
+    if (!beta) continue;
+    let ss = 0;
+    let st = 0;
+    let n = 0;
+    const my = rows.reduce((a, r) => a + r.y, 0) / rows.length;
+    for (const r of rows) {
+      const fit = r.x.reduce((a, v, i) => a + v * beta[i], 0);
+      ss += (r.y - fit) ** 2;
+      st += (r.y - my) ** 2;
+      if (done.has(r.s)) continue;
+      setMetric(r.s, 'valueGap', round((Math.exp(r.y - fit) - 1) * 100, 1), 'derived', r.s[type].metrics.medianPrice!.asAt, type);
+      done.add(r.s);
+      n++;
+    }
+    ctx.log(`  ${type}: value model (${m.name}) fitted on ${rows.length} suburbs, R² ${(1 - ss / st).toFixed(2)}, used for ${n}`);
   }
-  if (rows.length < 40) return;
-  const beta = ols(rows.map((r) => r.x), rows.map((r) => r.y));
-  if (!beta) return;
-  let ss = 0;
-  let st = 0;
-  const my = rows.reduce((a, r) => a + r.y, 0) / rows.length;
-  for (const r of rows) {
-    const fit = r.x.reduce((a, v, i) => a + v * beta[i], 0);
-    ss += (r.y - fit) ** 2;
-    st += (r.y - my) ** 2;
-    setMetric(r.s, 'valueGap', round((Math.exp(r.y - fit) - 1) * 100, 1), 'derived', r.s[type].metrics.medianPrice!.asAt, type);
-  }
-  ctx.log(`  ${type}: value model fitted on ${rows.length} suburbs, R² ${(1 - ss / st).toFixed(2)}`);
 }
 
 /** Discount to the median price of suburbs within 4 km (widening to 6 km if fewer than 3). */

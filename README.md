@@ -82,7 +82,7 @@ The method, the research behind it and its limits are written up in [docs/scorin
 | Tram access | 0 | 0 | 0 |
 
 - **3–5 year buy and sell** metric multipliers: `growth1y` ×3, `growth3y` ×1.5, `growth5y` ×0.5, `growth10y` ×0, `rentGrowth1y` ×1, `rentGrowth3y` ×0.5, `turnover` ×2, `dom` ×1.5, `ownerOccupier` ×0.5, `hazard` ×0.5.
-- **Long-term investment** metric multipliers: `growth1y` ×0.25, `growth3y` ×0.5, `growth5y` ×1, `growth10y` ×2, `rentGrowth1y` ×0.5, `rentGrowth3y` ×1.5, `nrzShare` ×2, `landToAsset` ×2, `turnover` ×0.
+- **Long-term investment** metric multipliers: `growth1y` ×0.25, `growth3y` ×0.5, `growth5y` ×1, `growth10y` ×2, `rentGrowth1y` ×0.5, `rentGrowth3y` ×1.5, `nrzShare` ×2, `landToAsset` ×2, `townhouseShare` ×2, `highriseShare` ×1.5, `turnover` ×0.
 - **Owner-occupier** metric multipliers: `growth1y` ×0, `growth3y` ×0.5, `growth5y` ×1, `growth10y` ×2, `rentGrowth1y` ×0, `rentGrowth3y` ×0, `priceToIncome` ×1.5, `neighbourGap` ×0.5, `ownerOccupier` ×2, `distanceTrain` ×1.5, `hazard` ×2, `approvalsRatio` ×0.5.
 
 Focus tilts (multiplied onto the goal's category weights):
@@ -125,12 +125,13 @@ Weights are the default share within each category, before a goal's multipliers.
 
 | Metric | Key | Source | Direction | Weight in category | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Building approvals ratio | `approvalsRatio` | ABS Building Approvals (8731.0) | Lower is better | 22% | Dwelling approvals in the last 12 months / total dwelling stock. Lower is better. Above ~2.5% hints at future oversupply. |
-| Neighbourhood residential zone | `nrzShare` | Vicmap Planning (zones and overlays) | Higher is better | 11% | Share of residential land zoned NRZ, which limits new density. Where supply is hard to add, prices rise more when demand grows. |
-| Land-to-asset ratio | `landToAsset` | Valuer-General Victoria median prices | Higher is better | 11% | Site value / capital improved value. Land appreciates; buildings depreciate. Houses only. |
-| Stock on market | `stockOnMarket` | SQM Research | Lower is better | 22% | Active listings / total dwellings. Around 1–1.3% is balanced; lower is tighter. |
-| Inventory | `inventoryMonths` | Cotality | Lower is better | 17% | Months to sell current listings at the current sales rate. Under 6 months suggests upward price pressure. |
-| Stock on market trend | `supplyTrend` | SQM Research | Lower is better | 17% | Change in listings over 6 months. Falling stock is a positive signal. |
+| Building approvals ratio | `approvalsRatio` | ABS Building Approvals (8731.0) | Lower is better | 20% | Dwelling approvals in the last 12 months / total dwelling stock. Lower is better. Above ~2.5% hints at future oversupply. |
+| Neighbourhood residential zone | `nrzShare` | Vicmap Planning (zones and overlays) | Higher is better | 10% | Share of residential land zoned NRZ, which limits new density. Where supply is hard to add, prices rise more when demand grows. |
+| Land-to-asset ratio | `landToAsset` | Valuer-General Victoria median prices | Higher is better | 10% | Site value / capital improved value. Land appreciates; buildings depreciate. Houses only. |
+| Townhouse share of units | `townhouseShare` | ABS Census 2021 | Higher is better | 10% | Townhouses, semis and villas as a share of all units, flats and apartments in the suburb (Census). Units with their own land behave more like houses: more land content, less new competing supply. Houses only. |
+| Stock on market | `stockOnMarket` | SQM Research | Lower is better | 20% | Active listings / total dwellings. Around 1–1.3% is balanced; lower is tighter. |
+| Inventory | `inventoryMonths` | Cotality | Lower is better | 15% | Months to sell current listings at the current sales rate. Under 6 months suggests upward price pressure. |
+| Stock on market trend | `supplyTrend` | SQM Research | Lower is better | 15% | Change in listings over 6 months. Falling stock is a positive signal. |
 
 **Demand**
 
@@ -158,8 +159,9 @@ Weights are the default share within each category, before a goal's multipliers.
 
 | Metric | Key | Source | Direction | Weight in category | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Price volatility | `volatility` | Valuer-General Victoria median prices | Lower is better | 60% | Standard deviation of yearly changes in the median price over up to 10 years. Steadier prices mean less chance of having to sell in a dip. |
-| Flood and bushfire overlays | `hazard` | Vicmap Planning (zones and overlays) | Lower is better | 40% | Number of hazard overlays (flood, bushfire) covering parts of the suburb: 0, 1 or 2. |
+| Price volatility | `volatility` | Valuer-General Victoria median prices | Lower is better | 43% | Standard deviation of yearly changes in the median price over up to 10 years. Steadier prices mean less chance of having to sell in a dip. |
+| High-rise share of units | `highriseShare` | ABS Census 2021 | Lower is better | 29% | Flats in blocks of four storeys or more as a share of all units in the suburb (Census). Tower-heavy unit markets carry more oversupply and building-defect risk, and have grown more slowly. Houses only. |
+| Flood and bushfire overlays | `hazard` | Vicmap Planning (zones and overlays) | Lower is better | 29% | Number of hazard overlays (flood, bushfire) covering parts of the suburb: 0, 1 or 2. |
 
 **Tram access**
 

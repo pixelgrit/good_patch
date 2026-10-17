@@ -89,6 +89,8 @@ export interface Suburb {
   overlays: RiskOverlays | null;
   /** Share of dwellings that are flats or apartments (Census), 0–1; null when unknown. */
   unitShare: number | null;
+  /** Occupied dwellings by type (Census), shares 0–1: townhouses and semis, and flats by block height. */
+  dwellingMix?: { semi: number; lowrise: number; midrise: number; highrise: number } | null;
   /** Share of households renting (Census), 0–1; null when unknown. */
   renterShare: number | null;
 }
