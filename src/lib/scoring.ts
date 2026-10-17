@@ -50,8 +50,9 @@ export function percentileRanks(values: number[]): number[] {
  * Writes `pct` (goodness percentile, higher is better) onto every metric value,
  * computed across all suburbs with data, separately for houses and units.
  * Neutral metrics get an ascending percentile (used only for map colouring).
+ * `rankValue` lets the build rank on an adjusted value (see rankValues in the build).
  */
-export function applyPercentiles(suburbs: Suburb[]): void {
+export function applyPercentiles(suburbs: Suburb[], rankValue?: (s: Suburb, type: PropertyType, key: string, v: number) => number): void {
   const types: PropertyType[] = ['houses', 'units'];
   for (const def of METRICS) {
     for (const type of types) {
@@ -64,7 +65,7 @@ export function applyPercentiles(suburbs: Suburb[]): void {
         const m = def.scope === 'common' ? s.common[def.key] : s[type].metrics[def.key];
         if (m && m.value != null && Number.isFinite(m.value)) {
           holders.push(m);
-          vals.push(m.value);
+          vals.push(rankValue && def.scope === 'type' ? rankValue(s, type, def.key, m.value) : m.value);
         } else if (m) {
           m.pct = null;
         }

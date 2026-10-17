@@ -17,7 +17,7 @@ import { mockBoundaries, mockMetrics, mockTransport } from './adapters/mock';
 import { curatedCensus, curatedMarket, curatedSeifa } from './adapters/curated';
 import { absApprovals, absCensus, absPopulation, absSal, absSeifa, dtpTransport, homesVicRents, suburbsFromBoundaries, vgvMedians, vicmapPlanning } from './adapters/open';
 import type { Adapter } from './adapters/types';
-import { applyDerived, applyGeo, tramCatchments, vicMask } from './lib/geo';
+import { applyDerived, applyGeo, rankValues, tramCatchments, vicMask } from './lib/geo';
 import { VIC_OUTLINE } from './mock/transport.seed';
 
 const args = new Set(process.argv.slice(2));
@@ -92,7 +92,7 @@ async function main() {
 
   console.log('- derived metrics and percentiles');
   applyDerived(ctx);
-  applyPercentiles(ctx.suburbs);
+  applyPercentiles(ctx.suburbs, rankValues(ctx));
 
   // Write outputs
   fs.mkdirSync(OUT_DIR, { recursive: true });

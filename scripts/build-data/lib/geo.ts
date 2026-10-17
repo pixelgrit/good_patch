@@ -112,32 +112,37 @@ export function applyDerived(ctx: BuildContext): void {
  */
 function estimateMissingRents(ctx: BuildContext): void {
   for (const type of ['houses', 'units'] as const) {
-    const ratios = ctx.suburbs
+    // Census rent mixes houses and flats, so its ratio to today's house (or unit) rent
+    // depends on the apartment share: fit ratio = a + b × apartment share.
+    const fit = ctx.suburbs
       .map((s) => {
         const r = s[type].metrics.medianRent;
         const c = s.common.censusRent?.value;
-        return r?.value && !r.approx && c ? r.value / c : null;
+        return r?.value && !r.approx && c && s.unitShare != null ? { x: [1, s.unitShare], y: r.value / c } : null;
       })
-      .filter((v): v is number => v != null);
-    if (ratios.length < 30) continue;
-    const ratio = median(ratios)!;
+      .filter((v): v is { x: number[]; y: number } => v != null);
+    if (fit.length < 30) continue;
+    const beta = ols(fit.map((f) => f.x), fit.map((f) => f.y));
+    if (!beta) continue;
     const asAt = ctx.suburbs.map((s) => s[type].metrics.medianRent?.asAt).filter(Boolean).sort().pop() ?? '';
     let n = 0;
     for (const s of ctx.suburbs) {
       if (s[type].metrics.medianRent?.value || !s[type].metrics.medianPrice?.value) continue;
       const c = s.common.censusRent?.value;
-      if (!c) continue;
-      setMetric(s, 'medianRent', round(c * ratio / 5, 0) * 5, 'abs-census', asAt, type, false, true);
+      if (!c || s.unitShare == null) continue;
+      const ratio = beta[0] + beta[1] * s.unitShare;
+      setMetric(s, 'medianRent', Math.round((c * ratio) / 5) * 5, 'abs-census', asAt, type, false, true);
       n++;
     }
-    ctx.log(`  ${type}: estimated rent for ${n} suburbs from the Census (×${ratio.toFixed(2)})`);
+    const err = fit.map((f) => Math.abs((beta[0] + beta[1] * f.x[1]) / f.y - 1)).sort((x, y) => x - y);
+    ctx.log(`  ${type}: estimated rent for ${n} suburbs from the Census (ratio ${beta[0].toFixed(2)} + ${beta[1].toFixed(2)} × apartment share; typical error ${(err[err.length >> 1] * 100).toFixed(0)}%)`);
   }
 }
 
 /**
  * Price against fundamentals: the residual of a log-linear regression of median
  * price on household income, SEIFA, distance to the CBD and to a train station
- * and the share of apartments,
+ * the share of apartments and flood and bushfire overlays,
  * fitted across all suburbs. +10 means 10% dearer than the model expects.
  */
 function valueGap(ctx: BuildContext, type: 'houses' | 'units'): void {
@@ -150,8 +155,11 @@ function valueGap(ctx: BuildContext, type: 'houses' | 'units'): void {
     const train = s.common.distanceTrain?.value;
     const flats = s.unitShare;
     if (!p || !inc || seifa == null || cbd == null || train == null || flats == null) continue;
-    // Apartment share separates apartment-dominated unit markets from townhouse and villa markets.
-    rows.push({ s, x: [1, Math.log(inc), seifa, Math.log(cbd + 1), Math.log(train + 0.5), flats], y: Math.log(p) });
+    // Apartment share separates apartment-dominated unit markets from townhouse and villa markets;
+    // hazard overlays are a fundamental too (insurance, building costs, risk).
+    const flood = s.overlays?.flood ? 1 : 0;
+    const fire = s.overlays?.bushfire ? 1 : 0;
+    rows.push({ s, x: [1, Math.log(inc), seifa, Math.log(cbd + 1), Math.log(train + 0.5), flats, flood, fire], y: Math.log(p) });
   }
   if (rows.length < 40) return;
   const beta = ols(rows.map((r) => r.x), rows.map((r) => r.y));
@@ -180,6 +188,33 @@ function neighbourGap(ctx: BuildContext, type: 'houses' | 'units'): void {
     const m = median(near.map((x) => x.o[type].metrics.medianPrice!.value!))!;
     setMetric(s, 'neighbourGap', round((m / own - 1) * 100, 1), 'derived', s[type].metrics.medianPrice!.asAt, type);
   }
+}
+
+/** Metrics computed from sale prices, whose noise grows as sales volume falls. */
+const PRICE_BASED = ['growth1y', 'growth3y', 'growth5y', 'growth10y', 'valueGap', 'neighbourGap'];
+/** Quarterly sales at which a suburb's own figure and the metro median get equal weight. */
+const SHRINK_SALES = 8;
+
+/**
+ * Values to rank price-based metrics on: each suburb's figure pulled toward the
+ * metro median by n / (n + k), where n is its quarterly sales (empirical-Bayes
+ * shrinkage). Suburbs with few sales can't top or bottom the rankings on noise
+ * alone; the displayed figures are unchanged.
+ */
+export function rankValues(ctx: BuildContext): (s: BuildContext['suburbs'][number], type: 'houses' | 'units', key: string, v: number) => number {
+  const centre = new Map<string, number>();
+  for (const type of ['houses', 'units'] as const)
+    for (const k of PRICE_BASED) {
+      const m = median(ctx.suburbs.map((s) => s[type].metrics[k]?.value).filter((v): v is number => v != null));
+      if (m != null) centre.set(`${type}:${k}`, m);
+    }
+  return (s, type, key, v) => {
+    const c = centre.get(`${type}:${key}`);
+    if (c == null) return v;
+    const n = s[type].metrics.salesQuarter?.value;
+    if (n == null) return v;
+    return c + (v - c) * (n / (n + SHRINK_SALES));
+  };
 }
 
 function median(v: number[]): number | null {

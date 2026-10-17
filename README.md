@@ -59,6 +59,7 @@ The basemap is a built-in Apple Maps–style light style (`src/lib/basemap.ts`) 
 The method, the research behind it and its limits are written up in [docs/scoring.md](docs/scoring.md).
 
 1. **Percentiles.** For each metric, the build script converts every suburb's raw value to a 0–100 percentile across all suburbs with data, separately for houses and units. The percentile is stored as a *goodness* percentile: for "lower is better" metrics (approvals ratio, volatility, value gap) it is inverted, so 100 always means best. Ties share a mid-rank. See `applyPercentiles()` in `src/lib/scoring.ts`.
+1a. **Small samples.** Price-based metrics are ranked on figures pulled toward the median by sales volume (`rankValues()` in `scripts/build-data/lib/geo.ts`), so suburbs with few sales can't top the rankings on noise alone.
 2. **Category scores.** Each category score is the weighted mean of its metrics' percentiles, using the in-category weights below adjusted by the goal's and focus's multipliers. Missing metrics are left out of the mean.
 3. **Composite.** The composite is the weighted mean of category scores using the goal and focus (or slider) weights. A metric held by fewer than 40% of priced suburbs (`MIN_COVERAGE`) is dropped rather than counted as missing.
 4. **Not enough data.** A suburb with no median price for the property type, or missing more than 35% of the planned weight (`MAX_MISSING_SHARE` in `src/lib/presets.ts`), is shown grey and labelled "not enough data".

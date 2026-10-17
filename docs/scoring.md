@@ -8,7 +8,8 @@ Propa ranks suburbs, not individual properties. A suburb score summarises what t
 2. **Categories.** Metrics are grouped into yield, growth, value, supply, demand, location, risk and tram access. A category score is the weighted mean of its metrics' percentiles.
 3. **Goal.** The buyer goal ("Buying for") sets how much each category counts and which metrics within a category matter. For example, 1-year growth counts three times as much for a 3–5 year buy-and-sell, and ten-year growth not at all.
 4. **Focus.** Balanced, Cashflow or Growth tilts the goal's weights. Moving a slider switches to custom weights.
-5. **Gaps.** A suburb with no median price for the property type, or missing more than 35% of the weighted inputs, is shown as "not enough data". A metric is only scored when at least 40% of priced suburbs have it.
+5. **Small samples.** Growth, value gap and discount to neighbours come from sale medians, which are noisy where few homes sell. For ranking, each suburb's figure is pulled toward the Melbourne median by n / (n + 8), where n is its sales in the latest quarter (empirical-Bayes shrinkage). A suburb with 8 sales is ranked halfway between its own figure and the median; one with 40 sales almost entirely on its own. The figures shown are not changed.
+6. **Gaps.** A suburb with no median price for the property type, or missing more than 35% of the weighted inputs, is shown as "not enough data". A metric is only scored when at least 40% of priced suburbs have it.
 
 ## What changed in October 2026, and why
 
@@ -18,7 +19,7 @@ The first version weighted "buyers' advocate" indicators equally across five cat
 | --- | --- | --- |
 | All growth horizons counted the same, whatever the buyer's horizon. | Over one to two years, house price changes keep going in the same direction (momentum). Over longer periods they partly drift back toward fundamentals (Capozza, Hendershott, Mack & Mayer 2002; variance-ratio studies of regional markets). | Each goal weights the horizons differently: short-run momentum for 3–5 year holds, the ten-year record for long holds. |
 | Nothing measured whether a suburb is cheap for what it offers. | Prices revert toward fundamentals. Cheaper areas next to dearer ones gain most in booms (Guerrieri, Hartley & Hurst, *Endogenous Gentrification*), and price effects ripple across nearby areas (AHURI 2024). | New **Value** category: price against a fitted model of fundamentals, and discount to suburbs within 4 km. |
-| Yield only counted under the Cashflow preset, and wasn't scored at all because coverage fell under 50%. | The rent-to-price ratio predicts total housing returns in most OECD markets (Engsted & Pedersen 2015). | Yield counts in both investor goals. Coverage is now measured against priced suburbs at 40%, and rents missing from Homes Victoria are estimated from the Census (marked approximate). |
+| Yield only counted under the Cashflow preset, and wasn't scored at all because coverage fell under 50%. | The rent-to-price ratio predicts total housing returns in most OECD markets (Engsted & Pedersen 2015). | Yield counts in both investor goals. Coverage is now measured against priced suburbs at 40%, and rents missing from Homes Victoria are estimated from the Census median rent (marked approximate). The scaling to today's rents depends on the suburb's apartment share, because Census rent mixes houses and flats. The estimate is typically within 5% where it can be checked. |
 | No measure of risk or liquidity. | A 3–5 year hold must cover about 5.5–6% stamp duty plus selling costs, so the ability to sell matters. Price swings raise the chance of having to sell in a dip. | New **Risk** category: price volatility and flood or bushfire overlays. New **turnover** liquidity metric under Demand. |
 
 Some things the research supports were already in the model and stay:
@@ -37,11 +38,13 @@ Some things the research supports were already in the model and stay:
 
 ## The value model
 
-For each property type, log median price is regressed on log household income, SEIFA decile, log distance to the CBD, log distance to a train station and the apartment share. The value gap is the residual as a percentage. The model is refitted on every data build, and the build log prints its R² (about 0.67 for houses and 0.38 for units in October 2026). The unit fit is weaker because unit medians mix apartments with townhouses, so treat unit value gaps with more caution.
+For each property type, log median price is regressed on log household income, SEIFA decile, log distance to the CBD, log distance to a train station, the apartment share, and flood and bushfire overlays. The value gap is the residual as a percentage. The model is refitted on every data build, and the build log prints its R² (about 0.67 for houses and 0.41 for units in October 2026). The unit fit is weaker because unit medians mix apartments with townhouses, so treat unit value gaps with more caution.
 
 A negative gap (cheaper than the model expects) can also reflect something the model can't see, such as a main road, an industrial edge or a new estate without mature amenities. Use it as a prompt to look closer, not as a verdict.
 
 ## Limits
+
+- Some outer hills suburbs (Kalorama, Mount Dandenong, Belgrave) score well for long holds on strong ten-year growth, high SEIFA, settled owner-occupier communities and almost no new building. They also sit under bushfire overlays, which affect insurance and building costs. Turn on "Apply risk penalties" or raise the risk weight if that matters to you.
 
 - Medians move with the mix of homes sold, especially in suburbs with few sales. Volatility partly reflects this sampling noise.
 - Census measures (income, owner-occupiers, SEIFA) are from 2021 until the 2026 Census DataPacks are released in 2027.
