@@ -1,31 +1,33 @@
 {
-  "updatedAt": "2026-10-17T04:01:10.365Z",
+  "updatedAt": "2026-10-17T05:23:19.082Z",
   "sources": {
     "abs-boundaries": {
       "id": "abs-boundaries",
       "name": "ABS SAL and SA2 boundaries (ASGS 2021)",
       "status": "ok",
-      "fetchedAt": "2026-10-16T23:09:10.052Z",
+      "fetchedAt": "2026-10-17T05:04:43.025Z",
       "asAt": "2021-07-01",
       "url": "https://geo.abs.gov.au/arcgis/rest/services/ASGS2021/SAL/MapServer/0",
-      "rows": 450,
+      "rows": 1621,
       "files": [
         "sal-metro.geojson",
         "sa2-metro.geojson"
       ],
-      "message": "450 suburbs, 348 SA2s"
+      "message": "1621 suburbs, 477 SA2s",
+      "version": 2
     },
     "abs-seifa": {
       "id": "abs-seifa",
       "name": "ABS SEIFA 2021 by suburb",
       "status": "ok",
-      "fetchedAt": "2026-10-16T23:09:10.588Z",
+      "fetchedAt": "2026-10-17T05:07:12.517Z",
       "asAt": "2021-08-10",
       "url": "https://geo.abs.gov.au/arcgis/rest/services/Hosted/ABS_Socio_Economic_Indexes_for_Areas_SEIFA_by_2021_SAL/FeatureServer/0",
-      "rows": 440,
+      "rows": 1845,
       "files": [
         "seifa-sal.csv"
-      ]
+      ],
+      "version": 2
     },
     "abs-census": {
       "id": "abs-census",
@@ -75,10 +77,10 @@
       "id": "abs-approvals",
       "name": "ABS Building Approvals by SA2 (monthly)",
       "status": "ok",
-      "fetchedAt": "2026-10-16T23:28:30.555Z",
+      "fetchedAt": "2026-10-17T05:07:57.951Z",
       "asAt": "2026-08-31",
       "url": "https://data.api.abs.gov.au/rest/data/ABS,BA_SA2",
-      "rows": 450,
+      "rows": 1621,
       "files": [
         "approvals-sal.csv"
       ],
@@ -88,10 +90,10 @@
       "id": "abs-population",
       "name": "ABS Estimated Resident Population by SA2 (annual)",
       "status": "ok",
-      "fetchedAt": "2026-10-16T23:28:41.638Z",
+      "fetchedAt": "2026-10-17T05:08:42.511Z",
       "asAt": "2025-06-30",
       "url": "https://data.api.abs.gov.au/rest/data/ABS,ABS_ANNUAL_ERP_ASGS2021",
-      "rows": 447,
+      "rows": 1620,
       "files": [
         "population-sal.csv"
       ],
@@ -101,42 +103,56 @@
       "id": "vicmap-planning",
       "name": "Vicmap Planning zones and overlays",
       "status": "ok",
-      "fetchedAt": "2026-10-16T23:26:07.919Z",
-      "asAt": "2026-10-16",
+      "fetchedAt": "2026-10-17T05:14:02.050Z",
+      "asAt": "2026-10-17",
       "url": "https://opendata.maps.vic.gov.au/geoserver/wfs",
-      "rows": 450,
+      "rows": 1621,
       "files": [
         "planning-sal.csv"
       ],
-      "message": "3699 zone and 14932 overlay polygons"
+      "message": "5240 zone and 39665 overlay polygons"
     },
     "ptv-gtfs": {
       "id": "ptv-gtfs",
-      "name": "PTV GTFS Schedule (metro tram and train)",
+      "name": "PTV GTFS Schedule (tram, metro and V/Line train)",
       "status": "ok",
-      "fetchedAt": "2026-10-16T23:16:10.652Z",
-      "asAt": "2026-10-16",
+      "fetchedAt": "2026-10-17T05:14:37.852Z",
+      "asAt": "2026-10-17",
       "url": "https://opendata.transport.vic.gov.au/dataset/3f4e292e-7f8a-4ffe-831f-1953be0fe448/resource/fb152201-859f-4882-9206-b768060b50ad/download/gtfs.zip",
-      "rows": 1927,
+      "rows": 2047,
       "files": [
         "transport-lines.geojson",
         "transport-stops.geojson"
       ],
-      "message": "83 route shapes, 1844 stops"
+      "message": "93 route shapes, 1954 stops",
+      "version": 2
     },
     "vicmap-admin": {
       "id": "vicmap-admin",
       "name": "Vicmap Admin council and postcode areas",
       "status": "ok",
-      "fetchedAt": "2026-10-17T02:07:15.270Z",
+      "fetchedAt": "2026-10-17T05:07:10.937Z",
       "asAt": "2026-10-17",
       "url": "https://opendata.maps.vic.gov.au/geoserver/wfs",
-      "rows": 450,
+      "rows": 1621,
       "files": [
         "admin-sal.csv"
       ],
-      "message": "39 council and 277 postcode polygons (fields lga_name, postcode)",
+      "message": "70 council and 514 postcode polygons (fields lga_name, postcode)",
       "version": 2
+    },
+    "wikipedia": {
+      "id": "wikipedia",
+      "name": "Wikipedia locality summaries",
+      "status": "ok",
+      "fetchedAt": "2026-10-17T05:23:19.082Z",
+      "asAt": "2026-10-17",
+      "url": "https://en.wikipedia.org",
+      "rows": 1212,
+      "files": [
+        "wikipedia-sal.json"
+      ],
+      "message": "1212 of 1621 localities"
     }
   }
 }

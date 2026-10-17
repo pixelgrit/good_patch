@@ -1,223 +1,754 @@
 SAL_CODE_2021,lga,postcode
 20002,Yarra,3067
 20003,Moonee Valley,3040
+20004,Baw Baw,3825
+20005,Murrindindi,3714
+20006,Baw Baw,3833
+20007,Bass Coast,3984
+20008,Ballarat,3352
+20009,Central Goldfields,3465
+20010,South Gippsland,3962
 20011,Melton,"3335, 3336"
+20012,Colac Otway,3237
+20013,Surf Coast,3231
 20015,Moonee Valley,3042
 20017,Brimbank,3021
 20018,Port Phillip,3206
 20021,Brimbank,3020
+20022,Murrindindi,3714
+20023,Ballarat,3350
+20024,Baw Baw,3823
+20025,Baw Baw,"3823, 3824, 3871"
+20026,South Gippsland,3871
+20029,Hepburn,3364
+20031,Central Goldfields,3465
+20033,Bass Coast,3979
 20034,Yarra,3078
 20035,Hobsons Bay,3018
 20036,Hobsons Bay,3028
 20037,Hobsons Bay,3025
+20038,Colac Otway,3249
+20039,Central Goldfields,3371
+20040,Baw Baw,3825
+20041,Pyrenees,3468
+20042,Greater Geelong,3213
+20043,Mansfield,3715
+20044,Bass Coast,3995
+20046,Surf Coast,3230
+20049,Colac Otway,3233
+20054,South Gippsland,3951
+20056,Greater Shepparton,3631
+20057,Strathbogie,3631
+20060,Benalla,3723
+20061,Bass Coast,3995
 20062,Brimbank,3022
+20065,Greater Bendigo,3523
 20066,Stonnington,3143
+20068,Greater Geelong,3217
 20071,Nillumbik,3099
+20072,Mornington Peninsula,3936
+20073,Ballarat,3364
+20074,Greater Bendigo,3551
 20075,Moonee Valley,3032
+20076,Macedon Ranges,3442
 20077,Boroondara,3147
 20078,Monash,3147
 20079,Kingston,3195
 20080,Kingston,3195
+20081,Baw Baw,3818
 20082,Hume,3049
+20085,Greater Geelong,3212
+20086,Strathbogie,3664
+20087,Pyrenees,3467
 20089,Moonee Valley,3034
+20090,Greater Bendigo,3559
+20091,Cardinia,3782
+20092,Greater Bendigo,3551
+20093,Greater Bendigo,3551
+20095,Moorabool,3340
+20096,Benalla,3670
+20097,Yarra Ranges,3777
+20099,Greater Bendigo,3551
+20100,Greater Bendigo,3551
+20102,Strathbogie,3608
+20104,Ballarat,3350
 20105,Port Phillip,3183
+20106,Ballarat,3364
+20107,Colac Otway,3249
+20108,Moorabool,3342
+20111,Ballarat,3350
+20112,Ballarat,3350
+20113,Ballarat,3350
+20115,Moorabool,3340
+20116,Moorabool,3340
+20118,Strathbogie,3666
+20120,Mornington Peninsula,3926
+20121,Mornington Peninsula,3926
+20122,Latrobe,3971
 20123,Boroondara,3103
 20124,Boroondara,3104
+20127,Surf Coast,3241
+20128,Golden Plains,3333
 20131,Greater Dandenong,3175
+20133,Golden Plains,3331
+20137,Mount Alexander,3444
+20138,Mount Alexander,3463
+20139,Mount Alexander,"3463, 3464"
+20140,Mansfield,3723
+20141,Mount Alexander,"3451, 3463"
+20143,Moorabool,3364
+20145,Greater Bendigo,3557
+20148,South Gippsland,3871
+20149,Colac Otway,3249
+20150,Colac Otway,3249
+20151,Surf Coast,3221
+20153,Colac Otway,3249
+20156,Moorabool,3458
+20157,Golden Plains,3329
+20158,Colac Otway,3329
+20160,Mansfield,3722
+20161,Colac Otway,3243
+20162,Greater Geelong,3227
+20163,Hepburn,3460
+20164,Bass Coast,3991
+20165,Golden Plains,3213
+20167,Baw Baw,3833
+20168,Mount Baw Baw Alpine Resort (Uninc),3833
 20169,Mornington Peninsula,3911
+20171,Cardinia,3981
+20172,Macedon Ranges,3444
 20173,Knox,3153
 20174,Maroondah,3153
 20175,Cardinia,3807
 20176,Cardinia,3808
+20181,Pyrenees,3373
 20182,Bayside,3193
+20184,Colac Otway,3251
+20185,Colac Otway,3237
+20187,Yarra Ranges,3139
 20188,Yarra Ranges,3160
 20189,Yarra Ranges,3160
 20190,Yarra Ranges,3160
+20191,Greater Geelong,3215
+20192,Greater Geelong,3215
 20193,Greater Geelong,3223
+20195,Surf Coast,3228
 20198,Banyule,3081
+20200,Surf Coast,3228
+20201,Greater Geelong,3216
+20203,South Gippsland,"3946, 3951"
 20207,Nillumbik,3097
+20208,Greater Bendigo,3550
+20212,Macedon Ranges,3435
+20213,South Gippsland,3960
 20214,Glen Eira,3204
 20215,Glen Eira,3165
+20216,Surf Coast,3235
+20217,Moorabool,3342
+20219,Golden Plains,3351
+20222,Corangamite,3323
+20223,South Gippsland,3953
 20224,Casey,3806
+20226,Central Goldfields,3472
+20230,Central Goldfields,3472
+20233,Mitchell,3753
+20235,Greater Bendigo,3555
+20236,Surf Coast,"3231, 3232"
+20237,Yarra Ranges,3799
+20242,Wellington,3966
+20247,Colac Otway,3242
+20248,Mornington Peninsula,3918
+20249,Ballarat,3350
 20251,Bayside,3193
 20252,Whitehorse,3130
 20253,Whitehorse,3130
 20254,Whitehorse,3130
+20256,Moorabool,3458
+20257,Mornington Peninsula,3942
+20258,Moorabool,3342
+20259,Hepburn,3364
 20260,Casey,3980
+20261,Ballarat,3352
+20262,Ballarat,"3351, 3352"
+20266,Strathbogie,3669
+20267,Strathbogie,3669
+20272,Macedon Ranges,3432
+20275,Moorabool,3352
+20276,Baw Baw,3820
 20278,Kingston,3196
+20280,Mornington Peninsula,3939
+20281,Campaspe,3561
 20282,Melton,"3335, 3336"
+20283,Mansfield,3720
+20284,Ballarat,3352
+20286,Baw Baw,3825
+20287,South Gippsland,3960
+20288,Latrobe,3870
+20289,Latrobe,3870
+20293,Surf Coast,3235
+20298,Mansfield,3723
+20299,South Gippsland,3953
 20304,Knox,3155
 20307,Casey,3977
+20309,Central Goldfields,3465
 20314,Whitehorse,3128
 20315,Whitehorse,3129
 20316,Whitehorse,3128
+20318,Mount Alexander,3463
+20319,Corangamite,3361
 20320,Kingston,3195
+20321,Baw Baw,3821
+20323,Baw Baw,3821
 20324,Maribyrnong,3019
+20326,Greater Geelong,3219
+20327,Greater Geelong,3227
+20329,Pyrenees,3352
 20331,Banyule,3088
+20332,Mansfield,3723
+20333,Loddon,3516
 20337,Bayside,3186
 20338,Bayside,3187
+20345,Mitchell,3658
 20346,Hume,3047
+20350,Central Goldfields,3472
 20351,Melton,3338
 20352,Brimbank,3012
+20354,Hepburn,3364
+20356,Ballarat,3350
 20361,Merri-Bek,3056
 20362,Merri-Bek,3057
 20363,Merri-Bek,3055
+20369,Surf Coast,3240
+20373,Latrobe,3870
+20375,South Gippsland,3958
 20381,Hume,3428
+20383,Moorabool,3352
+20384,Hepburn,3461
+20385,Moorabool,3461
 20386,Manningham,3105
+20387,Macedon Ranges,3437
+20390,Baw Baw,3821
+20391,Baw Baw,3821
+20398,Moorabool,3342
 20399,Whittlesea,3083
+20400,Central Goldfields,3465
+20401,Colac Otway,3260
+20402,Moorabool,3334
+20404,Moorabool,3352
+20409,Ballarat,3357
+20410,Ballarat,3352
+20411,Cardinia,3815
+20412,Cardinia,3815
+20416,Pyrenees,3371
+20417,Campaspe,3558
 20418,Yarra,3121
 20419,Melton,3023
 20420,Melton,3023
+20421,Campaspe,3559
+20425,Ballarat,3352
 20426,Whitehorse,3125
 20427,Whitehorse,3151
+20431,Murrindindi,3711
+20435,Mitchell,3762
+20436,Greater Shepparton,3617
+20438,Hepburn,3364
+20440,Macedon Ranges,3442
 20441,Brimbank,3023
 20442,Brimbank,3037
+20443,Cardinia,3984
+20444,Greater Bendigo,3556
+20447,Latrobe,3844
+20448,Wellington,3844
+20449,Wellington,3844
+20452,Yarra Ranges,3779
 20453,Boroondara,3124
+20454,Golden Plains,3352
 20455,Hume,3061
+20457,Mount Alexander,3451
+20458,Loddon,3556
+20459,Hepburn,3364
+20461,Ballarat,3350
+20463,Greater Shepparton,3630
 20466,Casey,3977
 20468,Boroondara,3126
+20470,Golden Plains,3351
+20473,Bass Coast,3995
+20474,Mornington Peninsula,3939
+20475,Bass Coast,3925
+20476,Mornington Peninsula,3940
+20478,Campaspe,3623
+20479,Central Goldfields,3371
+20485,Ballarat,"3350, 3352"
+20486,Ballarat,3352
 20487,Cardinia,3978
+20489,Moorabool,3334
+20491,Baw Baw,3825
+20492,Central Goldfields,3464
+20493,Colac Otway,3239
+20494,Macedon Ranges,3442
 20495,Melbourne,3053
 20496,Yarra,3054
 20498,Glen Eira,3163
+20499,Pyrenees,3351
 20500,Melton,3023
+20505,Pyrenees,3361
 20507,Kingston,3197
 20508,Frankston,3201
+20512,Murrindindi,3777
+20516,Mount Alexander,3450
+20517,Cardinia,3981
+20519,Murrindindi,3714
 20521,Glen Eira,3162
 20522,Glen Eira,3145
 20523,Glen Eira,3161
 20524,Glen Eira,3162
+20525,Murrindindi,3660
+20527,Greater Geelong,3221
 20528,Monash,3148
+20530,Ballarat,3352
+20533,Greater Geelong,3217
 20537,Kingston,3196
 20538,Kingston,3196
 20539,Kingston,3192
+20540,Pyrenees,3351
+20541,Macedon Ranges,"3434, 3441"
+20547,Mount Alexander,3451
+20548,Mount Alexander,3451
+20549,Baw Baw,3824
+20555,Macedon Ranges,3756
 20556,Yarra Ranges,3116
 20559,Nillumbik,3775
+20560,Yarra Ranges,3777
+20561,Latrobe,3842
+20562,Bass Coast,3925
+20563,Pyrenees,3373
+20564,Moorabool,3352
+20565,Moorabool,3352
 20566,Kingston,3169
+20567,Macedon Ranges,3430
+20568,Moorabool,3352
 20569,Monash,3168
 20570,Kingston,3169
 20572,Cardinia,3782
 20574,Yarra,3068
 20575,Greater Geelong,3222
+20576,Mitchell,3658
+20578,Baw Baw,3822
+20580,Hepburn,3370
 20581,Casey,3978
 20582,Casey,3978
+20584,Hepburn,3461
+20585,Baw Baw,3825
+20587,Macedon Ranges,"3435, 3442"
 20590,Melton,3338
 20596,Merri-Bek,3058
 20597,Merri-Bek,3058
+20600,Cardinia,3781
 20601,Wyndham,3030
+20603,Ballarat,3364
 20605,Moorabool,3340
+20607,Colac Otway,3250
+20609,Colac Otway,3250
+20610,Colac Otway,3250
+20611,Campaspe,"3559, 3612"
+20612,Moorabool,3342
 20613,Yarra Ranges,3770
 20616,Yarra,3066
+20621,Greater Geelong,3227
 20624,Hume,3048
+20625,Greater Shepparton,3616
+20627,Hepburn,3461
+20628,Wellington,3860
+20633,Cardinia,3814
+20636,Colac Otway,3249
+20638,Golden Plains,3352
+20639,Bass Coast,3984
+20640,Greater Geelong,3214
+20642,Campaspe,"3551, 3559"
+20644,Bass Coast,3984
+20645,Campaspe,3559
+20646,Colac Otway,3254
+20649,Colac Otway,3249
+20652,Greater Bendigo,3523
+20653,Central Goldfields,3465
 20654,Nillumbik,3099
+20657,Bass Coast,3922
+20659,Wellington,3857
+20660,Central Goldfields,3465
 20661,Hume,3064
 20662,Casey,3977
 20663,Casey,3977
 20664,Casey,3977
 20665,Casey,3977
 20666,Casey,3977
+20667,Benalla,3669
+20668,Campaspe,3551
+20669,Strathbogie,3666
 20670,Yarra,3121
+20671,Colac Otway,3322
+20672,Hepburn,3363
+20673,Hepburn,3363
+20674,Mornington Peninsula,3919
+20675,Wellington,3858
+20677,Pyrenees,"3373, 3375"
+20679,Baw Baw,3821
 20682,Maroondah,3136
 20683,Maroondah,3136
 20684,Maroondah,3136
 20685,Maroondah,3136
+20693,Colac Otway,3251
+20694,Corangamite,3251
 20697,Greater Geelong,3222
+20700,Central Goldfields,3465
+20701,Moorabool,"3341, 3458"
 20702,Hume,3047
 20703,Cardinia,3981
+20706,Bass Coast,3992
 20707,Greater Dandenong,3175
 20708,Greater Dandenong,3175
 20709,Greater Dandenong,3175
+20712,Moorabool,3340
+20713,South Gippsland,3871
+20715,Baw Baw,3822
+20716,Macedon Ranges,3756
+20720,Wellington,3858
+20721,Hepburn,3460
+20722,Hepburn,3363
+20723,Surf Coast,3235
 20724,Melton,3336
 20728,Boroondara,3103
 20729,Brimbank,3023
+20730,Ballarat,3356
 20731,Brimbank,3037
+20732,Mansfield,3723
+20733,Latrobe,3871
+20738,Hepburn,3461
+20740,Loddon,3516
+20741,Golden Plains,3352
 20743,Brimbank,3026
+20744,Greater Bendigo,3523
+20745,Corangamite,3325
+20747,Murrindindi,3714
 20748,Casey,3977
 20750,Cardinia,3808
+20751,Greater Shepparton,3610
 20752,Nillumbik,3089
 20754,Melton,3427
 20758,Kingston,3172
 20762,Yarra Ranges,3775
 20766,Melbourne,"3003, 3008"
+20768,South Gippsland,3871
+20769,Yarra Ranges,3139
 20771,Manningham,3108
 20772,Manningham,3109
 20773,Whittlesea,"3064, 3751"
 20774,Manningham,3111
 20779,Nillumbik,3754
 20783,Casey,3177
+20784,Colac Otway,3249
+20785,Colac Otway,3249
+20786,Latrobe,3840
+20788,Mornington Peninsula,3936
+20789,Murrindindi,3660
+20790,Baw Baw,3818
+20791,Baw Baw,3818
+20792,Baw Baw,3818
+20793,Baw Baw,3818
+20796,Greater Geelong,3215
+20798,Hepburn,3461
+20799,Hepburn,"3446, 3451"
+20801,Hepburn,3461
 20802,Greater Geelong,3222
+20804,South Gippsland,3956
+20805,South Gippsland,3956
+20807,Central Goldfields,3371
+20810,Central Goldfields,3472
+20812,Moorabool,3352
+20813,Central Goldfields,3472
+20815,Golden Plains,3342
+20816,Ballarat,3352
+20821,Corangamite,"3251, 3323"
+20823,Greater Bendigo,3556
+20824,Greater Bendigo,3556
 20825,Banyule,3084
+20826,Strathbogie,3669
+20828,Greater Bendigo,3550
+20829,Greater Geelong,3219
 20830,Melbourne,3002
+20833,Yarra Ranges,3799
+20834,Surf Coast,3231
+20835,Loddon,3463
+20842,Central Goldfields,"3463, 3472"
+20843,Whittlesea,3757
+20845,Macedon Ranges,3444
 20848,Kingston,3196
+20849,Hepburn,3461
+20850,Murrindindi,3713
+20851,Moorabool,3334
+20853,Hepburn,3461
+20856,French-Elizabeth-Sandstone Islands (Uninc),3921
+20859,Colac Otway,3250
+20860,Baw Baw,3821
+20862,Greater Bendigo,3558
+20863,Mount Alexander,3448
 20864,Glen Eira,3185
 20865,Nillumbik,3095
 20866,Nillumbik,3095
 20867,Port Phillip,3184
 20868,Cardinia,3782
+20870,Greater Bendigo,3551
 20871,Casey,3802
+20872,Golden Plains,3352
+20874,Mansfield,3723
+20877,Greater Bendigo,3551
 20878,Whittlesea,3076
+20879,Greater Bendigo,3551
+20880,Pyrenees,3352
+20881,Baw Baw,3825
 20885,Moonee Valley,3040
 20886,Moonee Valley,3041
 20887,Moonee Valley,3041
 20888,Moonee Valley,3040
 20889,Casey,3177
+20890,Colac Otway,3251
+20891,Ballarat,3350
+20892,Strathbogie,3666
+20894,Pyrenees,3371
 20898,Melton,3338
 20899,Melton,3338
+20900,South Gippsland,"3951, 3953"
 20901,Yarra,3078
+20902,Surf Coast,3231
+20907,Mount Alexander,3451
+20908,Murrindindi,3714
 20909,Merri-Bek,3060
+20911,Colac Otway,3237
+20912,Hepburn,3458
+20914,Baw Baw,3821
+20916,Yarra Ranges,3778
 20917,Knox,3156
 20918,Yarra Ranges,3786
+20920,Mornington Peninsula,3939
+20921,South Gippsland,3959
+20923,Moorabool,3342
 20924,Yarra,3065
 20925,Yarra,3068
+20927,Central Goldfields,"3464, 3465"
 20929,Melbourne,3031
+20930,Mornington Peninsula,3929
+20931,Greater Bendigo,3550
+20932,Murrindindi,3717
+20933,Latrobe,3844
+20934,Latrobe,3844
 20935,Maribyrnong,3011
+20936,Mitchell,3764
 20937,Whitehorse,3131
+20939,Colac Otway,3236
+20940,South Gippsland,3960
+20941,South Gippsland,3960
+20942,Greater Bendigo,3557
+20943,Corangamite,3323
+20946,Hepburn,3461
 20947,Frankston,3199
 20948,Frankston,3200
 20949,Frankston,3199
 20950,Melton,"3335, 3336"
+20952,French-Elizabeth-Sandstone Islands (Uninc),3921
+20954,Surf Coast,3217
+20955,Mount Alexander,3451
+20957,Baw Baw,3825
+20958,Baw Baw,3825
+20960,Greater Geelong,"3213, 3218"
+20961,Mansfield,3723
+20962,Baw Baw,3822
 20965,Glen Eira,3185
+20966,Cardinia,3814
+20967,Cardinia,3814
+20968,Golden Plains,3352
+20973,Greater Geelong,3220
+20974,Greater Geelong,3218
+20976,Colac Otway,3239
+20979,Cardinia,3783
+20981,Baw Baw,3833
+20985,Colac Otway,3249
+20989,Surf Coast,3240
+20990,Golden Plains,3331
+20991,Murrindindi,3717
+20995,Yarra Ranges,3797
+20997,Wellington,3858
+20999,Campaspe,3624
+21000,Greater Shepparton,3616
 21001,Macedon Ranges,3437
 21002,Macedon Ranges,3437
 21004,Hume,3043
+21005,Yarra Ranges,3797
+21006,Bass Coast,3979
+21008,Bass Coast,3990
 21009,Glen Eira,3163
 21010,Boroondara,3146
+21011,Ballarat,3352
 21013,Monash,3150
+21018,Mitchell,3764
+21019,Pyrenees,3352
+21020,Murrindindi,3717
+21021,Ballarat,3363
+21022,Ballarat,3364
+21023,Wellington,3858
+21025,Wellington,3854
+21026,Latrobe,3854
+21027,Latrobe,3854
+21028,Hepburn,3370
+21029,Mitchell,3444
+21030,Mitchell,3522
+21034,Pyrenees,3469
+21037,Mount Alexander,3451
+21038,Hepburn,3461
+21039,Wellington,3858
+21040,Moorabool,3340
 21047,Merri-Bek,3046
+21050,Surf Coast,3221
+21052,Campaspe,3559
+21053,Murrindindi,3719
+21055,Greater Bendigo,3555
+21056,Ballarat,3350
+21057,Mount Alexander,3451
+21058,Greater Bendigo,3555
+21059,Macedon Ranges,3435
+21060,Central Goldfields,3472
+21061,Ballarat,3352
+21066,Strathbogie,3666
+21069,Greater Bendigo,3557
+21073,Moorabool,3345
+21077,Mansfield,3723
+21078,Strathbogie,3608
 21079,Merri-Bek,3043
+21083,Mount Alexander,3463
+21086,Latrobe,3870
 21087,Melton,3335
+21089,Bass Coast,3984
+21094,Strathbogie,3608
+21100,Mount Alexander,3462
+21101,Moorabool,3341
+21102,Macedon Ranges,3444
 21104,Banyule,3088
 21105,Hume,3059
+21107,Moorabool,3352
+21111,Colac Otway,3234
+21114,Greater Geelong,3216
 21115,Yarra Ranges,3770
+21116,Hepburn,3451
+21119,South Gippsland,3960
 21121,Cardinia,3807
+21123,Golden Plains,3351
 21124,Merri-Bek,3046
 21125,Casey,3803
+21126,Baw Baw,3818
+21128,South Gippsland,3953
+21130,Greater Geelong,3215
 21131,Bayside,3188
 21132,Bayside,3188
 21133,Casey,3976
+21135,Golden Plains,3360
+21137,Mount Alexander,3453
+21138,Greater Bendigo,3453
 21139,Casey,3806
 21140,Melton,3337
+21141,Bass Coast,3995
+21144,Greater Shepparton,3616
+21145,Mornington Peninsula,3915
+21147,Central Goldfields,3465
 21152,Boroondara,3122
 21153,Boroondara,3123
+21154,South Gippsland,3966
+21155,Latrobe,3840
+21156,Latrobe,3840
+21157,Latrobe,3840
+21158,Yarra Ranges,3777
+21159,Cardinia,3981
+21160,Greater Bendigo,3523
+21161,Mitchell,3758
+21162,Mitchell,3523
 21163,Kingston,3202
 21165,Maroondah,3135
 21167,Banyule,3084
 21168,Banyule,3081
 21169,Banyule,3081
+21172,Hepburn,"3460, 3461"
+21173,Hepburn,"3460, 3461"
+21174,Greater Geelong,3218
+21175,Latrobe,3825
+21176,Macedon Ranges,3442
+21177,Golden Plains,3321
+21183,Wellington,3971
+21184,Mitchell,3764
 21185,Bayside,3190
+21186,Murrindindi,3660
+21187,Greater Geelong,3216
+21189,Baw Baw,3825
+21190,Pyrenees,3351
+21191,Mitchell,3660
 21193,Melton,3037
+21195,Mornington Peninsula,3920
+21196,Yarra Ranges,3139
+21198,Pyrenees,3465
+21200,Murrindindi,3717
+21202,Moorabool,3340
 21203,Wyndham,3029
+21209,Mansfield,3723
+21211,Mansfield,3723
+21212,Mansfield,3723
+21213,Mansfield,3723
 21214,Monash,3166
+21215,Whittlesea,3757
+21216,Greater Bendigo,3558
 21218,Monash,3166
+21219,Greater Bendigo,3551
+21220,Greater Bendigo,3551
 21223,Nillumbik,3099
+21224,Baw Baw,3833
+21226,Golden Plains,3351
 21229,Greater Geelong,3223
+21232,Moorabool,3342
+21234,Golden Plains,3321
+21235,Bass Coast,3996
+21236,Ballarat,3352
+21237,Ballarat,3350
+21238,Cardinia,3815
+21240,Mount Alexander,3451
+21241,Greater Bendigo,3550
+21242,Colac Otway,3249
+21243,Colac Otway,3249
+21244,Colac Otway,3249
 21246,Banyule,3079
 21247,Banyule,3079
 21248,Hume,3047
+21250,Greater Bendigo,3556
+21251,Baw Baw,3825
+21252,Bass Coast,3984
+21253,Mansfield,3723
+21254,Surf Coast,3228
+21260,Latrobe,3840
+21261,Latrobe,3840
+21262,South Gippsland,3945
+21266,Baw Baw,3825
+21269,Baw Baw,3818
+21274,Mount Alexander,3364
+21275,Latrobe,3869
+21276,South Gippsland,3951
 21277,Casey,3977
+21279,Greater Bendigo,3551
+21284,Hume,3064
 21286,Yarra Ranges,3791
 21287,Yarra Ranges,3766
+21289,Greater Bendigo,3570
+21293,Greater Bendigo,3555
 21294,Nillumbik,3097
+21296,Murrindindi,3719
+21300,South Gippsland,3951
+21301,South Gippsland,3950
+21302,Corangamite,"3260, 3325"
+21304,Greater Shepparton,3631
+21311,Colac Otway,3249
 21312,Brimbank,3021
 21314,Brimbank,3036
 21315,Brimbank,3038
@@ -225,227 +756,867 @@ SAL_CODE_2021,lga,postcode
 21317,Brimbank,3038
 21318,Brimbank,3036
 21319,Brimbank,3042
+21321,Strathbogie,3666
+21325,Colac Otway,3234
+21326,Greater Bendigo,3550
 21327,Melbourne,3031
+21332,Bass Coast,3979
+21333,Macedon Ranges,3434
+21334,Murrindindi,3660
+21335,Mansfield,3723
 21336,Boroondara,3101
 21337,Boroondara,3102
 21339,Greater Dandenong,3173
+21340,Greater Shepparton,3631
+21341,Greater Shepparton,3631
+21342,Greater Shepparton,3631
+21345,Bass Coast,3995
+21350,Murrindindi,3717
+21352,Mitchell,3764
+21353,Mitchell,3764
 21354,Yarra Ranges,3137
 21355,Maroondah,3137
+21356,Greater Bendigo,"3444, 3551"
 21358,Murrindindi,3763
+21359,Murrindindi,3757
+21360,Murrindindi,3757
 21362,Brimbank,3021
 21363,Darebin,3083
+21364,Hepburn,3364
 21365,Maribyrnong,3012
+21369,Strathbogie,3608
+21370,Strathbogie,3666
+21372,Mansfield,3723
+21373,Greater Bendigo,3523
 21374,Knox,3180
+21378,South Gippsland,3951
 21380,Cardinia,3981
+21381,Cardinia,"3810, 3981"
+21386,South Gippsland,3954
+21389,Latrobe,3844
+21390,Hepburn,3364
+21392,South Gippsland,3953
 21393,Stonnington,3144
+21394,Murrindindi,3714
+21395,Moorabool,3341
+21399,South Gippsland,3950
+21400,South Gippsland,3950
+21401,Moorabool,3461
+21405,Bass Coast,3945
 21411,Melton,3337
+21413,Greater Shepparton,3620
+21414,Macedon Ranges,3444
+21415,Macedon Ranges,3444
+21417,Loddon,3463
+21419,Baw Baw,3816
+21421,Greater Bendigo,3523
+21432,Mansfield,3713
+21433,Greater Bendigo,3551
+21435,Ballarat,3355
+21436,Pyrenees,3373
+21447,Ballarat,3350
+21450,Moorabool,3352
 21452,Whittlesea,3075
+21453,Pyrenees,3352
+21455,Bass Coast,3995
+21456,Macedon Ranges,3435
+21459,Cardinia,3984
+21460,Cardinia,3984
+21461,Hepburn,3363
+21462,Pyrenees,3352
+21465,Mount Alexander,3444
 21467,Frankston,3910
 21468,Frankston,3911
+21469,Greater Geelong,3212
+21470,Baw Baw,3821
+21471,Colac Otway,3249
+21473,Yarra Ranges,3139
+21474,Macedon Ranges,3444
 21476,Hobsons Bay,3028
 21477,Wyndham,3026
+21480,Hepburn,3364
+21482,Ballarat,3352
+21484,Greater Bendigo,3516
+21485,Moorabool,3352
+21489,Hepburn,3461
+21490,South Gippsland,3953
+21491,South Gippsland,3953
+21492,South Gippsland,3953
+21493,Greater Geelong,3224
+21494,Moorabool,3458
+21495,Corangamite,3260
+21496,Golden Plains,3332
+21497,Pyrenees,3352
+21498,Wellington,3858
+21499,Wellington,3858
+21500,Baw Baw,3820
+21501,Central Goldfields,3371
 21504,Yarra Ranges,3140
+21505,Benalla,3673
+21506,Benalla,3673
+21507,Benalla,3673
+21508,Murrindindi,3717
+21514,Golden Plains,3360
+21516,Corangamite,3324
+21519,Hepburn,3458
 21520,Greater Geelong,3211
+21521,Loddon,3551
+21523,South Gippsland,3945
+21525,Baw Baw,3833
+21527,Strathbogie,3665
+21528,Greater Bendigo,3551
+21529,Greater Bendigo,3551
+21533,Moorabool,3340
+21534,Greater Bendigo,3550
+21537,Greater Bendigo,3551
+21538,Baw Baw,3816
+21539,Baw Baw,3816
+21540,Strathbogie,3665
+21541,Strathbogie,3666
+21542,Surf Coast,3232
+21544,Greater Geelong,3213
 21547,Banyule,3093
+21548,Latrobe,3844
+21550,Ballarat,3350
 21554,Casey,3975
 21555,Greater Dandenong,3975
+21557,Hepburn,3461
 21558,Yarra Ranges,3156
 21559,Casey,3156
+21561,Yarra Ranges,3782
+21562,Macedon Ranges,3440
 21564,Banyule,3085
+21567,Mansfield,3723
+21568,Wellington,"3870, 3971"
+21569,Moorabool,3340
+21573,Ballarat,3352
+21574,Greater Bendigo,3551
 21575,Maribyrnong,3012
+21577,Pyrenees,3373
+21578,Mornington Peninsula,3928
+21579,Mansfield,3723
+21580,Murrindindi,3714
+21582,Central Goldfields,3465
+21583,Mount Alexander,3463
+21585,Macedon Ranges,3446
 21586,Stonnington,3144
 21587,Stonnington,3145
 21588,Wyndham,3024
+21590,Greater Bendigo,3551
+21591,Greater Bendigo,3551
+21592,Strathbogie,3663
+21593,Greater Geelong,3218
 21594,Greater Geelong,3222
+21595,Golden Plains,3360
 21597,Wyndham,3024
+21599,Mansfield,3722
+21601,Greater Geelong,3222
+21602,South Gippsland,3953
+21603,Colac Otway,3233
 21604,Maribyrnong,3032
+21612,Greater Bendigo,3515
+21614,Strathbogie,3669
+21615,Greater Geelong,3216
+21618,Central Goldfields,3465
+21619,Cardinia,3812
+21620,Murrindindi,3779
+21621,Latrobe,3840
+21623,Yarra Ranges,3723
+21624,Golden Plains,3331
+21625,Mornington Peninsula,3938
+21628,Mount Alexander,3451
 21629,Glen Eira,3204
+21631,Yarra Ranges,3799
 21635,Hume,3048
+21637,South Gippsland,"3953, 3956"
 21640,Melbourne,"3000, 3004"
 21641,Hume,3045
 21642,Melton,3337
 21643,Melton,3338
 21644,Melton,3337
+21647,Pyrenees,3373
 21648,Kingston,3194
 21649,Yarra Ranges,3159
+21656,Golden Plains,3333
 21659,Whittlesea,3754
+21662,Mornington Peninsula,3916
+21663,Mornington Peninsula,3926
+21664,Mornington Peninsula,3926
+21667,Mansfield,3723
+21668,Moorabool,3340
+21670,Mansfield,3715
+21671,Mount Alexander,3448
+21672,Mount Alexander,3444
+21674,Greater Bendigo,3444
 21675,Hume,3064
+21676,Pyrenees,3375
 21677,Port Phillip,3206
+21678,South Gippsland,3956
+21679,Strathbogie,3666
 21683,Whittlesea,3082
+21684,Moorabool,3352
+21685,Yarra Ranges,3799
+21691,Ballarat,3352
+21692,Corangamite,3324
+21702,South Gippsland,3871
+21703,South Gippsland,3871
+21704,Mansfield,3722
 21706,Whitehorse,3132
+21707,Ballarat,3355
+21708,Strathbogie,3608
+21714,Baw Baw,3816
+21715,Surf Coast,3240
+21716,Latrobe,3825
+21717,Latrobe,3825
+21718,Surf Coast,3231
+21719,Strathbogie,3666
+21721,Murrindindi,3718
+21723,Strathbogie,3666
+21724,Hepburn,3352
 21727,Yarra Ranges,3793
+21728,Macedon Ranges,3433
+21731,Cardinia,3984
 21732,Whitehorse,3127
 21733,Whitehorse,3129
 21735,Banyule,3094
 21736,Yarra Ranges,3765
+21737,Greater Geelong,3224
+21739,Central Goldfields,3465
+21741,Baw Baw,3825
 21742,Moonee Valley,3039
+21743,Central Goldfields,3465
+21744,Mount Alexander,3450
+21745,Campaspe,3612
 21746,Kingston,3189
 21747,Kingston,3194
+21748,Greater Geelong,3213
+21750,Strathbogie,3610
+21751,Strathbogie,3523
+21753,Benalla,3673
+21754,Mornington Peninsula,3933
 21755,Yarra Ranges,3138
+21759,Mitchell,3764
 21760,Kingston,3195
+21762,Surf Coast,3240
+21763,Mornington Peninsula,3931
+21765,Moorabool,3334
+21769,Latrobe,3840
+21773,Hepburn,3363
+21774,South Gippsland,3960
+21775,Ballarat,3352
+21778,Mansfield,3723
+21779,Cardinia,3781
+21780,Corangamite,3324
+21781,Greater Bendigo,3523
+21782,Central Goldfields,3370
+21783,Ballarat,3350
 21786,Melton,3024
 21787,Yarra Ranges,3767
+21788,Moorabool,3334
+21790,Greater Geelong,"3216, 3217"
+21791,South Gippsland,3953
+21792,Moorabool,3352
 21793,Mornington Peninsula,3930
+21794,Pyrenees,3351
 21795,Yarra Ranges,3796
+21796,Hepburn,3461
+21797,Central Goldfields,3371
+21798,Ballarat,3350
+21799,Central Goldfields,3472
+21800,Pyrenees,3468
+21801,Macedon Ranges,3441
+21803,Mornington Peninsula,3934
+21804,Golden Plains,3352
+21805,Surf Coast,3240
+21807,Ballarat,3350
+21808,Hepburn,3364
+21810,Ballarat,3352
+21811,Colac Otway,3236
+21812,Latrobe,3844
+21814,Yarra Ranges,3777
+21815,Moorabool,3342
 21816,Monash,3149
+21817,Mansfield,3723
+21818,Baw Baw,3988
+21824,Mount Alexander,3451
+21825,Mount Alexander,3462
 21827,Monash,3170
+21832,Greater Shepparton,3610
+21833,Greater Shepparton,3610
+21834,Greater Shepparton,3610
+21835,Golden Plains,3218
+21847,Murrindindi,3717
+21848,Colac Otway,3243
 21849,Glen Eira,3163
+21851,Hepburn,3461
+21852,Hepburn,3461
+21853,Campaspe,3557
+21857,Greater Bendigo,3556
+21858,Campaspe,3551
+21859,Moorabool,3341
+21861,Greater Bendigo,3551
+21867,Strathbogie,3608
+21868,Colac Otway,3249
+21872,Cardinia,3781
+21877,Golden Plains,3352
+21878,Cardinia,3812
+21879,Cardinia,3812
+21880,Murrindindi,3778
+21889,Baw Baw,3824
 21893,Casey,3805
 21894,Yarra Ranges,3804
 21895,Casey,3804
 21896,Casey,3805
+21903,Moorabool,3352
+21904,Baw Baw,3832
+21906,Mount Alexander,"3463, 3472"
+21907,Baw Baw,3831
+21908,Baw Baw,3831
+21909,Baw Baw,3832
+21910,Baw Baw,3832
+21911,Baw Baw,3831
+21912,Greater Bendigo,3570
+21915,South Gippsland,3953
+21917,Ballarat,3350
+21918,Pyrenees,3373
+21921,Macedon Ranges,3438
+21922,Latrobe,3825
+21923,Loddon,3551
+21924,Hepburn,3458
+21925,Greater Geelong,3219
+21927,Macedon Ranges,3442
+21928,Bass Coast,"3922, 3925"
+21929,Ballarat,3350
+21931,Hepburn,3364
+21932,Hepburn,3364
 21934,Hobsons Bay,3015
+21936,Mount Alexander,3462
+21937,Golden Plains,3351
+21938,Greater Geelong,3220
 21942,Moonee Valley,3042
+21943,Baw Baw,3821
+21944,Baw Baw,3821
+21947,Golden Plains,3351
 21952,Greater Dandenong,3174
 21953,Greater Dandenong,3174
+21954,Baw Baw,3833
+21960,Greater Geelong,3214
+21963,Greater Bendigo,3550
+21964,Hepburn,3458
+21965,Greater Geelong,3215
 21966,Melbourne,3051
+21967,Greater Geelong,3214
 21969,Nillumbik,3113
+21970,Bass Coast,3995
 21971,Darebin,3070
+21972,Mitchell,3660
 21974,Monash,3168
+21979,Mount Alexander,3463
+21980,Mitchell,3435
 21985,Whitehorse,3131
 21991,Nillumbik,3099
+21996,South Gippsland,3987
 21998,Merri-Bek,3046
 21999,Hume,3063
 22000,Monash,3166
 22001,Monash,3166
 22002,Monash,3167
+22005,Greater Geelong,3226
 22006,Cardinia,3809
 22007,Cardinia,3809
 22009,Yarra Ranges,3788
+22010,Colac Otway,3241
+22013,Colac Otway,3249
 22016,Glen Eira,3204
+22019,South Gippsland,3951
+22026,Loddon,3551
 22027,Cardinia,3810
+22028,Cardinia,3810
+22029,Cardinia,3810
 22032,Nillumbik,3759
+22035,Surf Coast,3240
 22036,Manningham,3114
 22037,Kingston,3195
 22038,Melbourne,3052
+22039,Moorabool,3340
 22041,Merri-Bek,3044
 22042,Merri-Bek,3044
+22043,Macedon Ranges,3444
+22044,Macedon Ranges,3444
 22047,Kingston,3197
 22050,Casey,3912
+22055,Surf Coast,3235
+22058,Moorabool,3341
+22063,Colac Otway,3233
+22064,Murrindindi,3757
+22068,Baw Baw,3833
+22071,Golden Plains,3351
+22077,Bass Coast,3984
+22078,Macedon Ranges,3444
+22080,Mansfield,3723
+22081,Colac Otway,3249
+22082,Golden Plains,3351
+22083,Golden Plains,3360
 22084,Nillumbik,3090
 22085,Melton,3335
 22086,Wyndham,3030
+22087,Mornington Peninsula,3916
+22088,Greater Geelong,3225
 22089,Greater Geelong,3212
+22091,Corangamite,3260
+22092,Corangamite,3249
+22093,Corangamite,3260
+22097,Moorabool,3352
+22098,South Gippsland,3988
+22099,South Gippsland,3988
+22100,South Gippsland,3988
+22101,Hepburn,3461
+22106,South Gippsland,3964
 22107,Melbourne,3207
 22109,Greater Geelong,3223
+22113,Mornington Peninsula,3944
+22114,South Gippsland,3996
+22115,Yarra Ranges,3797
 22118,Stonnington,3181
+22120,Strathbogie,3666
 22121,Darebin,3072
 22122,Yarra,3054
+22124,Mitchell,3662
+22129,Mitchell,3521
 22132,Wyndham,3030
+22134,Greater Bendigo,3550
+22135,Queenscliffe,3225
+22136,Pyrenees,3373
+22138,South Gippsland,3951
+22139,Pyrenees,3465
+22140,Pyrenees,3465
 22141,Melton,3023
+22142,Greater Bendigo,3453
+22143,Mount Alexander,3453
+22144,Baw Baw,3825
+22146,Loddon,3570
+22148,Mornington Peninsula,3937
+22149,Mornington Peninsula,3937
+22150,Central Goldfields,3371
+22151,Ballarat,3350
+22153,Campaspe,3523
+22154,Mount Alexander,3444
+22155,Mitchell,3658
+22159,Yarra Ranges,3799
 22160,Nillumbik,3095
 22161,Darebin,3073
+22162,Wellington,3858
+22164,Bass Coast,3923
 22170,Yarra,3121
+22172,Macedon Ranges,3431
+22173,Strathbogie,3666
 22174,Maroondah,3134
 22175,Maroondah,3135
 22176,Maroondah,3134
+22177,Baw Baw,3818
+22178,Greater Geelong,3215
 22179,Port Phillip,3185
+22185,Macedon Ranges,3442
 22186,Melton,3335
+22188,Hepburn,3364
+22190,Baw Baw,3821
+22191,Golden Plains,3330
+22192,Golden Plains,3351
+22193,Macedon Ranges,3434
 22194,Banyule,3084
+22198,Mornington Peninsula,3939
+22203,Golden Plains,3351
+22206,Moorabool,3340
 22207,Knox,3178
 22208,Hume,3064
+22209,Murrindindi,3712
+22210,South Gippsland,3953
+22211,Strathbogie,3666
+22213,Greater Bendigo,"3551, 3558"
+22215,Campaspe,3612
+22216,Golden Plains,3331
+22219,Bass Coast,3992
+22220,Mornington Peninsula,3941
 22221,Cardinia,3810
+22222,Mornington Peninsula,3936
+22223,Hepburn,3461
+22224,Greater Bendigo,3556
+22225,Hepburn,3461
+22228,Benalla,3673
+22229,Bass Coast,3925
 22232,Frankston,3977
+22233,Mount Alexander,3462
 22234,Bayside,3191
+22236,South Gippsland,3959
+22237,Wellington,3858
 22239,Yarra Ranges,3787
+22240,Mansfield,3723
+22241,Golden Plains,3351
 22242,Knox,3179
+22243,Ballarat,3352
+22244,Ballarat,3352
 22247,Hobsons Bay,3028
 22249,Frankston,3198
 22250,Hobsons Bay,3018
+22252,Wellington,3858
+22253,Baw Baw,3821
+22254,Greater Bendigo,3556
+22255,Ballarat,3356
 22256,Maribyrnong,3011
+22257,Greater Bendigo,3551
 22258,Yarra Ranges,3159
+22260,Colac Otway,3234
 22263,Yarra Ranges,3139
+22264,Yarra Ranges,3139
+22265,Mitchell,3660
+22266,Baw Baw,3821
+22268,Golden Plains,3331
+22269,Strathbogie,3666
+22271,Greater Bendigo,3515
+22272,Golden Plains,3329
+22274,Hepburn,3461
 22278,Yarra Ranges,3789
+22279,Mornington Peninsula,3916
+22280,Macedon Ranges,3444
 22281,Yarra Ranges,3795
+22282,Bass Coast,3922
+22285,Central Goldfields,3465
+22286,Colac Otway,3233
+22287,Colac Otway,3233
+22290,Pyrenees,3361
 22291,Frankston,3977
+22293,Hepburn,3364
+22294,Bass Coast,3922
 22295,Nillumbik,3760
+22296,Hepburn,3364
+22298,Golden Plains,3351
+22299,Golden Plains,3351
+22301,Pyrenees,3351
+22302,Ballarat,3350
+22303,Mornington Peninsula,3927
 22304,Hume,3062
+22305,Mornington Peninsula,3912
+22306,Mornington Peninsula,3943
+22307,Bass Coast,3995
+22308,Greater Geelong,3220
 22309,Hobsons Bay,3015
 22310,Port Phillip,3205
 22311,Whittlesea,3752
 22313,Melbourne,3006
 22314,Stonnington,3141
 22315,Melbourne,3006
+22317,Moorabool,3461
 22319,Hobsons Bay,3015
+22320,Greater Bendigo,3550
+22321,Macedon Ranges,3444
+22322,Moorabool,3352
+22323,Golden Plains,3351
+22325,Macedon Ranges,3434
+22327,Hepburn,3364
 22328,Greater Dandenong,3171
 22329,Greater Dandenong,3172
 22330,Brimbank,3021
+22331,Greater Geelong,3219
 22332,Nillumbik,3761
+22333,Mornington Peninsula,3941
+22337,Bass Coast,3995
 22339,Banyule,3088
 22343,Port Phillip,3182
 22344,Port Phillip,3183
 22345,Port Phillip,3182
 22346,Greater Geelong,3223
+22347,Wellington,3971
+22348,Golden Plains,3351
+22350,Campaspe,3623
+22352,Greater Geelong,3340
 22355,Yarra Ranges,3775
+22356,Golden Plains,3331
+22360,Pyrenees,3373
+22361,Golden Plains,3218
+22362,Pyrenees,3373
+22363,Central Goldfields,3371
+22364,South Gippsland,3957
+22365,Corangamite,3260
+22367,Mount Alexander,3461
+22370,Murrindindi,3658
+22372,Strathbogie,3666
+22373,Greater Bendigo,3550
 22375,Nillumbik,3099
+22376,Greater Bendigo,3551
+22378,Mount Alexander,3364
 22380,Moonee Valley,3041
 22381,Moonee Valley,3041
 22382,Melton,3338
+22384,South Gippsland,3950
+22386,Colac Otway,3234
+22387,Mitchell,3658
+22389,Ballarat,3352
+22390,Bass Coast,3922
 22391,Hume,3429
+22392,Mitchell,3658
+22393,Bass Coast,3922
+22394,Bass Coast,3922
 22395,Brimbank,3020
 22396,Brimbank,3020
 22397,Brimbank,3020
+22398,Bass Coast,3922
 22399,Boroondara,3127
+22401,Golden Plains,3331
+22403,Mount Alexander,3448
 22404,Greater Geelong,3225
+22407,Queenscliffe,3225
+22408,Colac Otway,3249
+22410,Benalla,3673
 22414,Brimbank,3037
+22417,Strathbogie,3607
+22419,Murrindindi,3714
+22423,Central Goldfields,3371
+22430,Mitchell,3659
+22435,Wellington,3858
+22437,Strathbogie,3669
+22438,Greater Shepparton,3669
+22442,Baw Baw,3825
+22443,Baw Baw,3833
+22444,Baw Baw,3825
+22446,Colac Otway,3249
+22447,Mount Alexander,3447
+22448,Strathbogie,3666
+22449,Mount Alexander,3451
+22450,Loddon,3551
 22451,Wyndham,3029
+22454,Wellington,3971
 22457,Yarra Ranges,3775
+22460,Mount Alexander,3463
+22464,South Gippsland,3956
+22465,South Gippsland,3956
+22466,Benalla,3673
+22467,Greater Shepparton,3616
+22468,Greater Shepparton,3616
+22472,Murrindindi,3713
 22473,Melton,3037
 22474,Brimbank,3038
 22476,Yarra Ranges,3160
+22479,Golden Plains,3328
 22483,Manningham,3106
 22484,Manningham,3107
+22486,Bass Coast,3984
+22489,Murrindindi,3719
+22494,Baw Baw,3821
 22496,Knox,"3154, 3787"
+22498,Bass Coast,3984
 22501,Yarra Ranges,3792
 22504,Whittlesea,3074
+22505,Baw Baw,3825
+22506,Greater Geelong,3219
 22508,Darebin,3071
 22509,Melton,3335
+22510,Murrindindi,3712
+22511,Baw Baw,3835
+22512,Baw Baw,3824
+22514,Yarra Ranges,3797
+22519,Central Goldfields,3465
+22520,Central Goldfields,3465
+22526,Mansfield,3723
+22531,Cardinia,3815
+22533,Mitchell,3522
+22534,Greater Shepparton,3614
+22535,Greater Shepparton,3614
 22536,Murrindindi,3777
 22537,Melton,3337
+22538,Campaspe,3551
+22542,Baw Baw,3825
+22543,Baw Baw,3856
+22544,South Gippsland,3962
+22545,South Gippsland,3962
 22546,Casey,3980
 22547,Stonnington,3142
+22549,Baw Baw,3833
+22550,Mornington Peninsula,3941
+22551,Surf Coast,3228
+22554,Baw Baw,3821
 22556,Maribyrnong,3012
+22558,Ballarat,3363
+22565,Baw Baw,3824
+22566,Baw Baw,3824
+22567,Baw Baw,3824
+22569,Latrobe,3844
+22570,Latrobe,3844
+22571,Latrobe,3844
 22572,Moonee Valley,3032
+22573,Pyrenees,3373
+22574,Mitchell,3660
 22576,Yarra Ranges,3785
+22577,Hepburn,3458
+22578,Macedon Ranges,3458
+22581,South Gippsland,3953
 22582,Melton,3029
+22584,Mornington Peninsula,3915
 22586,Hume,3043
+22591,South Gippsland,3960
+22593,Mitchell,3658
+22594,Mornington Peninsula,3913
+22596,Latrobe,"3825, 3844"
+22597,Macedon Ranges,3444
+22598,Cardinia,3813
+22599,Cardinia,3813
+22606,Hepburn,3370
 22614,Knox,3156
+22617,Mitchell,3756
+22619,Strathbogie,3664
 22620,Yarra Ranges,3158
+22623,Mount Alexander,3451
+22625,Bass Coast,3922
+22626,South Gippsland,3956
 22627,Whitehorse,3133
 22628,Whitehorse,3133
+22629,Cardinia,3814
+22630,Baw Baw,3833
 22633,Banyule,3084
+22635,Strathbogie,3669
+22636,Corangamite,3325
+22637,Corangamite,3325
+22640,Loddon,3551
+22645,Strathbogie,3608
+22651,Baw Baw,3825
+22652,Wellington,3825
+22653,South Gippsland,3956
+22654,South Gippsland,3956
+22655,South Gippsland,3956
+22656,Moorabool,3352
+22661,Mitchell,3756
+22662,Golden Plains,3351
+22663,Greater Geelong,3222
+22665,Mount Alexander,"3453, 3463"
+22669,Greater Geelong,3216
 22672,Yarra Ranges,3139
 22673,Yarra Ranges,3139
+22676,Mitchell,3758
 22685,Knox,3152
 22686,Knox,3152
+22687,Campaspe,3612
+22688,South Gippsland,3959
+22689,Yarra Ranges,3799
+22690,Central Goldfields,3465
+22693,Colac Otway,3243
+22695,Casey,3980
+22698,Baw Baw,3820
+22699,Baw Baw,3821
+22700,Baw Baw,3821
 22702,Manningham,3113
 22703,Manningham,3134
 22704,Maroondah,3134
+22706,Benalla,3670
+22707,Ballarat,3352
+22709,Colac Otway,3249
+22717,Mitchell,3658
+22719,Pyrenees,3373
 22720,Kingston,3195
 22721,Banyule,3087
 22722,Banyule,3087
 22723,Nillumbik,3097
+22724,Bass Coast,3995
+22726,Moorabool,3352
 22727,Nillumbik,3096
+22729,Pyrenees,3352
+22730,Greater Geelong,3216
+22732,Ballarat,3352
+22736,Colac Otway,3237
+22737,Colac Otway,3251
+22738,Corangamite,3260
 22740,Melton,3338
+22741,Greater Bendigo,3551
+22742,Mount Alexander,3462
+22745,Ballarat,3355
+22746,Surf Coast,3241
+22748,Golden Plains,3352
+22749,Mount Alexander,3364
 22750,Wyndham,3030
 22751,Wyndham,3030
+22753,Yarra Ranges,3799
+22754,Greater Bendigo,3550
+22755,Bass Coast,3992
 22756,Maribyrnong,3012
 22757,Melbourne,3003
+22759,Baw Baw,3825
 22761,Hume,3049
+22763,Murrindindi,3714
+22765,Hepburn,3461
 22766,Monash,3150
+22767,Greater Bendigo,3556
+22769,Greater Bendigo,"3550, 3551"
+22770,Mitchell,3660
+22771,South Gippsland,3950
+22774,Greater Geelong,3219
+22775,Whittlesea,3757
+22776,Colac Otway,3243
+22780,Strathbogie,3612
+22783,South Gippsland,"3950, 3953"
 22784,Hume,3429
 22791,Wyndham,3027
 22792,Hobsons Bay,3016
 22793,Hobsons Bay,3016
+22794,Baw Baw,3825
+22795,Mitchell,3764
+22796,Golden Plains,"3324, 3360"
+22799,Greater Bendigo,3515
+22801,Bass Coast,3922
+22802,Surf Coast,3241
+22803,Surf Coast,3241
+22804,Ballarat,3352
 22805,Stonnington,3181
+22807,Colac Otway,3321
+22812,Wellington,3858
+22814,Ballarat,3358
+22817,Strathbogie,3608
 22820,Whittlesea,3750
+22824,South Gippsland,3960
 22825,Manningham,3115
+22826,Colac Otway,3234
+22829,Bass Coast,3995
+22831,Wellington,3962
+22833,Macedon Ranges,3442
+22834,Macedon Ranges,3442
+22835,Mansfield,3715
+22839,Bass Coast,3945
+22840,Mansfield,3723
 22843,Whittlesea,3751
+22844,Loddon,3551
+22845,Loddon,3463
+22846,Greater Bendigo,3556
+22847,Corangamite,3249
+22848,Bass Coast,3995
+22854,South Gippsland,3962
+22855,South Gippsland,3960
+22856,South Gippsland,3953
+22857,Yarra Ranges,3139
+22865,Wellington,3858
+22874,Surf Coast,3241
+22881,Colac Otway,3234
 22883,Wyndham,3024
 22892,Banyule,3085
+22893,Latrobe,3825
+22894,Latrobe,3825
 22898,Whittlesea,3755
+22900,South Gippsland,3960
+22902,Hepburn,3461
+22903,Mount Alexander,3461
+22905,Wellington,3858
+22906,Cardinia,3981
+22907,Mount Alexander,3451
+22908,Murrindindi,3719
 22910,Yarra Ranges,3775
+22911,Yarra Ranges,3797
+22912,Loddon,3516
+22913,Baw Baw,3823
+22914,Baw Baw,3823
 22916,Nillumbik,3091
 22917,Maribyrnong,3013
+22924,Murrindindi,3717
+22925,Yarra Ranges,3139
+22927,Moorabool,3352
+22928,Colac Otway,3249
+22929,Colac Otway,3249
 22930,Yarra Ranges,3770
+22934,Latrobe,3869
+22935,Latrobe,3869
 22941,Hume,3063
