@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T05:23:19.082Z",
+  "updatedAt": "2026-10-17T05:36:16.005Z",
   "sources": {
     "abs-boundaries": {
       "id": "abs-boundaries",
@@ -145,14 +145,15 @@
       "id": "wikipedia",
       "name": "Wikipedia locality summaries",
       "status": "ok",
-      "fetchedAt": "2026-10-17T05:23:19.082Z",
+      "fetchedAt": "2026-10-17T05:36:16.005Z",
       "asAt": "2026-10-17",
       "url": "https://en.wikipedia.org",
-      "rows": 1212,
+      "rows": 1190,
       "files": [
         "wikipedia-sal.json"
       ],
-      "message": "1212 of 1621 localities"
+      "message": "1190 of 1621 localities",
+      "version": 2
     }
   }
 }
