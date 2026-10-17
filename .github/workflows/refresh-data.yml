@@ -64,7 +64,11 @@ jobs:
             echo "No data changes."
           else
             git commit -m "Refresh data $(date -u +%Y-%m-%d)"
-            git push
+            # Code may have been pushed while this ran: rebase onto it before pushing.
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              sleep 10
+            done
           fi
 
       - name: Report failed sources

@@ -59,7 +59,8 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
   const links = listingLinks(s, type, maxPrice);
   const [showAll, setShowAll] = useState(false);
   const available = useAvailableMetrics();
-  const figures = KEY_FIGURES.filter((k) => available.has(k)).slice(0, 8);
+  // Only figures this suburb has a value for.
+  const figures = KEY_FIGURES.filter((k) => available.has(k) && getMetric(s, type, k)?.value != null).slice(0, 8);
   const hasSeries = SERIES.some((x) => (s[type].series[x.key]?.length ?? 0) > 1);
   const isPinned = pinned.includes(s.code);
   const focusLabel = focus === 'custom' ? 'Custom weights' : `${FOCUS[focus].label} focus`;
@@ -215,7 +216,7 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
 
       <SalesHistory s={s} type={type} />
 
-      <AboutSection code={s.code} />
+      <AboutSection s={s} />
 
       <section className="detail__section">
         <h3>Tram and train access</h3>
@@ -376,28 +377,61 @@ function SalesHistory({ s, type }: { s: Suburb; type: PropertyType }) {
   );
 }
 
-/** History and character of the locality, from its Wikipedia article. */
-function AboutSection({ code }: { code: string }) {
-  const about = useAbout(code);
-  if (!about) return null;
+/** Facts about the locality, then its description and history from Wikipedia. */
+function AboutSection({ s }: { s: Suburb }) {
+  const about = useAbout(s.code);
+  const value = (k: string) => s.common[k]?.value ?? null;
+  const facts: [string, string][] = [];
+  if (s.lga) facts.push(['Council', s.lga]);
+  if (s.postcode) facts.push([s.postcode.includes(',') ? 'Postcodes' : 'Postcode', s.postcode]);
+  if (value('distanceCbd') != null) facts.push(['To the CBD', `${Math.round(value('distanceCbd')!)} km`]);
+  if (s.areaKm2 != null) facts.push(['Area', `${s.areaKm2 < 10 ? s.areaKm2.toFixed(1) : Math.round(s.areaKm2)} km²`]);
+  if (value('dwellings') != null) facts.push(['Homes', `${Math.round(value('dwellings')!).toLocaleString('en-AU')} (Census 2021)`]);
+  if (value('ownerOccupier') != null) facts.push(['Owner-occupied', `${Math.round(value('ownerOccupier')!)}%`]);
+  if (s.rural != null) facts.push(['Setting', s.rural ? 'Rural or semi-rural' : 'Suburban or town']);
+  const paras = (t: string) =>
+    t
+      .split(/\n+/)
+      .filter(Boolean)
+      .map((p, i) => (
+        <p className="note" key={i}>
+          {p}
+        </p>
+      ));
   return (
-    <section className="detail__section">
-      <h3>About</h3>
-      {about.extract
-        .split(/\n+/)
-        .filter(Boolean)
-        .map((para, i) => (
-          <p className="note" key={i}>
-            {para}
-          </p>
-        ))}
-      <p className="muted note">
-        From{' '}
-        <a href={about.url} target="_blank" rel="noopener noreferrer">
-          {about.title} on Wikipedia
-        </a>
-        , CC BY-SA 4.0.
-      </p>
-    </section>
+    <>
+      <section className="detail__section">
+        <h3>About</h3>
+        <dl className="kv">
+          {facts.map(([k, v]) => (
+            <Fragment key={k}>
+              <dt>{k}</dt>
+              <dd>{v}</dd>
+            </Fragment>
+          ))}
+        </dl>
+        {about && paras(about.extract)}
+        {about && !about.history && <Attribution title={about.title} url={about.url} />}
+      </section>
+      {about?.history && (
+        <section className="detail__section">
+          <h3>History</h3>
+          {paras(about.history)}
+          <Attribution title={about.title} url={about.url} />
+        </section>
+      )}
+    </>
+  );
+}
+
+function Attribution({ title, url }: { title: string; url: string }) {
+  return (
+    <p className="muted note">
+      From{' '}
+      <a href={url} target="_blank" rel="noopener noreferrer">
+        {title} on Wikipedia
+      </a>
+      , CC BY-SA 4.0.
+    </p>
   );
 }

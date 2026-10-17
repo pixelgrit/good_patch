@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 export interface About {
   title: string;
   extract: string;
+  history?: string;
   url: string;
 }
 
