@@ -13,7 +13,7 @@ export function Search() {
     const term = q.trim().toLowerCase();
     if (!term) return [];
     return suburbs
-      .filter((s) => s.name.toLowerCase().includes(term) || s.postcode.startsWith(term))
+      .filter((s) => s.name.toLowerCase().includes(term) || s.postcode.split(/,\s*/).some((p) => p.startsWith(term)))
       .sort((a, b) => Number(!a.name.toLowerCase().startsWith(term)) - Number(!b.name.toLowerCase().startsWith(term)) || a.name.localeCompare(b.name))
       .slice(0, 8);
   }, [q, suburbs]);

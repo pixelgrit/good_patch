@@ -83,7 +83,7 @@ export const licensedAdapters: Adapter[] = SPECS.map((spec) => ({
     const rows = await spec.fetchRows(process.env[spec.envKey]!, ctx);
     let n = 0;
     for (const row of rows) {
-      const targets = row.postcode ? ctx.suburbs.filter((s) => s.postcode === row.postcode) : [findByName(ctx, row.suburb)].filter(Boolean);
+      const targets = row.postcode ? ctx.suburbs.filter((s) => s.postcode.split(/,\s*/).includes(row.postcode!)) : [findByName(ctx, row.suburb)].filter(Boolean);
       for (const s of targets) {
         if (!s) continue;
         const types: PropertyType[] = row.type === 'all' ? ['houses', 'units'] : [row.type];

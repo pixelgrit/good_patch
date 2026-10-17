@@ -75,6 +75,7 @@ export interface Suburb {
   /** ABS SAL 2021 code. */
   code: string;
   name: string;
+  /** Postcodes covering at least 10% of the suburb, comma-separated ("3000, 3004"). */
   postcode: string;
   lga: string;
   centroid: [number, number];

@@ -65,14 +65,17 @@ function pickField(f: Area | undefined, patterns: RegExp[], what: string): strin
   throw new Error(`no ${what} field among ${keys.join(', ')}`);
 }
 
-/** For each suburb, the property of the polygon covering the largest share of it. */
-function largestOverlap(sal: Feature<Polygon | MultiPolygon, { code: string }>[], areas: Area[], field: string): Map<string, string> {
+/**
+ * For each suburb, the values of the polygons covering it, largest share first.
+ * Values covering less than `minShare` of the suburb are dropped (the largest is always kept).
+ */
+function overlaps(sal: Feature<Polygon | MultiPolygon, { code: string }>[], areas: Area[], field: string, minShare: number): Map<string, string[]> {
   const idx = areas.map((f) => ({ f: turf.simplify(f, { tolerance: 0.0002, highQuality: false }), bb: turf.bbox(f), v: String(f.properties[field] ?? '') }));
-  const out = new Map<string, string>();
+  const out = new Map<string, string[]>();
   for (const s of sal) {
     const bb = turf.bbox(s);
-    let best = '';
-    let bestArea = 0;
+    const total = turf.area(s);
+    const byValue = new Map<string, number>();
     for (const { f, bb: o, v } of idx) {
       if (!v || o[0] > bb[2] || o[2] < bb[0] || o[1] > bb[3] || o[3] < bb[1]) continue;
       let a = 0;
@@ -82,12 +85,11 @@ function largestOverlap(sal: Feature<Polygon | MultiPolygon, { code: string }>[]
       } catch {
         a = 0;
       }
-      if (a > bestArea) {
-        bestArea = a;
-        best = v;
-      }
+      if (a > 0) byValue.set(v, (byValue.get(v) ?? 0) + a);
     }
-    if (best) out.set(s.properties.code, best);
+    const ranked = [...byValue.entries()].sort((x, y) => y[1] - x[1]);
+    const kept = ranked.filter(([, a], i) => i === 0 || a / total >= minShare).map(([v]) => v);
+    if (kept.length) out.set(s.properties.code, kept);
   }
   return out;
 }
@@ -98,6 +100,8 @@ export const vicmapAdmin: Fetcher = {
   id: 'vicmap-admin',
   name: 'Vicmap Admin council and postcode areas',
   cadence: 'yearly',
+  // 2: every postcode covering at least 10% of the suburb.
+  version: 2,
   needs: ['abs-boundaries'],
   async run() {
     const sal = readJsonOut<FeatureCollection<Polygon | MultiPolygon, { code: string; name: string }>>('sal-metro.geojson');
@@ -109,9 +113,14 @@ export const vicmapAdmin: Fetcher = {
     if (lgas.length < 20 || pcs.length < 100) throw new Error(`only ${lgas.length} council and ${pcs.length} postcode polygons`);
     const lgaField = pickField(lgas[0], [/^lga_name$/i, /^lga$/i, /lga.*name/i, /^name$/i], 'council name');
     const pcField = pickField(pcs[0], [/^postcode$/i, /postcode/i], 'postcode');
-    const lgaOf = largestOverlap(sal.features, lgas, lgaField);
-    const pcOf = largestOverlap(sal.features, pcs, pcField);
-    const out = sal.features.map((s) => ({ SAL_CODE_2021: s.properties.code, lga: titleCase(lgaOf.get(s.properties.code) ?? ''), postcode: pcOf.get(s.properties.code) ?? '' }));
+    const lgaOf = overlaps(sal.features, lgas, lgaField, 1);
+    // Suburbs often span postcodes (Melbourne is 3000 and 3004): keep each one covering 10% or more.
+    const pcOf = overlaps(sal.features, pcs, pcField, 0.1);
+    const out = sal.features.map((s) => ({
+      SAL_CODE_2021: s.properties.code,
+      lga: titleCase(lgaOf.get(s.properties.code)?.[0] ?? ''),
+      postcode: [...(pcOf.get(s.properties.code) ?? [])].sort().join(', '),
+    }));
     const n = out.filter((r) => r.lga && r.postcode).length;
     if (n < out.length * 0.9) throw new Error(`council and postcode found for only ${n} of ${out.length} suburbs`);
     writeCsv('admin-sal.csv', out);
