@@ -11,7 +11,7 @@ import { parseSdmxCsv, pickMembers } from '../lib/sdmx';
 import { parseRentSheet, parseVgvQuarterly, parseVgvTimeSeries, periodEnd, readWorkbook } from '../lib/sheet';
 import { suburbKey } from '../lib/common';
 
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'propa-test-'));
+const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'good-patch-test-'));
 const names = ['ABBOTSFORD', 'FITZROY', 'ST KILDA EAST', 'CARLTON NORTH', ...Array.from({ length: 300 }, (_, i) => `TESTVILLE ${i}`)];
 
 function book(sheets: Record<string, unknown[][]>, file: string) {

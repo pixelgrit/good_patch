@@ -273,7 +273,7 @@ export function appleLikeStyle(): StyleSpecification {
 
   return {
     version: 8,
-    name: 'Propa light',
+    name: 'Good patch light',
     glyphs: GLYPHS,
     sources: { osm: { type: 'vector', url: TILEJSON_URL } },
     layers,

@@ -1,6 +1,6 @@
 # Data sources
 
-Every source Propa uses, how it's fetched, how often the publisher updates it, and what it feeds. All automated sources are free and published by government agencies under CC BY 4.0, so keep the attribution if you publish the app.
+Every source Good patch uses, how it's fetched, how often the publisher updates it, and what it feeds. All automated sources are free and published by government agencies under CC BY 4.0, so keep the attribution if you publish the app.
 
 `npm run fetch` downloads each source that's due, normalises it into `data/sources/`, and records the result in `data/sources/manifest.json`. `npm run data` then joins everything onto suburbs. The scheduled GitHub workflow (`.github/workflows/refresh-data.yml`) runs both every Monday and commits any changes.
 

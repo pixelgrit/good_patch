@@ -199,8 +199,11 @@ export const absCensus: Adapter = {
       const units = num(r.unit_share);
       if (units != null) s.unitShare = units;
       const semi = num(r.semi_share);
-      const high = num(r.flat_highrise_share);
-      if (semi != null && high != null) s.dwellingMix = { semi, lowrise: num(r.flat_lowrise_share) ?? 0, midrise: num(r.flat_midrise_share) ?? 0, highrise: high };
+      const low = num(r.flat_lowrise_share);
+      const mid = num(r.flat_midrise_share);
+      // If the 4+ storey column isn't found, it's what's left of all flats after 1–3 storey blocks.
+      const high = num(r.flat_highrise_share) ?? (units != null && low != null && mid != null ? Math.max(0, units - low - mid) : null);
+      if (semi != null && low != null && mid != null && high != null) s.dwellingMix = { semi, lowrise: low, midrise: mid, highrise: high };
       const rentWeekly = num(r.median_rent_weekly);
       if (rentWeekly) setMetric(s, 'censusRent', rentWeekly, 'abs-census', asAt);
       const weekly = num(r.median_household_income_weekly);

@@ -57,7 +57,7 @@ jobs:
 
       - name: Commit changes
         run: |
-          git config user.name "propa-data-bot"
+          git config user.name "good-patch-data-bot"
           git config user.email "actions@users.noreply.github.com"
           git add data/sources public/data
           if git diff --cached --quiet; then

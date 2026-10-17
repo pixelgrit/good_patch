@@ -48,7 +48,7 @@ export default function App() {
 
   const brand = (
     <div className="brand">
-      <h1>Propa</h1>
+      <h1>Good patch</h1>
       <span className="muted">Melbourne suburb investment map</span>
     </div>
   );

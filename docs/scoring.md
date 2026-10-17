@@ -1,6 +1,6 @@
 # How the score works, and why
 
-Propa ranks suburbs, not individual properties. A suburb score summarises what the public data can say about a suburb's prospects for one buyer goal. It cannot see the condition, block or street of a specific home.
+Good patch ranks suburbs, not individual properties. A suburb score summarises what the public data can say about a suburb's prospects for one buyer goal. It cannot see the condition, block or street of a specific home.
 
 ## The method
 
@@ -45,7 +45,7 @@ Units need more care, because a suburb's unit median can be a studio in a tower 
 - **The suburb's median house price.** This captures land value and amenity the other measures miss. It lifts the fit from R² 0.41 to 0.54.
 - **The Census dwelling mix.** Townhouses and semis, and flats in 1–2, 3 and 4+ storey blocks, as shares of occupied dwellings.
 
-Suburbs missing an input fall back to the simpler model. The house model fits at about R² 0.67.
+Together they lift the unit fit from R² 0.41 to 0.55; most of the gain comes from the house price. The rest of the gap is largely noise from which units happened to sell in the quarter. Suburbs missing an input fall back to the simpler model. The house model fits at about R² 0.67.
 
 A negative gap (cheaper than the model expects) can also reflect something the model can't see, such as a main road, an industrial edge or a new estate without mature amenities. Use it as a prompt to look closer, not as a verdict.
 

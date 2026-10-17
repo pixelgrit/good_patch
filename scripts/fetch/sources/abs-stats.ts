@@ -100,7 +100,7 @@ export const absCensus: Fetcher = {
     const semi = optional([/^OPDs_SD_r_t_h_th_Tot/i, /SD_r_t_h_th.*Tot/i, /Semi.*Tot/i], 'semi-detached, row or townhouse');
     const low = optional([/^OPDs_F_ap_I_1or2_sty/i, /F_ap.*1or2_sty/i, /1_or_2_sty/i], 'flats in 1–2 storey blocks');
     const mid = optional([/^OPDs_F_ap_I_3_sty/i, /F_ap.*_3_sty/i], 'flats in 3 storey blocks');
-    const high = optional([/^OPDs_F_ap_I_4_or_more_sty/i, /F_ap.*4_or_more_sty/i, /4_or_more_sty/i], 'flats in 4+ storey blocks');
+    const high = optional([/^OPDs_F_ap_I_4_or_more_sty/i, /F_ap.*4_or_mo/i, /F_ap.*4.*sty/i], 'flats in 4+ storey blocks');
     if (!semi || !high) console.warn(`  G36 columns: ${c36.join(', ')}`);
 
     const share = (d: Record<string, string> | undefined, col: string | null, occ: number | null) => (d && col && occ ? ((parseNumber(d[col]) ?? 0) / occ).toFixed(4) : '');

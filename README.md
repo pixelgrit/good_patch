@@ -1,6 +1,6 @@
-# Propa
+# Good patch
 
-**Live site:** https://pixelgrit.github.io/propa/
+**Live site:** https://pixelgrit.github.io/good_patch/
 
 A heat map of Melbourne suburbs for property investors. Every suburb is coloured by a composite investment score built for your goal (a 3–5 year buy and sell, a long-term investment or a home to live in) from yield, growth, value, supply, demand, location and risk, and every score breaks down into its parts with the source and date of each number.
 

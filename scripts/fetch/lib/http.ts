@@ -9,7 +9,7 @@ setGlobalDispatcher(new Agent({ headersTimeout: 15 * 60_000, bodyTimeout: 15 * 6
 
 // Some agency sites reject non-browser user agents with 403 or a dropped connection.
 const BROWSER_HEADERS = {
-  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15 propa-data-refresh/1.0',
+  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15 good-patch-data-refresh/1.0',
   'Accept-Language': 'en-AU,en;q=0.9',
 };
 
