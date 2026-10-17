@@ -219,8 +219,8 @@ export const absCensus: Adapter = {
 };
 
 export const absAdmin: Adapter = {
-  id: 'abs-admin',
-  name: 'ABS council and postcode by suburb',
+  id: 'vicmap-admin',
+  name: 'Vicmap Admin council and postcode by suburb',
   stage: 'metrics',
   licensed: false,
   available: files('admin-sal.csv'),

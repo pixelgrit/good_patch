@@ -44,6 +44,81 @@ async function wfsAll(typeName: string, cql: string): Promise<Area[]> {
   return all;
 }
 
+/* ------------------------------------------------------------------ */
+/* Vicmap Admin: council and postcode                                   */
+/* ------------------------------------------------------------------ */
+
+/** One WFS page of every attribute (field names vary between Vicmap layers). */
+async function wfsPage(typeName: string, cql: string): Promise<Area[]> {
+  const params = new URLSearchParams({ service: 'WFS', version: '2.0.0', request: 'GetFeature', typeNames: typeName, outputFormat: 'application/json', srsName: 'EPSG:4326', count: '5000', CQL_FILTER: cql });
+  const page = await getJson<FeatureCollection<Polygon | MultiPolygon, Record<string, unknown>>>(`${WFS}?${params}`, { timeoutMs: 600_000 });
+  return page.features.filter((f) => f.geometry);
+}
+
+/** The first property whose name matches, in order of preference. */
+function pickField(f: Area | undefined, patterns: RegExp[], what: string): string {
+  const keys = Object.keys(f?.properties ?? {});
+  for (const p of patterns) {
+    const k = keys.find((x) => p.test(x));
+    if (k) return k;
+  }
+  throw new Error(`no ${what} field among ${keys.join(', ')}`);
+}
+
+/** For each suburb, the property of the polygon covering the largest share of it. */
+function largestOverlap(sal: Feature<Polygon | MultiPolygon, { code: string }>[], areas: Area[], field: string): Map<string, string> {
+  const idx = areas.map((f) => ({ f: turf.simplify(f, { tolerance: 0.0002, highQuality: false }), bb: turf.bbox(f), v: String(f.properties[field] ?? '') }));
+  const out = new Map<string, string>();
+  for (const s of sal) {
+    const bb = turf.bbox(s);
+    let best = '';
+    let bestArea = 0;
+    for (const { f, bb: o, v } of idx) {
+      if (!v || o[0] > bb[2] || o[2] < bb[0] || o[1] > bb[3] || o[3] < bb[1]) continue;
+      let a = 0;
+      try {
+        const hit = turf.intersect(turf.featureCollection([s, f]));
+        a = hit ? turf.area(hit) : 0;
+      } catch {
+        a = 0;
+      }
+      if (a > bestArea) {
+        bestArea = a;
+        best = v;
+      }
+    }
+    if (best) out.set(s.properties.code, best);
+  }
+  return out;
+}
+
+const titleCase = (v: string) => v.toLowerCase().replace(/\b([a-z])/g, (m) => m.toUpperCase()).replace(/\s*\((city|shire|rural city|borough)\)\s*$/i, '');
+
+export const vicmapAdmin: Fetcher = {
+  id: 'vicmap-admin',
+  name: 'Vicmap Admin council and postcode areas',
+  cadence: 'yearly',
+  needs: ['abs-boundaries'],
+  async run() {
+    const sal = readJsonOut<FeatureCollection<Polygon | MultiPolygon, { code: string; name: string }>>('sal-metro.geojson');
+    if (!sal) throw new Error('needs abs-boundaries output first');
+    const [minx, miny, maxx, maxy] = turf.bbox(sal);
+    const bbox = `BBOX(geom,${miny},${minx},${maxy},${maxx})`;
+    const lgas = await wfsPage('open-data-platform:lga_polygon', bbox);
+    const pcs = await wfsPage('open-data-platform:postcode_polygon', bbox);
+    if (lgas.length < 20 || pcs.length < 100) throw new Error(`only ${lgas.length} council and ${pcs.length} postcode polygons`);
+    const lgaField = pickField(lgas[0], [/^lga_name$/i, /^lga$/i, /lga.*name/i, /^name$/i], 'council name');
+    const pcField = pickField(pcs[0], [/^postcode$/i, /postcode/i], 'postcode');
+    const lgaOf = largestOverlap(sal.features, lgas, lgaField);
+    const pcOf = largestOverlap(sal.features, pcs, pcField);
+    const out = sal.features.map((s) => ({ SAL_CODE_2021: s.properties.code, lga: titleCase(lgaOf.get(s.properties.code) ?? ''), postcode: pcOf.get(s.properties.code) ?? '' }));
+    const n = out.filter((r) => r.lga && r.postcode).length;
+    if (n < out.length * 0.9) throw new Error(`council and postcode found for only ${n} of ${out.length} suburbs`);
+    writeCsv('admin-sal.csv', out);
+    return { asAt: new Date().toISOString().slice(0, 10), url: WFS, rows: out.length, files: ['admin-sal.csv'], message: `${lgas.length} council and ${pcs.length} postcode polygons (fields ${lgaField}, ${pcField})` };
+  },
+};
+
 export const vicmapPlanning: Fetcher = {
   id: 'vicmap-planning',
   name: 'Vicmap Planning zones and overlays',

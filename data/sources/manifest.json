@@ -122,13 +122,6 @@
         "transport-stops.geojson"
       ],
       "message": "83 route shapes, 1844 stops"
-    },
-    "abs-admin": {
-      "id": "abs-admin",
-      "name": "ABS council and postcode areas (ASGS 2021)",
-      "fetchedAt": "2026-10-17T01:45:37.237Z",
-      "status": "failed",
-      "message": "ArcGIS error: Failed to execute query."
     }
   }
 }
