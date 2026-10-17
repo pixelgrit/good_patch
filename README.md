@@ -2,7 +2,7 @@
 
 **Live site:** https://pixelgrit.github.io/propa/
 
-A heat map of Melbourne suburbs for property investors. Every suburb is coloured by a composite investment score built from the metrics buyers' advocates use — price, yield, supply, demand, momentum, quality and risk — and every score breaks down into its parts with the source and date of each number.
+A heat map of Melbourne suburbs for property investors. Every suburb is coloured by a composite investment score built for your goal (a 3–5 year buy and sell, a long-term investment or a home to live in) from yield, growth, value, supply, demand, location and risk, and every score breaks down into its parts with the source and date of each number.
 
 > Scores are a research aid, not financial advice.
 
@@ -43,9 +43,10 @@ The basemap is a built-in Apple Maps–style light style (`src/lib/basemap.ts`) 
 ## What's in the app
 
 - **Map**: opens on Melbourne with the rest of Australia muted. Suburbs are filled on a colour-blind-safe viridis-family ramp (brighter is stronger). Grey means "not enough data" — a suburb missing more than 35% of its weighted inputs is never coloured as if scored.
-- **Colour by**: the investment score or any single metric (price, rent, yield, vacancy, days on market, approvals ratio, stock, clearance, growth, owner-occupiers, SEIFA, distance, tram share). For single metrics the colour follows the metric's goodness percentile, so brighter is always better; the legend shows the raw values.
+- **Colour by**: the investment score or any single metric (price, rent, yield, growth, value gap, discount to neighbours, volatility, turnover, approvals ratio, owner-occupiers, SEIFA, distance, tram share, and vacancy, days on market, stock and clearance when a licensed feed is connected). For single metrics the colour follows the metric's goodness percentile, so brighter is always better; the legend shows the raw values.
 - **Houses / units** switch: every type-specific metric and percentile is computed separately.
-- **Strategy presets**: Balanced, Cashflow (yield and vacancy weighted up) and Growth (supply, days-on-market trend, owner-occupiers and SEIFA weighted up). The weights sliders let you set your own mix; the map recolours live. An optional toggle deducts points for risk flags.
+- **Buying for**: 3–5 year buy and sell, long-term investment or owner-occupier. Each goal weights the categories and metrics differently (see [docs/scoring.md](docs/scoring.md)).
+- **Focus**: Balanced, Cashflow (yield and rent growth weighted up) or Growth (growth, value and supply weighted up), applied on top of the goal. The weights sliders let you set your own mix; the map recolours live. An optional toggle deducts points for risk flags.
 - **Hover** shows the score and the two strongest and two weakest factors. **Click** opens the detail panel: key figures with source and "as at" date (flagged when stale), category breakdown, a full metric table (raw value, percentile, weight, points), five-year sparklines, tram and train access, risk flags and zoning.
 - **Search** by suburb or postcode.
 - **Filters**: budget range, minimum yield, maximum vacancy, maximum distance to CBD, tram suburbs only.
@@ -55,79 +56,109 @@ The basemap is a built-in Apple Maps–style light style (`src/lib/basemap.ts`) 
 
 ## Scoring model
 
-1. **Percentiles.** For each metric, the build script converts every suburb's raw value to a 0–100 percentile across all suburbs with data, separately for houses and units. The percentile is stored as a *goodness* percentile: for "lower is better" metrics (vacancy, approvals ratio, days on market) it is inverted, so 100 always means best. Ties share a mid-rank. See `applyPercentiles()` in `src/lib/scoring.ts`.
-2. **Category scores.** Each category score is the weighted mean of its metrics' percentiles, using the in-category weights below, adjusted by any preset multipliers. Missing metrics are left out of the mean.
-3. **Composite.** The composite is the weighted mean of category scores using the preset or slider weights. A metric with no data in any suburb (for example search interest, until a licensed feed is connected) is dropped entirely rather than counted as missing.
-4. **Not enough data.** If more than 35% of the planned weight is missing (`MAX_MISSING_SHARE` in `src/lib/presets.ts`), the suburb is shown grey and labelled "not enough data".
+The method, the research behind it and its limits are written up in [docs/scoring.md](docs/scoring.md).
+
+1. **Percentiles.** For each metric, the build script converts every suburb's raw value to a 0–100 percentile across all suburbs with data, separately for houses and units. The percentile is stored as a *goodness* percentile: for "lower is better" metrics (approvals ratio, volatility, value gap) it is inverted, so 100 always means best. Ties share a mid-rank. See `applyPercentiles()` in `src/lib/scoring.ts`.
+2. **Category scores.** Each category score is the weighted mean of its metrics' percentiles, using the in-category weights below adjusted by the goal's and focus's multipliers. Missing metrics are left out of the mean.
+3. **Composite.** The composite is the weighted mean of category scores using the goal and focus (or slider) weights. A metric held by fewer than 40% of priced suburbs (`MIN_COVERAGE`) is dropped rather than counted as missing.
+4. **Not enough data.** A suburb with no median price for the property type, or missing more than 35% of the planned weight (`MAX_MISSING_SHARE` in `src/lib/presets.ts`), is shown grey and labelled "not enough data".
 5. **Risk penalties (optional).** Flood overlay −5, Bushfire Management Overlay −5, oversupply −8 (approvals ratio above 2.5% with stock on market rising), apartment-heavy −4 (more than 50% units and 55% renters). Heritage overlays are shown but not penalised.
 6. **Breakdown.** Each metric's effective weight is `category share × metric share within the available metrics of that category`, so the points column in the detail panel sums exactly to the composite.
 
-### Presets
+### Goals and focus
 
-| Category | Balanced | Cashflow | Growth |
+"Buying for" picks the goal; "Focus" tilts it. Category weights by goal (Balanced focus):
+
+| Category | 3–5 year buy and sell | Long-term investment | Owner-occupier |
 | --- | --- | --- | --- |
-| Yield | 20 | 40 | 5 |
-| Supply | 20 | 10 | 25 |
-| Demand | 20 | 25 | 20 |
-| Growth | 20 | 10 | 20 |
-| Quality | 20 | 15 | 30 |
+| Yield | 10 | 20 | 0 |
+| Growth | 25 | 15 | 10 |
+| Value | 25 | 10 | 15 |
+| Supply | 15 | 15 | 10 |
+| Demand | 15 | 5 | 0 |
+| Location | 5 | 25 | 50 |
+| Risk | 5 | 10 | 15 |
 | Tram access | 0 | 0 | 0 |
 
-Metric multipliers: Cashflow doubles vacancy and lifts gross yield and 1-year rent growth by 1.5×. Growth doubles days-on-market trend, owner-occupier ratio and SEIFA, and lifts stock trend and approvals ratio by 1.5×.
+- **3–5 year buy and sell** metric multipliers: `growth1y` ×3, `growth3y` ×1.5, `growth5y` ×0.5, `growth10y` ×0, `rentGrowth1y` ×1, `rentGrowth3y` ×0.5, `turnover` ×2, `dom` ×1.5, `ownerOccupier` ×0.5, `hazard` ×0.5.
+- **Long-term investment** metric multipliers: `growth1y` ×0.25, `growth3y` ×0.5, `growth5y` ×1, `growth10y` ×2, `rentGrowth1y` ×0.5, `rentGrowth3y` ×1.5, `nrzShare` ×2, `landToAsset` ×2, `turnover` ×0.
+- **Owner-occupier** metric multipliers: `growth1y` ×0, `growth3y` ×0.5, `growth5y` ×1, `growth10y` ×2, `rentGrowth1y` ×0, `rentGrowth3y` ×0, `priceToIncome` ×1.5, `neighbourGap` ×0.5, `ownerOccupier` ×2, `distanceTrain` ×1.5, `hazard` ×2, `approvalsRatio` ×0.5.
+
+Focus tilts (multiplied onto the goal's category weights):
+
+- **Balanced**: no change.
+- **Cashflow**: yield ×2, growth ×0.7, location ×0.8; `rentGrowth1y` ×2, `rentGrowth3y` ×2.
+- **Growth**: yield ×0.4, growth ×1.4, value ×1.3, supply ×1.3.
+- Cashflow is not offered for owner-occupiers.
 
 ## Metrics
 
-Default weights are shares within each category under the Balanced preset.
+Weights are the default share within each category, before a goal's multipliers. Metrics from licensed feeds (SQM Research, Cotality, Domain) only count once a key is connected.
 
 **Yield**
 
 | Metric | Key | Source | Direction | Weight in category | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Gross rental yield | `grossYield` | Derived | Higher is better | 75% | (Median weekly rent × 52) / median price. |
-| Price-to-income ratio | `priceToIncome` | Derived | Lower is better | 25% | Median price / median annual household income (Census). |
-
-**Supply**
-
-| Metric | Key | Source | Direction | Weight in category | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Building approvals ratio | `approvalsRatio` | ABS Building Approvals (8731.0) | Lower is better | 29% | Dwelling approvals in the last 12 months / total dwelling stock. Lower is better. Above ~2.5% hints at future oversupply. |
-| Stock on market | `stockOnMarket` | SQM Research | Lower is better | 29% | Active listings / total dwellings. Around 1–1.3% is balanced; lower is tighter. |
-| Inventory | `inventoryMonths` | Cotality | Lower is better | 21% | Months to sell current listings at the current sales rate. Under 6 months suggests upward price pressure. |
-| Stock on market trend | `supplyTrend` | SQM Research | Lower is better | 21% | Change in listings over 6 months. Falling stock is a positive signal. |
-
-**Demand**
-
-| Metric | Key | Source | Direction | Weight in category | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Vacancy rate | `vacancy` | SQM Research | Lower is better | 28% | Share of rental stock vacant. Around 3% is balanced; lower means demand exceeds supply. |
-| Days on market | `dom` | Cotality | Lower is better | 17% | Median days from listing to sale. Under 30 strong, 30–60 balanced, over 90 weak. |
-| Auction clearance rate | `clearance` | Domain | Higher is better | 17% | Share of reported auctions that sold. Above ~65% indicates strong demand. |
-| Vendor discounting | `vendorDiscount` | Cotality | Lower is better | 11% | Average % below initial asking price. |
-| Days on market trend | `domTrend` | Cotality | Lower is better | 17% | Change in days on market over 12 months. Falling days on market plus falling stock is the strongest signal. |
-| Search interest per listing | `searchInterest` | Search interest feed | Higher is better | 11% | Online search interest per listing (licensed feed). |
+| Gross rental yield | `grossYield` | Derived | Higher is better | 100% | (Median weekly rent × 52) / median price. |
 
 **Growth**
 
 | Metric | Key | Source | Direction | Weight in category | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Capital growth, 1 year | `growth1y` | Valuer-General Victoria median prices | Higher is better | 8% | Change in median price over 1 year. |
-| Capital growth, 3 years | `growth3y` | Valuer-General Victoria median prices | Higher is better | 15% | Change in median price over 3 years (total). |
-| Capital growth, 5 years | `growth5y` | Valuer-General Victoria median prices | Higher is better | 23% | Change in median price over 5 years (total). |
-| Capital growth, 10 years | `growth10y` | Valuer-General Victoria median prices | Higher is better | 23% | Change in median price over 10 years (total). |
-| Rental growth, 1 year | `rentGrowth1y` | Homes Victoria Rental Report | Higher is better | 15% | Change in median rent over 1 year. |
-| Rental growth, 3 years | `rentGrowth3y` | Homes Victoria Rental Report | Higher is better | 15% | Change in median rent over 3 years (total). |
+| Capital growth, 1 year | `growth1y` | Valuer-General Victoria median prices | Higher is better | 20% | Change in median price over 1 year. Short-run momentum: price trends tend to persist for a year or two. |
+| Capital growth, 3 years | `growth3y` | Valuer-General Victoria median prices | Higher is better | 20% | Change in median price over 3 years (total). |
+| Capital growth, 5 years | `growth5y` | Valuer-General Victoria median prices | Higher is better | 20% | Change in median price over 5 years (total). |
+| Capital growth, 10 years | `growth10y` | Valuer-General Victoria median prices | Higher is better | 20% | Change in median price over 10 years (total). A long track record reflects lasting location strengths more than the current cycle. |
+| Rental growth, 1 year | `rentGrowth1y` | Homes Victoria Rental Report | Higher is better | 10% | Change in median rent over 1 year. |
+| Rental growth, 3 years | `rentGrowth3y` | Homes Victoria Rental Report | Higher is better | 10% | Change in median rent over 3 years (total). |
 
-**Quality**
+**Value**
 
 | Metric | Key | Source | Direction | Weight in category | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Owner-occupier ratio | `ownerOccupier` | ABS Census 2021 | Higher is better | 22% | Share of occupied dwellings owned outright or with a mortgage. Above ~70% is preferred for stability. |
-| SEIFA IRSAD decile | `seifa` | ABS SEIFA 2021 (IRSAD) | Higher is better | 17% | Index of relative socio-economic advantage and disadvantage, Victorian decile. |
-| Population growth | `popGrowth` | ABS Regional Population (SA2) | Higher is better | 11% | Annual estimated resident population growth (SA2). |
-| Distance to CBD | `distanceCbd` | Derived | Lower is better | 17% | Straight-line distance from suburb centroid to Melbourne GPO. |
-| Distance to train | `distanceTrain` | DTP Public Transport Lines and Stops | Lower is better | 11% | Distance from suburb centroid to the nearest metro train station. |
-| Neighbourhood residential zone | `nrzShare` | Vicmap Planning (zones and overlays) | Higher is better | 11% | Share of residential land zoned NRZ — a proxy for scarcity and limited future density. |
-| Land-to-asset ratio | `landToAsset` | Valuer-General Victoria median prices | Higher is better | 11% | Site value / capital improved value. Houses only. |
+| Price against fundamentals | `valueGap` | Derived | Lower is better | 44% | How far the median price sits above (+) or below (−) what similar suburbs fetch, given household income, socio-economic standing, distance to the CBD and to a train station, and the share of apartments. Fitted across all suburbs each build. Prices tend to drift back toward fundamentals, so below-model suburbs have more room to catch up. |
+| Discount to neighbours | `neighbourGap` | Derived | Higher is better | 33% | How much cheaper (+) or dearer (−) the suburb is than the median of suburbs within 4 km. Cheaper suburbs next to dearer ones tend to gain most in a rising market (the ripple effect). |
+| Price-to-income ratio | `priceToIncome` | Derived | Lower is better | 22% | Median price / median annual household income (Census). Lower is more affordable for local buyers. |
+
+**Supply**
+
+| Metric | Key | Source | Direction | Weight in category | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Building approvals ratio | `approvalsRatio` | ABS Building Approvals (8731.0) | Lower is better | 22% | Dwelling approvals in the last 12 months / total dwelling stock. Lower is better. Above ~2.5% hints at future oversupply. |
+| Neighbourhood residential zone | `nrzShare` | Vicmap Planning (zones and overlays) | Higher is better | 11% | Share of residential land zoned NRZ, which limits new density. Where supply is hard to add, prices rise more when demand grows. |
+| Land-to-asset ratio | `landToAsset` | Valuer-General Victoria median prices | Higher is better | 11% | Site value / capital improved value. Land appreciates; buildings depreciate. Houses only. |
+| Stock on market | `stockOnMarket` | SQM Research | Lower is better | 22% | Active listings / total dwellings. Around 1–1.3% is balanced; lower is tighter. |
+| Inventory | `inventoryMonths` | Cotality | Lower is better | 17% | Months to sell current listings at the current sales rate. Under 6 months suggests upward price pressure. |
+| Stock on market trend | `supplyTrend` | SQM Research | Lower is better | 17% | Change in listings over 6 months. Falling stock is a positive signal. |
+
+**Demand**
+
+| Metric | Key | Source | Direction | Weight in category | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Population growth | `popGrowth` | ABS Regional Population (SA2) | Higher is better | 13% | Annual estimated resident population growth (SA2). |
+| Sales turnover | `turnover` | Valuer-General Victoria median prices | Higher is better | 9% | Annualised sales in the latest quarter / total dwellings. A liquid market makes it easier to sell at a fair price when you want to. |
+| Vacancy rate | `vacancy` | SQM Research | Lower is better | 22% | Share of rental stock vacant. Around 3% is balanced; lower means demand exceeds supply. |
+| Days on market | `dom` | Cotality, via Your Investment Property | Lower is better | 13% | Median days from listing to sale. Under 30 strong, 30–60 balanced, over 90 weak. |
+| Auction clearance rate | `clearance` | Domain | Higher is better | 13% | Share of reported auctions that sold. Above ~65% indicates strong demand. |
+| Vendor discounting | `vendorDiscount` | Cotality | Lower is better | 9% | Average % below initial asking price. |
+| Days on market trend | `domTrend` | Cotality | Lower is better | 13% | Change in days on market over 12 months. Falling days on market plus falling stock is the strongest signal. |
+| Search interest per listing | `searchInterest` | Search interest feed | Higher is better | 9% | Online search interest per listing (licensed feed). |
+
+**Location**
+
+| Metric | Key | Source | Direction | Weight in category | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Distance to CBD | `distanceCbd` | Derived | Lower is better | 36% | Straight-line distance from the suburb centre to the Melbourne GPO. Over decades, Melbourne suburbs closer to the CBD have grown faster. |
+| Distance to train | `distanceTrain` | DTP Public Transport Lines and Stops | Lower is better | 18% | Distance from suburb centroid to the nearest metro train station. |
+| SEIFA IRSAD decile | `seifa` | ABS SEIFA 2021 (IRSAD) | Higher is better | 27% | Index of relative socio-economic advantage and disadvantage, Victorian decile. |
+| Owner-occupier ratio | `ownerOccupier` | ABS Census 2021 | Higher is better | 18% | Share of occupied dwellings owned outright or with a mortgage. Above ~70% suggests a settled community and steady demand. |
+
+**Risk**
+
+| Metric | Key | Source | Direction | Weight in category | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Price volatility | `volatility` | Valuer-General Victoria median prices | Lower is better | 60% | Standard deviation of yearly changes in the median price over up to 10 years. Steadier prices mean less chance of having to sell in a dip. |
+| Flood and bushfire overlays | `hazard` | Vicmap Planning (zones and overlays) | Lower is better | 40% | Number of hazard overlays (flood, bushfire) covering parts of the suburb: 0, 1 or 2. |
 
 **Tram access**
 
@@ -139,9 +170,12 @@ Default weights are shares within each category under the Balanced preset.
 
 | Metric | Key | Source | Direction | Weight in category | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Median sale price | `medianPrice` | Valuer-General Victoria median prices | Context only | — | Median sale price over the last 12 months. |
-| Median weekly rent | `medianRent` | Homes Victoria Rental Report | Context only | — | Median weekly rent for new lettings, moving annual. |
+| Median sale price | `medianPrice` | Valuer-General Victoria median prices | Context only | — | Median sale price for the latest quarter (Valuer-General Victoria). |
+| Median weekly rent | `medianRent` | Homes Victoria Rental Report | Context only | — | Moving annual median rent for new leases (Homes Victoria). Where a suburb has no Homes Victoria figure, it is estimated from the Census median rent scaled to today’s rents, and marked approximate. |
+| Sales, last 12 months | `sales12m` | Cotality, via Your Investment Property | Context only | — | Number of sales over the last 12 months (Cotality). Medians from fewer than 20 sales are left out. |
+| Sales, latest quarter | `salesQuarter` | Valuer-General Victoria median prices | Context only | — | Number of sales in the latest quarter (Valuer-General Victoria). |
 | Median household income | `medianIncome` | ABS Census 2021 | Context only | — | Median annual household income (Census weekly × 52). |
+| Census median rent | `censusRent` | ABS Census 2021 | Context only | — | Median weekly rent paid by all renting households at the Census. |
 | Total dwellings | `dwellings` | ABS Census 2021 | Context only | — | Total private dwellings (Census). |
 | Building approvals | `buildingApprovals` | ABS Building Approvals (8731.0) | Context only | — | Dwelling approvals in the last 12 months. |
 
@@ -157,7 +191,7 @@ Each figure is stored as `{ value, source, asAt }`. The UI flags a figure when i
 2. **Transport** — `dtp-transport` (DTP Public Transport Lines and Stops, filtered to `METRO TRAM` and `METRO TRAIN`) or the approximate traced network.
 3. **Metrics** — the curated figures in `data/real/` first, then each source file or API in `data/raw/`, which overwrites the values it covers. (`--mock-only` swaps all of this for the mock seed.)
 
-Then it computes geography (distance to CBD and nearest station, tram routes, 400 m and 800 m catchments and each suburb's share within them), derived metrics (gross yield, price-to-income), and percentiles.
+Then it computes geography (distance to CBD and nearest station, tram routes, 400 m and 800 m catchments and each suburb's share within them), derived metrics (Census-based rent estimates where Homes Victoria has none, gross yield, price-to-income, turnover, the value model and discount to neighbours), and percentiles.
 
 | Output | Contents |
 | --- | --- |
@@ -191,7 +225,7 @@ src/
   lib/
     metrics.ts            metric registry (direction, weight, source)
     sources.ts            source registry and staleness
-    presets.ts            presets, missing-data threshold, risk penalties
+    presets.ts            buyer goals, focus tilts, missing-data threshold, risk penalties
     scoring.ts            percentiles, category and composite scores, breakdowns, flags
     colors.ts, format.ts
   hooks/useDerived.ts     memoised scores, filters, map colour values

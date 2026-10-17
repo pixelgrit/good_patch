@@ -225,6 +225,12 @@ input[type='number'].input::-webkit-inner-spin-button {
   font-weight: 500;
 }
 
+.field__hint {
+  font-size: 12px;
+  line-height: 1.45;
+  margin: 4px 0 0;
+}
+
 .field__input {
   display: flex;
   align-items: baseline;

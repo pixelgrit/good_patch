@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useAvailableMetrics, useSuburbByCode } from '../hooks/useDerived';
 import { formatDate, formatDistance, formatMetric, formatScore, formatValue } from '../lib/format';
 import { METRIC_BY_KEY } from '../lib/metrics';
-import { PRESETS } from '../lib/presets';
+import { FOCUS, GOALS } from '../lib/presets';
 import { getMetric, type SuburbScore } from '../lib/scoring';
 import { isStale, SOURCES } from '../lib/sources';
 import { rampColor } from '../lib/colors';
@@ -44,7 +44,8 @@ export function DetailPanel({ scores }: { scores: Map<string, SuburbScore> }) {
 
 function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
   const type = useStore((st) => st.type);
-  const preset = useStore((st) => st.preset);
+  const goal = useStore((st) => st.goal);
+  const focus = useStore((st) => st.focus);
   const pinned = useStore((st) => st.pinned);
   const togglePin = useStore((st) => st.togglePin);
   const setCompareOpen = useStore((st) => st.setCompareOpen);
@@ -53,7 +54,7 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
   const figures = KEY_FIGURES.filter((k) => available.has(k)).slice(0, 8);
   const hasSeries = SERIES.some((x) => (s[type].series[x.key]?.length ?? 0) > 1);
   const isPinned = pinned.includes(s.code);
-  const presetLabel = preset === 'custom' ? 'Custom weights' : PRESETS[preset].label;
+  const focusLabel = focus === 'custom' ? 'Custom weights' : `${FOCUS[focus].label} focus`;
   const approxGeometry = useStore((st) => st.dataset?.approxGeometry);
 
   return (
@@ -75,8 +76,10 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
               </>
             ) : (
               <>
-                {presetLabel} score
-                <span className="muted">{sc.penalty > 0 ? `${sc.penalty} points deducted for risk flags` : 'out of 100, percentile based'}</span>
+                Score for {GOALS[goal].label.toLowerCase()}
+                <span className="muted">
+                  {focusLabel}, out of 100{sc.penalty > 0 ? `, ${sc.penalty} points deducted for risk flags` : ''}
+                </span>
               </>
             )}
           </span>

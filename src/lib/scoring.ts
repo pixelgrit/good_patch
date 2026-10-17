@@ -133,17 +133,22 @@ export interface ScoringOptions {
   applyPenalties: boolean;
 }
 
-/** A metric is scored only when at least this share of suburbs has a value, so patchy sources don't skew comparisons. */
-export const MIN_COVERAGE = 0.5;
+/**
+ * A metric is scored only when at least this share of priced suburbs has a
+ * value, so patchy sources don't skew comparisons.
+ */
+export const MIN_COVERAGE = 0.4;
 
 /** Metric keys that are scored: in a category and covering enough suburbs. Others are shown but don't count as "missing". */
 export function availableMetricKeys(suburbs: Suburb[], type: PropertyType): Set<string> {
   const out = new Set<string>();
-  if (!suburbs.length) return out;
+  // Coverage is measured over suburbs with a median price for this property type.
+  const priced = suburbs.filter((s) => getValue(s, type, 'medianPrice') != null);
+  if (!priced.length) return out;
   for (const def of METRICS) {
     if (!def.category || !def.types.includes(type)) continue;
-    const n = suburbs.filter((s) => getValue(s, type, def.key) != null).length;
-    if (n / suburbs.length >= MIN_COVERAGE) out.add(def.key);
+    const n = priced.filter((s) => getValue(s, type, def.key) != null).length;
+    if (n / priced.length >= MIN_COVERAGE) out.add(def.key);
   }
   return out;
 }
@@ -232,7 +237,9 @@ export function scoreSuburb(s: Suburb, opts: ScoringOptions, available: Set<stri
   }
 
   const missingShare = totalPlanned > 0 ? totalMissing / totalPlanned : 1;
-  const insufficient = missingShare > MAX_MISSING_SHARE || compositeWeight === 0;
+  // Without a median price for this property type there is nothing to buy into: never score it.
+  const unpriced = getValue(s, type, 'medianPrice') == null;
+  const insufficient = unpriced || missingShare > MAX_MISSING_SHARE || compositeWeight === 0;
   const rawScore = insufficient ? null : composite / compositeWeight;
 
   // Effective weights over available data, so contributions sum exactly to the composite.

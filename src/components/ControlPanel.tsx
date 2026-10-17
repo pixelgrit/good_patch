@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { activeFilterCount, useAvailableMetrics } from '../hooks/useDerived';
 import { CATEGORIES, MAP_METRICS, METRIC_BY_KEY, METRICS } from '../lib/metrics';
-import { PRESETS } from '../lib/presets';
+import { focusOptions, GOALS, type GoalId } from '../lib/presets';
 import { TRAM_SUBURB_SHARE, useStore } from '../store';
 import { NumberField, Pill, Section, Segmented, Toggle } from './ui';
 
@@ -10,8 +10,10 @@ export function ViewControls() {
   const setType = useStore((s) => s.setType);
   const view = useStore((s) => s.view);
   const setView = useStore((s) => s.setView);
-  const preset = useStore((s) => s.preset);
-  const setPreset = useStore((s) => s.setPreset);
+  const goal = useStore((s) => s.goal);
+  const setGoal = useStore((s) => s.setGoal);
+  const focus = useStore((s) => s.focus);
+  const setFocus = useStore((s) => s.setFocus);
   const layers = useStore((s) => s.layers);
   const toggleLayer = useStore((s) => s.toggleLayer);
   const available = useAvailableMetrics();
@@ -41,14 +43,28 @@ export function ViewControls() {
       </div>
 
       <div className="field">
-        <span className="field__label">Strategy</span>
+        <label htmlFor="goal-select">Buying for</label>
+        <select id="goal-select" className="input select" value={goal} onChange={(e) => setGoal(e.target.value as GoalId)} aria-describedby="goal-hint">
+          {Object.values(GOALS).map((g) => (
+            <option key={g.id} value={g.id}>
+              {g.label}
+            </option>
+          ))}
+        </select>
+        <p className="field__hint muted" id="goal-hint">
+          {GOALS[goal].description}
+        </p>
+      </div>
+
+      <div className="field">
+        <span className="field__label">Focus</span>
         <div className="pill-row">
-          {Object.values(PRESETS).map((p) => (
-            <Pill key={p.id} active={preset === p.id} onClick={() => setPreset(p.id as 'balanced' | 'cashflow' | 'growth')} title={p.description}>
-              {p.label}
+          {focusOptions(goal).map((f) => (
+            <Pill key={f.id} active={focus === f.id} onClick={() => setFocus(f.id)} title={f.description}>
+              {f.label}
             </Pill>
           ))}
-          {preset === 'custom' && (
+          {focus === 'custom' && (
             <Pill active onClick={() => undefined}>
               Custom
             </Pill>

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { PRESETS, type CategoryWeights, type PresetId } from './lib/presets';
+import { weightsFor, type CategoryWeights, type FocusId, type GoalId } from './lib/presets';
 import type { CategoryId, Dataset, PropertyType } from './lib/types';
 
 export interface Filters {
@@ -31,7 +31,8 @@ interface State {
   type: PropertyType;
   /** 'score' or a metric key. */
   view: string;
-  preset: PresetId;
+  goal: GoalId;
+  focus: FocusId;
   categoryWeights: CategoryWeights;
   metricMultipliers: Partial<Record<string, number>>;
   applyPenalties: boolean;
@@ -48,7 +49,8 @@ interface State {
   setLoadError(e: string): void;
   setType(t: PropertyType): void;
   setView(v: string): void;
-  setPreset(p: Exclude<PresetId, 'custom'>): void;
+  setGoal(g: GoalId): void;
+  setFocus(f: Exclude<FocusId, 'custom'>): void;
   setCategoryWeight(id: CategoryId, w: number): void;
   setApplyPenalties(v: boolean): void;
   setFilters(f: Partial<Filters>): void;
@@ -66,9 +68,9 @@ export const useStore = create<State>((set, get) => ({
   loadError: null,
   type: 'houses',
   view: 'score',
-  preset: 'balanced',
-  categoryWeights: { ...PRESETS.balanced.categories },
-  metricMultipliers: { ...PRESETS.balanced.metricMultipliers },
+  goal: 'hold',
+  focus: 'balanced',
+  ...weightsState('hold', 'balanced'),
   applyPenalties: false,
   filters: { ...EMPTY_FILTERS },
   layers: { tram: false, tramCatchment: true, train: false },
@@ -83,8 +85,14 @@ export const useStore = create<State>((set, get) => ({
   setLoadError: (loadError) => set({ loadError }),
   setType: (type) => set({ type }),
   setView: (view) => set({ view }),
-  setPreset: (p) => set({ preset: p, categoryWeights: { ...PRESETS[p].categories }, metricMultipliers: { ...PRESETS[p].metricMultipliers } }),
-  setCategoryWeight: (id, w) => set((s) => ({ preset: 'custom', categoryWeights: { ...s.categoryWeights, [id]: w } })),
+  setGoal: (goal) =>
+    set((s) => {
+      // Cashflow doesn't apply to a home; custom weights reset to the new goal's.
+      const focus = s.focus === 'custom' || (goal === 'home' && s.focus === 'cashflow') ? 'balanced' : s.focus;
+      return { goal, focus, ...weightsState(goal, focus) };
+    }),
+  setFocus: (focus) => set((s) => ({ focus, ...weightsState(s.goal, focus) })),
+  setCategoryWeight: (id, w) => set((s) => ({ focus: 'custom', categoryWeights: { ...s.categoryWeights, [id]: w } })),
   setApplyPenalties: (applyPenalties) => set({ applyPenalties }),
   setFilters: (f) => set((s) => ({ filters: { ...s.filters, ...f } })),
   resetFilters: () => set({ filters: { ...EMPTY_FILTERS } }),
@@ -104,3 +112,8 @@ export const useStore = create<State>((set, get) => ({
   setCompareOpen: (compareOpen) => set({ compareOpen }),
   setDrawerOpen: (drawerOpen) => set({ drawerOpen }),
 }));
+
+function weightsState(goal: GoalId, focus: Exclude<FocusId, 'custom'>) {
+  const { categories, metricMultipliers } = weightsFor(goal, focus);
+  return { categoryWeights: categories, metricMultipliers };
+}

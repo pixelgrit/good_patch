@@ -76,4 +76,6 @@ export interface ManifestEntry {
   rows?: number;
   files?: string[];
   message?: string;
+  /** Output format version; a fetcher whose version changed refetches whatever its cadence. */
+  version?: number;
 }

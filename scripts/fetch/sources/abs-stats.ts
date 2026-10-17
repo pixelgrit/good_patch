@@ -42,6 +42,8 @@ export const absCensus: Fetcher = {
   id: 'abs-census',
   name: 'ABS Census General Community Profile by suburb',
   cadence: 'static',
+  // 2: adds median weekly rent.
+  version: 2,
   async run() {
     // Try the newest Census first; the 2026 DataPacks are due in 2027.
     let year = 0;
@@ -71,6 +73,12 @@ export const absCensus: Fetcher = {
     const codeCol = (rows: Record<string, string>[]) => Object.keys(rows[0]).find((k) => /SAL_CODE/i.test(k))!;
 
     const inc = findCol(Object.keys(g02[0]), [/^Median_tot_hhd_inc_weekly$/i, /hhd_inc_weekly/i], 'median household income');
+    let rentCol: string | null = null;
+    try {
+      rentCol = findCol(Object.keys(g02[0]), [/^Median_rent_weekly$/i, /rent_weekly/i], 'median weekly rent');
+    } catch (err) {
+      console.warn(`  ${(err as Error).message}`);
+    }
     const c37 = Object.keys(g37[0]);
     const outright = findCol(c37, [/^O_OR_Total$/i, /^O_OR.*Tot/i], 'owned outright');
     const mortgage = findCol(c37, [/^O_MTG_Total$/i, /^O_MTG.*Tot/i], 'owned with mortgage');
@@ -105,6 +113,7 @@ export const absCensus: Fetcher = {
         renter_share: stated > 0 ? (rent / stated).toFixed(4) : '',
         unit_share: d && occ && flats ? ((parseNumber(d[flats]) ?? 0) / occ).toFixed(4) : '',
         median_household_income_weekly: m02.get(code)?.[inc] ?? '',
+        median_rent_weekly: rentCol ? (m02.get(code)?.[rentCol] ?? '') : '',
         dwellings: d?.[dwellings] ?? '',
         as_at: year === 2026 ? '2026-08-11' : '2021-08-10',
       });

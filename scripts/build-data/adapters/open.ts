@@ -103,6 +103,7 @@ export const vgvMedians: Adapter = {
       const asAt = r.period_end;
       const put = (k: string, v: number | null, at = asAt) => setMetric(s, k, v, 'vgv', at, type);
       put('medianPrice', num(r.median));
+      put('salesQuarter', sales);
       const last = num(r.median_last_year);
       const yearEnd = r.series_last_year ? `${r.series_last_year}-12-31` : asAt;
       // 1-year growth: same quarter a year earlier if the quarterly sheet has it, else the yearly series.
@@ -113,12 +114,24 @@ export const vgvMedians: Adapter = {
       put('growth5y', pctChange(last, num(r.median_5y_ago)), yearEnd);
       put('growth10y', pctChange(last, num(r.median_10y_ago)), yearEnd);
       const pts = series[r.key]?.[type];
-      if (pts?.length) setSeries(s, type, 'price', pts.slice(-6));
+      if (pts?.length) {
+        setSeries(s, type, 'price', pts.slice(-6));
+        put('volatility', volatility(pts.slice(-11)), pts[pts.length - 1].t);
+      }
       n++;
     }
     ctx.log(`  ${n} suburb rows joined`);
   },
 };
+
+/** Standard deviation of year-on-year % changes, from at least 5 changes. */
+function volatility(pts: SeriesPoint[]): number | null {
+  const ch: number[] = [];
+  for (let i = 1; i < pts.length; i++) if (pts[i - 1].v > 0) ch.push(((pts[i].v - pts[i - 1].v) / pts[i - 1].v) * 100);
+  if (ch.length < 5) return null;
+  const mean = ch.reduce((a, b) => a + b, 0) / ch.length;
+  return round(Math.sqrt(ch.reduce((a, b) => a + (b - mean) ** 2, 0) / (ch.length - 1)), 2);
+}
 
 /* ------------------------------------------------------------------ */
 /* Homes Victoria rents                                                  */
@@ -172,6 +185,8 @@ export const absCensus: Adapter = {
       if (renter != null) s.renterShare = renter;
       const units = num(r.unit_share);
       if (units != null) s.unitShare = units;
+      const rentWeekly = num(r.median_rent_weekly);
+      if (rentWeekly) setMetric(s, 'censusRent', rentWeekly, 'abs-census', asAt);
       const weekly = num(r.median_household_income_weekly);
       if (weekly != null) setMetric(s, 'medianIncome', weekly * 52, 'abs-census', asAt);
       const dw = num(r.dwellings);
@@ -261,6 +276,7 @@ export const vicmapPlanning: Adapter = {
       const share = num(r.nrz_share_of_residential);
       if (share != null) setMetric(s, 'nrzShare', share * 100, 'vicmap-planning', r.as_at || new Date().toISOString().slice(0, 10));
       s.overlays = { flood: r.flood === '1', bushfire: r.bushfire === '1', heritage: r.heritage === '1' };
+      setMetric(s, 'hazard', (s.overlays.flood ? 1 : 0) + (s.overlays.bushfire ? 1 : 0), 'vicmap-planning', r.as_at || new Date().toISOString().slice(0, 10));
       n++;
     }
     ctx.log(`  ${n} suburbs joined`);

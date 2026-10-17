@@ -1,6 +1,6 @@
 export type PropertyType = 'houses' | 'units';
 
-export type CategoryId = 'yield' | 'supply' | 'demand' | 'growth' | 'quality' | 'tram';
+export type CategoryId = 'yield' | 'growth' | 'value' | 'supply' | 'demand' | 'location' | 'risk' | 'tram';
 
 export type Direction = 'high' | 'low' | 'neutral';
 

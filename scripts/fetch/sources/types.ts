@@ -19,6 +19,8 @@ export interface Fetcher {
   needs?: string[];
   /** The publisher blocks cloud/CI addresses: skipped on GitHub Actions, run it from your own machine. */
   localOnly?: string;
+  /** Bump when the output format changes so the source refetches even if it's otherwise up to date. */
+  version?: number;
   run(): Promise<FetchResult>;
 }
 
