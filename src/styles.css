@@ -272,6 +272,13 @@ input[type='number'].input::-webkit-inner-spin-button {
   border-color: var(--ink);
 }
 
+/* Links styled as pills (for-sale links). */
+a.pill {
+  color: inherit;
+  text-decoration: none;
+  display: inline-block;
+}
+
 .pill.is-active {
   background: var(--ink);
   border-color: var(--ink);

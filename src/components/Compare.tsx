@@ -4,6 +4,7 @@ import { METRIC_BY_KEY } from '../lib/metrics';
 import { getValue, type SuburbScore } from '../lib/scoring';
 import type { SeriesKey } from '../lib/types';
 import { MAX_PINNED, useStore } from '../store';
+import { TYPE_LABEL } from '../lib/types';
 import { Pill, Sparkline } from './ui';
 
 const ROWS = ['medianPrice', 'medianRent', 'grossYield', 'vacancy', 'dom', 'growth1y', 'growth5y', 'sales12m', 'stockOnMarket', 'approvalsRatio', 'clearance', 'priceToIncome', 'ownerOccupier', 'seifa', 'distanceCbd', 'tramShare800'];
@@ -73,7 +74,7 @@ export function ComparePanel({ scores }: { scores: Map<string, SuburbScore> }) {
     <section className="compare" aria-label="Compare suburbs">
       <header className="compare__head">
         <h2>Compare</h2>
-        <span className="muted">{type === 'houses' ? 'Houses' : 'Units'}</span>
+        <span className="muted">{TYPE_LABEL[type]}</span>
         <button type="button" className="icon-button" onClick={() => setOpen(false)} aria-label="Close compare">
           <svg width="14" height="14" viewBox="0 0 14 14">
             <path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" strokeWidth="1.5" />

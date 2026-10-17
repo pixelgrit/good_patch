@@ -15,6 +15,15 @@ const VGV = {
   unitQuarter: 'victorian-property-sales-report-median-unit-by-suburb',
   houseSeries: 'victorian-property-sales-report-median-house-by-suburb-time-series',
   unitSeries: 'victorian-property-sales-report-median-unit-by-suburb-time-series',
+  landQuarter: 'victorian-property-sales-report-median-vacant-land-by-suburb',
+  landSeries: 'victorian-property-sales-report-median-vacant-land-by-suburb-time-series',
+};
+
+const DATASETS = {
+  houses: { quarter: VGV.houseQuarter, series: VGV.houseSeries, minRows: 200 },
+  units: { quarter: VGV.unitQuarter, series: VGV.unitSeries, minRows: 200 },
+  // Fewer suburbs sell vacant land, and it's optional: a failure here doesn't block houses and units.
+  land: { quarter: VGV.landQuarter, series: VGV.landSeries, minRows: 80 },
 };
 
 /** land.vic.gov.au's firewall rejects bare requests; send what a browser following the report page's link would. */
@@ -56,24 +65,35 @@ export const vgvPrices: Fetcher = {
   id: 'vgv',
   name: 'Valuer-General Victoria median prices by suburb',
   cadence: 'quarterly',
+  // 2: adds vacant land.
+  version: 2,
   async run() {
     const out: Record<string, string | number | null>[] = [];
     const series: Record<string, Record<string, { t: string; v: number }[]>> = {};
     const notes: string[] = [];
     let asAt = '';
-    for (const type of ['houses', 'units'] as const) {
-      const q = await fetchSheets(type === 'houses' ? VGV.houseQuarter : VGV.unitQuarter, `vgv-${type}-quarter`);
-      const quarter = parseVgvQuarterly(q.sheets);
+    for (const type of ['houses', 'units', 'land'] as const) {
+      const ds = DATASETS[type];
+      let q: Awaited<ReturnType<typeof fetchSheets>>;
+      let quarter: ReturnType<typeof parseVgvQuarterly>;
+      try {
+        q = await fetchSheets(ds.quarter, `vgv-${type}-quarter`);
+        quarter = parseVgvQuarterly(q.sheets, ds.minRows);
+      } catch (err) {
+        if (type !== 'land') throw err;
+        notes.push(`land unavailable: ${(err as Error).message}`);
+        continue;
+      }
       const qAsAt = periodEnd(q.res.name) ?? periodEnd(quarter.detail) ?? '';
-      asAt = asAt && asAt < qAsAt ? asAt : qAsAt || asAt;
+      if (type !== 'land') asAt = asAt && asAt < qAsAt ? asAt : qAsAt || asAt;
       notes.push(`${type} quarter: ${q.res.name} (${quarter.detail})`);
 
       // The yearly series gives 3, 5 and 10-year growth. It's optional: if no
       // release can be fetched, quarterly prices and 1-year growth still load.
       let tsByKey = new Map<string, { years: Record<number, number> }>();
       try {
-        const t = await fetchNewestAvailable(type === 'houses' ? VGV.houseSeries : VGV.unitSeries, `vgv-${type}-series`);
-        const ts = parseVgvTimeSeries(t.sheets);
+        const t = await fetchNewestAvailable(ds.series, `vgv-${type}-series`);
+        const ts = parseVgvTimeSeries(t.sheets, ds.minRows);
         notes.push(`${type} series: ${t.res.name} (${ts.detail})`);
         tsByKey = new Map(ts.rows.map((r) => [r.key, r]));
       } catch (err) {

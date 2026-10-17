@@ -27,6 +27,7 @@ export function ViewControls() {
         options={[
           { value: 'houses', label: 'Houses' },
           { value: 'units', label: 'Units' },
+          { value: 'land', label: 'Land' },
         ]}
       />
 

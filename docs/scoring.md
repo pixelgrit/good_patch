@@ -57,6 +57,10 @@ Besides the value model, three things make unit scores more like-for-like:
 - **Townhouse share of units** (Supply). Units with their own land carry more land content and face less competing new supply. It is weighted ×2 for long-term holds.
 - **High-rise share of units** (Risk). Tower-heavy unit markets carry more oversupply and building-defect risk, and apartments have grown more slowly than houses (about 1.2 points a year slower in the RBA's 1993–2010 comparison).
 
+## Land
+
+Vacant land is scored from the Valuer-General's median land prices by suburb, with growth from its yearly series. Land earns no rent, so yield, rent growth and the rental demand measures don't apply, and the remaining categories are reweighted. The value model uses the same fundamentals as houses. Fewer suburbs sell vacant land, mostly in growth areas, so expect more suburbs without a land score.
+
 ## Limits
 
 - Some outer hills suburbs (Kalorama, Mount Dandenong, Belgrave) score well for long holds on strong ten-year growth, high SEIFA, settled owner-occupier communities and almost no new building. They also sit under bushfire overlays, which affect insurance and building costs. Turn on "Apply risk penalties" or raise the risk weight if that matters to you.

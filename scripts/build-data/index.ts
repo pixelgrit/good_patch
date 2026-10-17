@@ -79,10 +79,10 @@ async function main() {
     }
   }
 
-  // Keep suburbs with a median price for houses or units: without one there's
-  // no yield, and comparing them against priced suburbs would mislead.
+  // Keep suburbs with a median price for houses, units or land: without one
+  // there's nothing to score, and comparing them against priced suburbs would mislead.
   const before = ctx.suburbs.length;
-  ctx.suburbs = ctx.suburbs.filter((s) => s.houses.metrics.medianPrice?.value != null || s.units.metrics.medianPrice?.value != null);
+  ctx.suburbs = ctx.suburbs.filter((s) => s.houses.metrics.medianPrice?.value != null || s.units.metrics.medianPrice?.value != null || s.land.metrics.medianPrice?.value != null);
   ctx.byCode = new Map(ctx.suburbs.map((s) => [s.code, s]));
   ctx.boundaries = ctx.boundaries.filter((b) => ctx.byCode.has(b.properties.code));
   if (before !== ctx.suburbs.length) console.log(`- kept ${ctx.suburbs.length} of ${before} suburbs with a median price`);

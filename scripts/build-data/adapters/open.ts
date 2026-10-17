@@ -97,7 +97,7 @@ export const vgvMedians: Adapter = {
     for (const r of readCsv('vgv-medians.csv')) {
       const s = idx.get(r.key || key(r.suburb));
       const type = r.type as PropertyType;
-      if (!s || (type !== 'houses' && type !== 'units')) continue;
+      if (!s || (type !== 'houses' && type !== 'units' && type !== 'land')) continue;
       const sales = num(r.sales);
       if (sales != null && sales < MIN_QUARTER_SALES) continue;
       const asAt = r.period_end;

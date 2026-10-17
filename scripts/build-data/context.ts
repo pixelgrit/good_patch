@@ -111,6 +111,7 @@ export function emptySuburb(f: BoundaryFeature, centroid: [number, number]): Sub
     common: {},
     houses: { metrics: {}, series: {} },
     units: { metrics: {}, series: {} },
+    land: { metrics: {}, series: {} },
     zones: null,
     access: { tramShare400: 0, tramShare800: 0, tramRoutes: [], nearestTramStopM: null, nearestStation: null, trainLines: [] },
     overlays: null,

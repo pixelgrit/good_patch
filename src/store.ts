@@ -81,7 +81,11 @@ export const useStore = create<State>((set, get) => ({
   drawerOpen: false,
   flyTo: null,
 
-  setDataset: (dataset) => set({ dataset }),
+  setDataset: (dataset) => {
+    // Data built before vacant land was added has no land block.
+    for (const s of dataset.suburbs) s.land ??= { metrics: {}, series: {} };
+    set({ dataset });
+  },
   setLoadError: (loadError) => set({ loadError }),
   setType: (type) => set({ type }),
   setView: (view) => set({ view }),

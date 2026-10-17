@@ -80,7 +80,7 @@ export interface VgvQuarterRow {
   sales: number | null;
 }
 
-export function parseVgvQuarterly(sheets: Sheet[]): { rows: VgvQuarterRow[]; detail: string } {
+export function parseVgvQuarterly(sheets: Sheet[], minRows = 200): { rows: VgvQuarterRow[]; detail: string } {
   for (const { name, grid } of sheets) {
     const hr = grid.findIndex((row) => row.some((c) => c != null && /^(suburb|locality)/i.test(String(c))));
     if (hr < 0) continue;
@@ -112,7 +112,7 @@ export function parseVgvQuarterly(sheets: Sheet[]): { rows: VgvQuarterRow[]; det
       const ya = yearAgoCol ? parseNumber(r[yearAgoCol.c]) : null;
       rows.push({ suburb, key: suburbKey(suburb), median, yearAgo: ya != null && ya > 50_000 ? ya : null, sales: sales ? parseNumber(r[sales.c]) : null });
     }
-    if (rows.length < 200) throw new Error(`VGV quarterly: only ${rows.length} suburbs parsed on sheet "${name}"`);
+    if (rows.length < minRows) throw new Error(`VGV quarterly: only ${rows.length} suburbs parsed on sheet "${name}"`);
     return { rows, detail: `sheet "${name}", median col "${latest.h}"${yearAgoCol ? `, year-ago col "${yearAgoCol.h}"` : ''}${sales ? `, sales col "${sales.h}"` : ''}` };
   }
   throw new Error('VGV quarterly: no sheet with a Suburb/Locality header and price columns');
@@ -129,7 +129,7 @@ export interface VgvSeriesRow {
   years: Record<number, number>;
 }
 
-export function parseVgvTimeSeries(sheets: Sheet[]): { rows: VgvSeriesRow[]; detail: string } {
+export function parseVgvTimeSeries(sheets: Sheet[], minRows = 200): { rows: VgvSeriesRow[]; detail: string } {
   for (const { name, grid } of sheets) {
     const hr = grid.findIndex((row) => row.filter((c) => c != null && /^(19|20)\d{2}\b/.test(String(c))).length >= 5);
     if (hr < 0) continue;
@@ -158,7 +158,7 @@ export function parseVgvTimeSeries(sheets: Sheet[]): { rows: VgvSeriesRow[]; det
       }
       if (Object.keys(years).length >= 3) rows.push({ suburb, key: suburbKey(suburb), years });
     }
-    if (rows.length < 200) throw new Error(`VGV time series: only ${rows.length} suburbs parsed on sheet "${name}"`);
+    if (rows.length < minRows) throw new Error(`VGV time series: only ${rows.length} suburbs parsed on sheet "${name}"`);
     return { rows, detail: `sheet "${name}", years ${yearCols[0].y}–${yearCols[yearCols.length - 1].y}` };
   }
   throw new Error('VGV time series: no sheet with a row of year headers');

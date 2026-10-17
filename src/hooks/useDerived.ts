@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { METRIC_BY_KEY, METRICS as METRICS_ALL } from '../lib/metrics';
 import { getMetric, getValue, scoreAll, type SuburbScore } from '../lib/scoring';
-import type { Suburb } from '../lib/types';
+import type { PropertyType, Suburb } from '../lib/types';
 import { TRAM_SUBURB_SHARE, useStore, type Filters } from '../store';
 
 export function useSuburbs(): Suburb[] {
@@ -26,12 +26,13 @@ export function useScores(): Map<string, SuburbScore> {
   );
 }
 
-export function passesFilters(s: Suburb, type: 'houses' | 'units', f: Filters): boolean {
+export function passesFilters(s: Suburb, type: PropertyType, f: Filters): boolean {
   const price = getValue(s, type, 'medianPrice');
   if (f.priceMin != null && (price == null || price < f.priceMin)) return false;
   if (f.priceMax != null && (price == null || price > f.priceMax)) return false;
   const y = getValue(s, type, 'grossYield');
-  if (f.minYield != null && (y == null || y < f.minYield)) return false;
+  // Land earns no rent, so the yield filter doesn't apply to it.
+  if (f.minYield != null && type !== 'land' && (y == null || y < f.minYield)) return false;
   const vac = getValue(s, type, 'vacancy');
   if (f.maxVacancy != null && (vac == null || vac > f.maxVacancy)) return false;
   const dist = getValue(s, type, 'distanceCbd');

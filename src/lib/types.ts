@@ -1,4 +1,9 @@
-export type PropertyType = 'houses' | 'units';
+export type PropertyType = 'houses' | 'units' | 'land';
+
+export const PROPERTY_TYPES: PropertyType[] = ['houses', 'units', 'land'];
+export const TYPE_LABEL: Record<PropertyType, string> = { houses: 'Houses', units: 'Units', land: 'Land' };
+/** "No recent {house} sales". */
+export const TYPE_SINGULAR: Record<PropertyType, string> = { houses: 'house', units: 'unit', land: 'land' };
 
 export type CategoryId = 'yield' | 'growth' | 'value' | 'supply' | 'demand' | 'location' | 'risk' | 'tram';
 
@@ -83,6 +88,8 @@ export interface Suburb {
   common: Partial<Record<string, MetricValue>>;
   houses: TypeData;
   units: TypeData;
+  /** Vacant land. */
+  land: TypeData;
   /** Planning zone mix; null until Vicmap Planning data is loaded. */
   zones: ZoneMix | null;
   access: Access;

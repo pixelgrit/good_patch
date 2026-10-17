@@ -1,6 +1,7 @@
 import * as turf from '@turf/turf';
 import type { Feature, FeatureCollection, MultiPolygon, Point, Polygon } from 'geojson';
 import { round, setMetric, type BuildContext } from '../context';
+import type { PropertyType } from '../../../src/lib/types';
 
 const GPO: [number, number] = [144.9631, -37.8136];
 
@@ -79,7 +80,7 @@ export function applyGeo(ctx: BuildContext, catchments: Catchments): void {
 export function applyDerived(ctx: BuildContext): void {
   estimateMissingRents(ctx);
   for (const s of ctx.suburbs) {
-    for (const type of ['houses', 'units'] as const) {
+    for (const type of ['houses', 'units', 'land'] as const) {
       const price = s[type].metrics.medianPrice;
       const rent = s[type].metrics.medianRent;
       const income = s.common.medianIncome;
@@ -109,7 +110,7 @@ export function applyDerived(ctx: BuildContext): void {
     setMetric(s, 'townhouseShare', round((m.semi / units) * 100, 1), 'abs-census', at, 'units');
     setMetric(s, 'highriseShare', round((m.highrise / units) * 100, 1), 'abs-census', at, 'units');
   }
-  for (const type of ['houses', 'units'] as const) {
+  for (const type of ['houses', 'units', 'land'] as const) {
     valueGap(ctx, type);
     neighbourGap(ctx, type);
   }
@@ -160,7 +161,7 @@ function estimateMissingRents(ctx: BuildContext): void {
  * miss) and the Census dwelling mix (townhouses, low-rise and high-rise flats).
  * Suburbs missing those inputs fall back to the simpler model.
  */
-function valueGap(ctx: BuildContext, type: 'houses' | 'units'): void {
+function valueGap(ctx: BuildContext, type: PropertyType): void {
   type S = (typeof ctx.suburbs)[number];
   const base = (s: S): number[] | null => {
     const inc = s.common.medianIncome?.value;
@@ -222,7 +223,7 @@ function valueGap(ctx: BuildContext, type: 'houses' | 'units'): void {
 }
 
 /** Discount to the median price of suburbs within 4 km (widening to 6 km if fewer than 3). */
-function neighbourGap(ctx: BuildContext, type: 'houses' | 'units'): void {
+function neighbourGap(ctx: BuildContext, type: PropertyType): void {
   const priced = ctx.suburbs.filter((s) => s[type].metrics.medianPrice?.value);
   for (const s of priced) {
     const own = s[type].metrics.medianPrice!.value!;
@@ -246,9 +247,9 @@ const SHRINK_SALES = 8;
  * shrinkage). Suburbs with few sales can't top or bottom the rankings on noise
  * alone; the displayed figures are unchanged.
  */
-export function rankValues(ctx: BuildContext): (s: BuildContext['suburbs'][number], type: 'houses' | 'units', key: string, v: number) => number {
+export function rankValues(ctx: BuildContext): (s: BuildContext['suburbs'][number], type: PropertyType, key: string, v: number) => number {
   const centre = new Map<string, number>();
-  for (const type of ['houses', 'units'] as const)
+  for (const type of ['houses', 'units', 'land'] as const)
     for (const k of PRICE_BASED) {
       const m = median(ctx.suburbs.map((s) => s[type].metrics[k]?.value).filter((v): v is number => v != null));
       if (m != null) centre.set(`${type}:${k}`, m);

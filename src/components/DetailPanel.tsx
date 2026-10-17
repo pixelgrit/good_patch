@@ -6,7 +6,8 @@ import { FOCUS, GOALS } from '../lib/presets';
 import { getMetric, type SuburbScore } from '../lib/scoring';
 import { isStale, SOURCES } from '../lib/sources';
 import { rampColor } from '../lib/colors';
-import type { MetricValue, SeriesKey, Suburb } from '../lib/types';
+import { listingLinks } from '../lib/listings';
+import { PROPERTY_TYPES, TYPE_LABEL, TYPE_SINGULAR, type MetricValue, type SeriesKey, type Suburb } from '../lib/types';
 import { MAX_PINNED, TRAM_SUBURB_SHARE, useStore } from '../store';
 import { Pill, Sparkline } from './ui';
 
@@ -50,8 +51,9 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
   const togglePin = useStore((st) => st.togglePin);
   const setCompareOpen = useStore((st) => st.setCompareOpen);
   const setType = useStore((st) => st.setType);
-  const other = type === 'houses' ? 'units' : 'houses';
-  const otherScored = s[other].metrics.medianPrice?.value != null;
+  // Where this type has no sales, offer the first type that does.
+  const other = PROPERTY_TYPES.find((t) => t !== type && s[t].metrics.medianPrice?.value != null);
+  const links = listingLinks(s, type);
   const [showAll, setShowAll] = useState(false);
   const available = useAvailableMetrics();
   const figures = KEY_FIGURES.filter((k) => available.has(k)).slice(0, 8);
@@ -64,7 +66,7 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
     <div className="detail__content">
       <header className="detail__header">
         <div className="detail__eyebrow muted">
-          {[s.lga, s.postcode, type === 'houses' ? 'Houses' : 'Units'].filter(Boolean).join(' · ')}
+          {[s.lga, s.postcode, TYPE_LABEL[type]].filter(Boolean).join(' · ')}
         </div>
         <h2>{s.name}</h2>
         <div className="detail__score">
@@ -74,7 +76,7 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
           <span className="detail__score-meta">
             {sc.unpriced ? (
               <>
-                No recent {type === 'houses' ? 'house' : 'unit'} sales
+                No recent {TYPE_SINGULAR[type]} sales
                 <span className="muted">Fewer than 5 sold in the latest quarter, so there is no median price to score.</span>
               </>
             ) : sc.insufficient ? (
@@ -96,9 +98,9 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
           <Pill active={isPinned} onClick={() => togglePin(s.code)} title={!isPinned && pinned.length >= MAX_PINNED ? `Up to ${MAX_PINNED} suburbs` : undefined}>
             {isPinned ? 'Pinned' : 'Pin to compare'}
           </Pill>
-          {sc.unpriced && otherScored && (
+          {sc.unpriced && other && (
             <Pill onClick={() => setType(other)}>
-              Show {other}
+              Show {TYPE_LABEL[other].toLowerCase()}
             </Pill>
           )}
           {pinned.length > 1 && (
@@ -108,6 +110,20 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
           )}
         </div>
       </header>
+
+      <section className="detail__section">
+        <h3>For sale now</h3>
+        <div className="pill-row">
+          {links.map((l) => (
+            <a key={l.site} className="pill" href={l.url} target="_blank" rel="noopener noreferrer">
+              {l.site}
+            </a>
+          ))}
+        </div>
+        <p className="muted note">
+          {TYPE_LABEL[type]} for sale in {s.name}, live on each site. Good patch links to the listings rather than copying them.
+        </p>
+      </section>
 
       <section className="detail__section">
         <h3>Key figures</h3>

@@ -53,12 +53,12 @@ export function percentileRanks(values: number[]): number[] {
  * `rankValue` lets the build rank on an adjusted value (see rankValues in the build).
  */
 export function applyPercentiles(suburbs: Suburb[], rankValue?: (s: Suburb, type: PropertyType, key: string, v: number) => number): void {
-  const types: PropertyType[] = ['houses', 'units'];
+  const types: PropertyType[] = ['houses', 'units', 'land'];
   for (const def of METRICS) {
     for (const type of types) {
       if (!def.types.includes(type)) continue;
-      // Common metrics are identical for both types; compute once on 'houses' pass.
-      if (def.scope === 'common' && type === 'units' && def.types.includes('houses')) continue;
+      // Common metrics are identical for every type; compute them once, on the first type they apply to.
+      if (def.scope === 'common' && type !== def.types[0]) continue;
       const holders: MetricValue[] = [];
       const vals: number[] = [];
       for (const s of suburbs) {

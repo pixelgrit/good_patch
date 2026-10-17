@@ -8,8 +8,8 @@ Every source Good patch uses, how it's fetched, how often the publisher updates 
 
 | Source | Publisher | Endpoint | Publisher updates | Fetcher checks | Feeds |
 | --- | --- | --- | --- | --- | --- |
-| Median house and unit prices by suburb, quarterly | Valuer-General Victoria (via DataVic; Internet Archive copy when blocked) | DataVic catalogue `victorian-property-sales-report-median-house-by-suburb`, `…-median-unit-by-suburb` (XLS) | Quarterly | Monthly | Median price |
-| Median house and unit prices by suburb, yearly time series | Valuer-General Victoria (via DataVic) | `…-median-house-by-suburb-time-series`, `…-median-unit-by-suburb-time-series` (XLSX) | Yearly | Monthly | 1, 3, 5 and 10-year growth; price trend |
+| Median house, unit and vacant land prices by suburb, quarterly | Valuer-General Victoria (via DataVic; Internet Archive copy when blocked) | DataVic catalogue `victorian-property-sales-report-median-house-by-suburb`, `…-median-unit-by-suburb`, `…-median-vacant-land-by-suburb` (XLS) | Quarterly | Monthly | Median price |
+| Median house, unit and vacant land prices by suburb, yearly time series | Valuer-General Victoria (via DataVic) | `…-median-house-by-suburb-time-series`, `…-median-unit-by-suburb-time-series`, `…-median-vacant-land-by-suburb-time-series` (XLSX) | Yearly | Monthly | 1, 3, 5 and 10-year growth; price trend |
 | Rental Report, moving annual rents by suburb | Homes Victoria (DFFH, via DataVic) | `rental-report-quarterly-moving-annual-rents-by-suburb` (XLSX) | Quarterly | Monthly | Median rent (3-bedroom house, 2-bedroom flat, and 2-bedroom house blended into unit rents by townhouse share), 1 and 3-year rent growth, rent trend |
 | Building Approvals by SA2 | ABS | Data API `ABS,BA_SA2` (data.api.abs.gov.au/rest) (SDMX-CSV) | Monthly | Monthly | Approvals in last 12 months, approvals ratio |
 | Estimated Resident Population by SA2 | ABS | Data API `ABS,ABS_ANNUAL_ERP_ASGS2021` | Yearly (March) | Every 2 months | Population growth |
