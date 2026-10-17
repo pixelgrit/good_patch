@@ -15,7 +15,7 @@ import { emptySuburb, OUT_DIR, round, SOURCES_DIR, type BuildContext } from './c
 import { licensedAdapters } from './adapters/licensed';
 import { mockBoundaries, mockMetrics, mockTransport } from './adapters/mock';
 import { curatedCensus, curatedMarket, curatedSeifa } from './adapters/curated';
-import { absApprovals, absCensus, absPopulation, absSal, absSeifa, dtpTransport, homesVicRents, suburbsFromBoundaries, vgvMedians, vicmapPlanning } from './adapters/open';
+import { absAdmin, absApprovals, absCensus, absPopulation, absSal, absSeifa, dtpTransport, homesVicRents, suburbsFromBoundaries, vgvMedians, vicmapPlanning } from './adapters/open';
 import type { Adapter } from './adapters/types';
 import { applyDerived, applyGeo, rankValues, tramCatchments, vicMask } from './lib/geo';
 import { VIC_OUTLINE } from './mock/transport.seed';
@@ -35,6 +35,7 @@ const ADAPTERS: Adapter[] = mockOnly
       curatedMarket,
       curatedCensus,
       curatedSeifa,
+      absAdmin,
       vgvMedians,
       absCensus,
       homesVicRents,

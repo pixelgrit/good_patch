@@ -22,7 +22,7 @@ export function Legend({ values, shown, total }: { values: MapValues; shown: num
       </div>
       <div className="legend__keys">
         <span className="legend__key">
-          <i style={{ background: NO_DATA }} /> Not enough data
+          <i style={{ background: NO_DATA }} /> Not enough data or sales
         </span>
         {layers.tram && (
           <span className="legend__key">

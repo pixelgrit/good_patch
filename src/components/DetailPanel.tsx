@@ -49,6 +49,9 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
   const pinned = useStore((st) => st.pinned);
   const togglePin = useStore((st) => st.togglePin);
   const setCompareOpen = useStore((st) => st.setCompareOpen);
+  const setType = useStore((st) => st.setType);
+  const other = type === 'houses' ? 'units' : 'houses';
+  const otherScored = s[other].metrics.medianPrice?.value != null;
   const [showAll, setShowAll] = useState(false);
   const available = useAvailableMetrics();
   const figures = KEY_FIGURES.filter((k) => available.has(k)).slice(0, 8);
@@ -61,7 +64,7 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
     <div className="detail__content">
       <header className="detail__header">
         <div className="detail__eyebrow muted">
-          {s.lga} · {s.postcode} · {type === 'houses' ? 'Houses' : 'Units'}
+          {[s.lga, s.postcode, type === 'houses' ? 'Houses' : 'Units'].filter(Boolean).join(' · ')}
         </div>
         <h2>{s.name}</h2>
         <div className="detail__score">
@@ -69,7 +72,12 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
             {sc.insufficient ? '—' : formatScore(sc.score)}
           </span>
           <span className="detail__score-meta">
-            {sc.insufficient ? (
+            {sc.unpriced ? (
+              <>
+                No recent {type === 'houses' ? 'house' : 'unit'} sales
+                <span className="muted">Fewer than 5 sold in the latest quarter, so there is no median price to score.</span>
+              </>
+            ) : sc.insufficient ? (
               <>
                 Not enough data
                 <span className="muted">{Math.round(sc.missingShare * 100)}% of weighted inputs missing</span>
@@ -88,6 +96,11 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
           <Pill active={isPinned} onClick={() => togglePin(s.code)} title={!isPinned && pinned.length >= MAX_PINNED ? `Up to ${MAX_PINNED} suburbs` : undefined}>
             {isPinned ? 'Pinned' : 'Pin to compare'}
           </Pill>
+          {sc.unpriced && otherScored && (
+            <Pill onClick={() => setType(other)}>
+              Show {other}
+            </Pill>
+          )}
           {pinned.length > 1 && (
             <Pill onClick={() => setCompareOpen(true)}>
               Compare {pinned.length}
@@ -113,29 +126,31 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
         </div>
       </section>
 
-      <section className="detail__section">
-        <h3>Score breakdown</h3>
-        <div className="bars">
-          {sc.categories
-            .filter((c) => c.weight > 0)
-            .map((c) => (
-              <div className="bar" key={c.id}>
-                <div className="bar__label">
-                  <span>{c.label}</span>
-                  <span className="muted">{Math.round(c.weight * 100)}% weight</span>
+      {!sc.unpriced && (
+        <section className="detail__section">
+          <h3>Score breakdown</h3>
+          <div className="bars">
+            {sc.categories
+              .filter((c) => c.weight > 0)
+              .map((c) => (
+                <div className="bar" key={c.id}>
+                  <div className="bar__label">
+                    <span>{c.label}</span>
+                    <span className="muted">{Math.round(c.weight * 100)}% weight</span>
+                  </div>
+                  <div className="bar__track">
+                    <div className="bar__fill" style={{ width: `${c.score ?? 0}%`, background: c.score == null ? undefined : rampColor(c.score / 100) }} />
+                  </div>
+                  <div className="bar__value">{c.score == null ? '—' : Math.round(c.score)}</div>
                 </div>
-                <div className="bar__track">
-                  <div className="bar__fill" style={{ width: `${c.score ?? 0}%`, background: c.score == null ? undefined : rampColor(c.score / 100) }} />
-                </div>
-                <div className="bar__value">{c.score == null ? '—' : Math.round(c.score)}</div>
-              </div>
-            ))}
-        </div>
-        <button type="button" className="link-button" onClick={() => setShowAll(!showAll)} aria-expanded={showAll}>
-          {showAll ? 'Hide metric detail' : 'Show every metric'}
-        </button>
-        {showAll && <MetricTable sc={sc} />}
-      </section>
+              ))}
+          </div>
+          <button type="button" className="link-button" onClick={() => setShowAll(!showAll)} aria-expanded={showAll}>
+            {showAll ? 'Hide metric detail' : 'Show every metric'}
+          </button>
+          {showAll && <MetricTable sc={sc} />}
+        </section>
+      )}
 
       <section className="detail__section">
         <h3>Five-year trend</h3>

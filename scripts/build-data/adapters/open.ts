@@ -150,14 +150,16 @@ export const homesVicRents: Adapter = {
     const rows = readCsv('homesvic-rents.csv');
     const house2 = new Map(rows.filter((r) => r.type === 'house2').map((r) => [r.key, num(r.median_rent)]));
     let blended = 0;
+    // Homes Victoria names some areas differently from the ABS suburb.
+    const ALIAS: Record<string, string> = { CBD: 'MELBOURNE' };
     for (const r of rows) {
-      const s = idx.get(r.key || key(r.suburb));
+      const s = idx.get(ALIAS[r.key] ?? (r.key || key(r.suburb)));
       const type = r.type as PropertyType;
       if (!s || (type !== 'houses' && type !== 'units')) continue;
       let rent = num(r.median_rent);
       // Unit medians include townhouses; blend the 2-bed flat rent with the 2-bed house
       // rent in proportion to the suburb's townhouse share of units.
-      const h2 = type === 'units' ? house2.get(r.key) : null;
+      const h2 = type === 'units' ? house2.get(r.key) ?? house2.get(ALIAS[r.key] ?? '') : null;
       const m = s.dwellingMix;
       if (rent != null && h2 && m) {
         const units = m.semi + m.lowrise + m.midrise + m.highrise;
@@ -210,6 +212,25 @@ export const absCensus: Adapter = {
       if (weekly != null) setMetric(s, 'medianIncome', weekly * 52, 'abs-census', asAt);
       const dw = num(r.dwellings);
       if (dw != null) setMetric(s, 'dwellings', dw, 'abs-census', asAt);
+      n++;
+    }
+    ctx.log(`  ${n} suburbs joined`);
+  },
+};
+
+export const absAdmin: Adapter = {
+  id: 'abs-admin',
+  name: 'ABS council and postcode by suburb',
+  stage: 'metrics',
+  licensed: false,
+  available: files('admin-sal.csv'),
+  run(ctx) {
+    let n = 0;
+    for (const r of readCsv('admin-sal.csv')) {
+      const s = ctx.byCode.get(r.SAL_CODE_2021);
+      if (!s) continue;
+      if (r.lga) s.lga = r.lga;
+      if (r.postcode) s.postcode = r.postcode;
       n++;
     }
     ctx.log(`  ${n} suburbs joined`);

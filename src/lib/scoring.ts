@@ -120,6 +120,8 @@ export interface SuburbScore {
   /** Composite before risk penalties. */
   rawScore: number | null;
   insufficient: boolean;
+  /** No median price for this property type: too few sales, or almost none of that type in the suburb. */
+  unpriced: boolean;
   missingShare: number;
   categories: CategoryScore[];
   metrics: MetricContribution[];
@@ -265,6 +267,7 @@ export function scoreSuburb(s: Suburb, opts: ScoringOptions, available: Set<stri
     score: score == null ? null : round1(score),
     rawScore: rawScore == null ? null : round1(rawScore),
     insufficient,
+    unpriced,
     missingShare,
     categories,
     metrics,

@@ -29,7 +29,7 @@ export function HoverCard({ code, x, y, scores }: Props) {
     <div className="hover-card" style={{ left, top }} role="tooltip">
       <div className="hover-card__head">
         <span className="hover-card__name">{s.name}</span>
-        <span className="hover-card__score">{sc.insufficient ? 'Not enough data' : formatScore(sc.score)}</span>
+        <span className="hover-card__score">{sc.unpriced ? `No ${type === 'houses' ? 'house' : 'unit'} sales` : sc.insufficient ? 'Not enough data' : formatScore(sc.score)}</span>
       </div>
       {viewDef && (
         <div className="hover-card__metric">
