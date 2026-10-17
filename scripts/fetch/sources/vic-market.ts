@@ -65,8 +65,8 @@ export const vgvPrices: Fetcher = {
   id: 'vgv',
   name: 'Valuer-General Victoria median prices by suburb',
   cadence: 'quarterly',
-  // 2: adds vacant land.
-  version: 2,
+  // 2: adds vacant land. 3: land falls back to older archived quarters.
+  version: 3,
   async run() {
     const out: Record<string, string | number | null>[] = [];
     const series: Record<string, Record<string, { t: string; v: number }[]>> = {};
