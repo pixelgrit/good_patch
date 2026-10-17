@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T00:42:22.462Z",
+  "updatedAt": "2026-10-17T01:28:40.032Z",
   "sources": {
     "abs-boundaries": {
       "id": "abs-boundaries",
@@ -31,7 +31,7 @@
       "id": "abs-census",
       "name": "ABS Census General Community Profile by suburb",
       "status": "ok",
-      "fetchedAt": "2026-10-17T00:38:53.474Z",
+      "fetchedAt": "2026-10-17T01:28:37.035Z",
       "asAt": "2021-08-10",
       "url": "https://www.abs.gov.au/census/find-census-data/datapacks/download/2021_GCP_SAL_for_VIC_short-header.zip",
       "rows": 2946,
@@ -39,7 +39,7 @@
         "census-sal.csv"
       ],
       "message": "Census 2021",
-      "version": 2
+      "version": 3
     },
     "vgv": {
       "id": "vgv",
@@ -59,15 +59,16 @@
       "id": "homesvic",
       "name": "Homes Victoria Rental Report, moving annual rents by suburb",
       "status": "ok",
-      "fetchedAt": "2026-10-16T23:22:26.533Z",
+      "fetchedAt": "2026-10-17T01:28:40.031Z",
       "asAt": "2025-09-30",
       "url": "https://www.dffh.vic.gov.au/moving-annual-rent-suburb-september-quarter-2025-excel",
-      "rows": 426,
+      "rows": 636,
       "files": [
         "homesvic-rents.csv",
         "homesvic-series.json"
       ],
-      "message": " Rental Report - Moving Annual Rents by LGA Sep 2025; houses: sheet \"3 bedroom house\", 206 quarters to 2025-09-30, 143 groups; units: sheet \"2 bedroom flat\", 206 quarters to 2025-09-30, 146 groups"
+      "message": " Rental Report - Moving Annual Rents by LGA Sep 2025; houses: sheet \"3 bedroom house\", 206 quarters to 2025-09-30, 143 groups; units: sheet \"2 bedroom flat\", 206 quarters to 2025-09-30, 146 groups; 2-bed houses: sheet \"2 bedroom house\", 206 quarters to 2025-09-30, 142 groups",
+      "version": 2
     },
     "abs-approvals": {
       "id": "abs-approvals",
