@@ -101,12 +101,28 @@ export async function download(url: string, dest: string, opts?: GetOptions): Pr
 /* Internet Archive fallback                                            */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Timestamp of the newest successful capture of `url`. The CDX index is the
+ * reliable source; the "available" API often misses captures that exist, so
+ * it's only a backup.
+ */
 async function latestSnapshot(url: string): Promise<string | null> {
-  const res = await getJson<{ archived_snapshots?: { closest?: { available?: boolean; status?: string; timestamp?: string } } }>(
-    `https://archive.org/wayback/available?url=${encodeURIComponent(url)}`,
-  );
-  const c = res.archived_snapshots?.closest;
-  return c?.available && c.status === '200' && c.timestamp ? c.timestamp : null;
+  try {
+    const rows = await getJson<string[][]>(`https://web.archive.org/cdx/search/cdx?url=${encodeURIComponent(url)}&output=json&filter=statuscode:200&fl=timestamp&limit=-1`, { timeoutMs: 60_000 });
+    const ts = rows?.[rows.length - 1]?.[0];
+    if (ts && /^\d{14}$/.test(ts)) return ts;
+  } catch (err) {
+    console.warn(`  archive index: ${describe(err)}`);
+  }
+  try {
+    const res = await getJson<{ archived_snapshots?: { closest?: { available?: boolean; status?: string; timestamp?: string } } }>(
+      `https://archive.org/wayback/available?url=${encodeURIComponent(url)}`,
+    );
+    const c = res.archived_snapshots?.closest;
+    return c?.available && c.status === '200' && c.timestamp ? c.timestamp : null;
+  } catch {
+    return null;
+  }
 }
 
 /**
@@ -127,11 +143,15 @@ async function archiveDownload(url: string, dest: string): Promise<string> {
       ts = await latestSnapshot(url);
     }
   }
-  if (!ts) throw new Error(`no Internet Archive copy of ${url} after requesting one`);
+  // Last resort: a year-only timestamp redirects to the nearest capture, if any.
+  if (!ts) ts = String(new Date().getUTCFullYear());
   // "id_" returns the original bytes rather than the archive's wrapped page.
-  const res = await get(`https://web.archive.org/web/${ts}id_/${url}`, { timeoutMs: 300_000 });
+  const res = await get(`https://web.archive.org/web/${ts}id_/${url}`, { timeoutMs: 300_000 }).catch((err) => {
+    throw new Error(`no Internet Archive copy of ${url} (${describe(err)})`);
+  });
   const buf = Buffer.from(await res.arrayBuffer());
   if (buf.length < 10_000) throw new Error(`Internet Archive copy of ${url} is only ${buf.length} bytes`);
+  if (/^\s*</.test(buf.subarray(0, 64).toString('latin1'))) throw new Error(`no Internet Archive copy of ${url} (got a web page, not the file)`);
   fs.writeFileSync(dest, buf);
   return dest;
 }
