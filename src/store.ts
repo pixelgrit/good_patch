@@ -77,7 +77,7 @@ export const useStore = create<State>((set, get) => ({
   ...weightsState('hold', 'balanced'),
   applyPenalties: false,
   filters: { ...EMPTY_FILTERS },
-  layers: { tram: false, tramCatchment: true, train: false },
+  layers: { tram: true, tramCatchment: true, train: false },
   listingMaxPrice: LISTING_PRICE_DEFAULT,
   hovered: null,
   selected: null,
