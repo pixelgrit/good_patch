@@ -28,8 +28,9 @@ function splitCsv(line: string): string[] {
 
 /** Column preference, best first: every pattern must match the column title. */
 const PREFER: RegExp[][] = [
-  [/investor/i, /variable/i, /new/i],
-  [/investor/i, /variable/i],
+  [/invest/i, /variable/i, /new/i, /large/i],
+  [/invest/i, /variable/i, /new/i],
+  [/invest/i, /variable/i],
   [/variable/i, /new/i],
   [/variable/i],
 ];
@@ -54,6 +55,8 @@ export const rbaRates: Fetcher = {
   id: 'rba-rates',
   name: 'RBA housing lending rates (F6)',
   cadence: 'monthly',
+  // 2: match "Investment" as well as "Investor".
+  version: 2,
   async run() {
     const p = await download(F6, cache('rba-f6.csv'));
     const { rate, title, date } = parseF6(fs.readFileSync(p, 'latin1'));
