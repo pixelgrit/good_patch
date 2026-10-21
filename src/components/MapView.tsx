@@ -137,7 +137,7 @@ export function MapView({ values, scores, visible }: Props) {
         const hasGlyphs = !!map.getStyle().glyphs;
         // Suburb colour sits under water, roads and labels when there is a basemap.
         const fillBefore = map.getLayer(SUBURB_FILL_BEFORE) ? SUBURB_FILL_BEFORE : firstSymbol;
-        const fillOpacity = basemap ? 0.58 : 0.72;
+        const fillOpacity = basemap ? 0.72 : 0.8;
 
         map.addImage('hatch', hatchImage(), { pixelRatio: 2 });
 

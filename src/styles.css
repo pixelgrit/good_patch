@@ -1338,14 +1338,14 @@ input[type='range']:focus-visible {
   border: 1px solid transparent;
 }
 .rating--strong {
-  background: #97c95a;
-  color: #1c1c1a;
+  background: #127a74;
+  color: #fff;
 }
 .rating--neutral {
   border-color: var(--rule-strong);
   color: var(--muted);
 }
 .rating--weak {
-  background: #3c5a92;
+  background: #c8463a;
   color: #fff;
 }

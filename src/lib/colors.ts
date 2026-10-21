@@ -1,14 +1,13 @@
 /**
- * Perceptually even, colour-blind-safe sequential ramp (viridis family,
- * trimmed at the dark end so it sits calmly on a light basemap).
+ * Red (weak) through orange and yellow to green and dark teal-green (strong),
+ * the convention buyer's agents use on suburb heat maps.
  */
 export const RAMP: [number, string][] = [
-  [0, '#3b2f6b'],
-  [0.2, '#3c5a92'],
-  [0.4, '#2f8790'],
-  [0.6, '#3daa7c'],
-  [0.8, '#97c95a'],
-  [1, '#f2e14c'],
+  [0, '#c8463a'],
+  [0.25, '#e6924a'],
+  [0.5, '#e4d07c'],
+  [0.75, '#7fb26c'],
+  [1, '#127a74'],
 ];
 
 export const NO_DATA = '#c9c6bd';
