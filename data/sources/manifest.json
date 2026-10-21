@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-18T22:26:27.427Z",
+  "updatedAt": "2026-10-21T10:01:47.458Z",
   "sources": {
     "abs-boundaries": {
       "id": "abs-boundaries",
@@ -62,16 +62,16 @@
       "id": "homesvic",
       "name": "Homes Victoria Rental Report, moving annual rents by suburb",
       "status": "ok",
-      "fetchedAt": "2026-10-17T01:28:40.031Z",
+      "fetchedAt": "2026-10-21T10:01:46.922Z",
       "asAt": "2025-09-30",
       "url": "https://www.dffh.vic.gov.au/moving-annual-rent-suburb-september-quarter-2025-excel",
-      "rows": 636,
+      "rows": 1275,
       "files": [
         "homesvic-rents.csv",
         "homesvic-series.json"
       ],
-      "message": " Rental Report - Moving Annual Rents by LGA Sep 2025; houses: sheet \"3 bedroom house\", 206 quarters to 2025-09-30, 143 groups; units: sheet \"2 bedroom flat\", 206 quarters to 2025-09-30, 146 groups; 2-bed houses: sheet \"2 bedroom house\", 206 quarters to 2025-09-30, 142 groups",
-      "version": 2
+      "message": " Rental Report - Moving Annual Rents by LGA Sep 2025; houses: sheet \"3 bedroom house\", 206 quarters to 2025-09-30, 143 groups; units: sheet \"2 bedroom flat\", 206 quarters to 2025-09-30, 146 groups; flat1: sheet \"1 bedroom flat\", 206 quarters to 2025-09-30, 145 groups; flat3: sheet \"3 bedroom flat\", 206 quarters to 2025-09-30, 145 groups; house2: sheet \"2 bedroom house\", 206 quarters to 2025-09-30, 142 groups; house4: sheet \"4 bedroom house\", 206 quarters to 2025-09-30, 143 groups",
+      "version": 3
     },
     "abs-approvals": {
       "id": "abs-approvals",
@@ -154,6 +154,19 @@
       ],
       "message": "1190 of 1621 localities",
       "version": 2
+    },
+    "rba-rates": {
+      "id": "rba-rates",
+      "name": "RBA housing lending rates (F6)",
+      "status": "ok",
+      "fetchedAt": "2026-10-21T10:01:47.457Z",
+      "asAt": "31/08/2026",
+      "url": "https://www.rba.gov.au/statistics/tables/csv/f6-data.csv",
+      "rows": 1,
+      "files": [
+        "rba-rate.json"
+      ],
+      "message": "6.2% (Lending rates; Housing credit; New loans funded in the month; Owner-occupied; Variable-rate; Large institutions)"
     }
   }
 }
