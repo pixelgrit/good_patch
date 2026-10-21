@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-21T10:01:47.458Z",
+  "updatedAt": "2026-10-21T10:04:15.684Z",
   "sources": {
     "abs-boundaries": {
       "id": "abs-boundaries",
@@ -159,14 +159,15 @@
       "id": "rba-rates",
       "name": "RBA housing lending rates (F6)",
       "status": "ok",
-      "fetchedAt": "2026-10-21T10:01:47.457Z",
+      "fetchedAt": "2026-10-21T10:04:15.684Z",
       "asAt": "31/08/2026",
       "url": "https://www.rba.gov.au/statistics/tables/csv/f6-data.csv",
       "rows": 1,
       "files": [
         "rba-rate.json"
       ],
-      "message": "6.2% (Lending rates; Housing credit; New loans funded in the month; Owner-occupied; Variable-rate; Large institutions)"
+      "message": "6.3% (Lending rates; Housing credit; New loans funded in the month; Investment; Variable-rate; Large institutions)",
+      "version": 2
     }
   }
 }
