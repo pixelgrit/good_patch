@@ -57,6 +57,19 @@ Besides the value model, three things make unit scores more like-for-like:
 - **Townhouse share of units** (Supply). Units with their own land carry more land content and face less competing new supply. It is weighted ×2 for long-term holds.
 - **High-rise share of units** (Risk). Tower-heavy unit markets carry more oversupply and building-defect risk, and apartments have grown more slowly than houses (about 1.2 points a year slower in the RBA's 1993–2010 comparison).
 
+## Measures added in October 2026
+
+These mirror the suburb sheets buyer's agents use (for example HtAG Analytics), built from free sources:
+
+- **Rent cover** (shown, not scored): gross yield as a share of the RBA investor variable mortgage rate (table F6). Over 100% means the rent covers the interest on a loan for the full price. It ranks suburbs exactly as yield does, so it isn't scored separately.
+- **Unit to house value** (Value, units): median unit price as a share of the median house price in the suburb. Low means units are cheap next to local houses.
+- **Unit to house share** (Supply): townhouses, semis, flats and apartments as a share of all homes (Census). Lower means scarcer land.
+- **Growth against own history** (Value): annual growth over the last 5 years minus the suburb's own annual growth over the 5 years before. Below its history suggests room to catch up. Counted at half weight for 3–5 year holds, which lean on momentum instead.
+- **Years of income to buy**: the price-to-income ratio, now shown in years.
+- **Rents by bedroom**: Homes Victoria medians for 1, 2 and 3-bed flats and 2, 3 and 4-bed houses, shown in the suburb panel.
+
+The suburb panel rates each indicator Strong (top 40% of suburbs), Neutral (middle 20%) or Weak (bottom 40%), allowing for whether higher or lower is better. Stock on market, months of supply, days on market, vacancy, vendor discounting, search interest and auction clearance need a licensed feed (HtAG, SQM Research, Cotality or Domain); the model already scores them once one is connected. Average hold period isn't available from any free source.
+
 ## Land
 
 Vacant land is scored from the Valuer-General's median land prices by suburb, with growth from its yearly series. Land earns no rent, so yield, rent growth and the rental demand measures don't apply, and the remaining categories are reweighted. The value model uses the same fundamentals as houses. Fewer suburbs sell vacant land, mostly in growth areas, so expect more suburbs without a land score.

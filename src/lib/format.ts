@@ -16,6 +16,10 @@ export function formatValue(unit: Unit, v: number | null | undefined, opts: { co
       return `${sign}${v.toFixed(Math.abs(v) < 10 ? 1 : 0)}%`;
     case 'ratio':
       return `${v.toFixed(1)}×`;
+    case 'years':
+      return `${v.toFixed(v < 10 ? 1 : 0)} yrs`;
+    case 'points':
+      return `${sign}${v.toFixed(1)} pts`;
     case 'days':
       return `${sign}${Math.round(v)} days`;
     case 'months':
@@ -32,7 +36,7 @@ export function formatValue(unit: Unit, v: number | null | undefined, opts: { co
 }
 
 export function formatMetric(def: MetricDef, v: number | null | undefined, compact = false): string {
-  const signed = def.key.endsWith('Trend') || def.key.startsWith('growth') || def.key.startsWith('rentGrowth') || def.key === 'popGrowth';
+  const signed = def.key.endsWith('Trend') || def.key.startsWith('growth') || def.key.startsWith('rentGrowth') || def.key === 'popGrowth' || def.key === 'valueGap' || def.key === 'neighbourGap';
   return formatValue(def.unit, v, { compact, signed });
 }
 

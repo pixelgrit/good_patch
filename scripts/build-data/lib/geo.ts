@@ -1,6 +1,6 @@
 import * as turf from '@turf/turf';
 import type { Feature, FeatureCollection, MultiPolygon, Point, Polygon } from 'geojson';
-import { round, setMetric, type BuildContext } from '../context';
+import { rawExists, readJson, round, setMetric, type BuildContext } from '../context';
 import type { PropertyType } from '../../../src/lib/types';
 
 const GPO: [number, number] = [144.9631, -37.8136];
@@ -121,9 +121,42 @@ export function applyDerived(ctx: BuildContext): void {
     setMetric(s, 'townhouseShare', round((m.semi / units) * 100, 1), 'abs-census', at, 'units');
     setMetric(s, 'highriseShare', round((m.highrise / units) * 100, 1), 'abs-census', at, 'units');
   }
+  extraMeasures(ctx);
   for (const type of ['houses', 'units', 'land'] as const) {
     valueGap(ctx, type);
     neighbourGap(ctx, type);
+  }
+}
+
+/** Used for rent cover when the RBA rate couldn't be fetched. */
+const DEFAULT_INVESTOR_RATE = 6.0;
+
+/** Rent cover, unit-to-house value and share, renter share, and growth against own history. */
+function extraMeasures(ctx: BuildContext): void {
+  const rba = rawExists('rba-rate.json') ? readJson<{ rate: number; title: string; date: string }>('rba-rate.json') : null;
+  const rate = rba?.rate ?? DEFAULT_INVESTOR_RATE;
+  ctx.log(`  rent cover at ${rate}% (${rba ? `RBA: ${rba.title}, ${rba.date}` : 'default, RBA rate not fetched'})`);
+  for (const s of ctx.suburbs) {
+    for (const type of ['houses', 'units'] as const) {
+      const y = s[type].metrics.grossYield;
+      if (y?.value != null) setMetric(s, 'rentCover', round((y.value / rate) * 100, 0), 'derived', y.asAt, type, false, !!y.approx);
+    }
+    const h = s.houses.metrics.medianPrice?.value;
+    const u = s.units.metrics.medianPrice;
+    if (h && u?.value) setMetric(s, 'unitToHouseValue', round((u.value / h) * 100, 0), 'derived', u.asAt, 'units');
+    const at = s.common.dwellings?.asAt ?? s.common.ownerOccupier?.asAt ?? '';
+    const m = s.dwellingMix;
+    const share = m ? m.semi + m.lowrise + m.midrise + m.highrise : s.unitShare;
+    if (share != null) setMetric(s, 'unitDwellingShare', round(share * 100, 1), 'abs-census', at);
+    if (s.renterShare != null) setMetric(s, 'renterShare', round(s.renterShare * 100, 1), 'abs-census', s.common.ownerOccupier?.asAt ?? at);
+    for (const type of ['houses', 'units', 'land'] as const) {
+      const pts = s[type].series.price ?? [];
+      if (pts.length < 11) continue;
+      const [a, b, c] = [pts[pts.length - 11].v, pts[pts.length - 6].v, pts[pts.length - 1].v];
+      if (!a || !b || !c) continue;
+      const annual = (from: number, to: number) => (Math.pow(to / from, 1 / 5) - 1) * 100;
+      setMetric(s, 'growthVsHistory', round(annual(b, c) - annual(a, b), 1), 'derived', pts[pts.length - 1].t, type);
+    }
   }
 }
 

@@ -5,6 +5,8 @@ export const TYPE_LABEL: Record<PropertyType, string> = { houses: 'Houses', unit
 /** "No recent {house} sales". */
 export const TYPE_SINGULAR: Record<PropertyType, string> = { houses: 'house', units: 'unit', land: 'land' };
 
+export type BedroomRent = 'flat1' | 'flat2' | 'flat3' | 'house2' | 'house3' | 'house4';
+
 export type CategoryId = 'yield' | 'growth' | 'value' | 'supply' | 'demand' | 'location' | 'risk' | 'tram';
 
 export type Direction = 'high' | 'low' | 'neutral';
@@ -97,6 +99,8 @@ export interface Suburb {
   overlays: RiskOverlays | null;
   /** Share of dwellings that are flats or apartments (Census), 0–1; null when unknown. */
   unitShare: number | null;
+  /** Median weekly rent by bedroom count (Homes Victoria): flat1, flat2, flat3, house2, house3, house4. */
+  rentByBedroom?: Partial<Record<BedroomRent, { value: number; asAt: string }>>;
   /** Land area in square kilometres. */
   areaKm2?: number;
   /** Fewer than 100 dwellings per square kilometre: farms, acreage and bush rather than suburban streets. */

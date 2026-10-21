@@ -24,14 +24,14 @@ export const GOALS: Record<GoalId, Goal> = {
     label: '3–5 year buy and sell',
     description: 'Buy, hold for a few years and sell. Leans on recent momentum, room to catch up with fundamentals and neighbours, and a market liquid enough to sell into. Recent growth counts most; ten-year growth not at all.',
     categories: { yield: 10, growth: 25, value: 25, supply: 15, demand: 15, location: 5, risk: 5, tram: 0 },
-    metricMultipliers: { growth1y: 3, growth3y: 1.5, growth5y: 0.5, growth10y: 0, rentGrowth1y: 1, rentGrowth3y: 0.5, turnover: 2, dom: 1.5, ownerOccupier: 0.5, hazard: 0.5 },
+    metricMultipliers: { growth1y: 3, growth3y: 1.5, growth5y: 0.5, growth10y: 0, rentGrowth1y: 1, rentGrowth3y: 0.5, turnover: 2, dom: 1.5, ownerOccupier: 0.5, hazard: 0.5, growthVsHistory: 0.5 },
   },
   hold: {
     id: 'hold',
     label: 'Long-term investment',
     description: 'Hold for 10 years or more and rent it out. Weights rental yield and the lasting drivers of growth: location, scarce land and limited new supply. Long-run growth counts most; last year’s growth very little.',
     categories: { yield: 20, growth: 15, value: 10, supply: 15, demand: 5, location: 25, risk: 10, tram: 0 },
-    metricMultipliers: { growth1y: 0.25, growth3y: 0.5, growth5y: 1, growth10y: 2, rentGrowth1y: 0.5, rentGrowth3y: 1.5, nrzShare: 2, landToAsset: 2, townhouseShare: 2, highriseShare: 1.5, turnover: 0 },
+    metricMultipliers: { growth1y: 0.25, growth3y: 0.5, growth5y: 1, growth10y: 2, rentGrowth1y: 0.5, rentGrowth3y: 1.5, nrzShare: 2, landToAsset: 2, townhouseShare: 2, highriseShare: 1.5, unitDwellingShare: 1.5, turnover: 0 },
   },
   home: {
     id: 'home',

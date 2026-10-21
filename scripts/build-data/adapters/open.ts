@@ -8,7 +8,7 @@ import * as turf from '@turf/turf';
 import type { FeatureCollection, LineString, MultiLineString, MultiPolygon, Point, Polygon } from 'geojson';
 import type { BoundaryFeature, BuildContext } from '../context';
 import { num, rawExists, readCsv, readJson, round, setMetric, setSeries } from '../context';
-import type { PropertyType, SeriesPoint, Suburb } from '../../../src/lib/types';
+import type { BedroomRent, PropertyType, SeriesPoint, Suburb } from '../../../src/lib/types';
 import type { Adapter } from './types';
 
 const files = (...names: string[]) => () => {
@@ -154,11 +154,17 @@ export const homesVicRents: Adapter = {
     let blended = 0;
     // Homes Victoria names some areas differently from the ABS suburb.
     const ALIAS: Record<string, string> = { CBD: 'MELBOURNE' };
+    // The benchmark rows are the 3-bed house (houses) and 2-bed flat (units).
+    const BEDROOM: Record<string, BedroomRent> = { houses: 'house3', units: 'flat2', flat1: 'flat1', flat3: 'flat3', house2: 'house2', house4: 'house4' };
     for (const r of rows) {
       const s = idx.get(ALIAS[r.key] ?? (r.key || key(r.suburb)));
+      if (!s) continue;
+      const kind = BEDROOM[r.type];
+      const raw = num(r.median_rent);
+      if (kind && raw != null) (s.rentByBedroom ??= {})[kind] = { value: raw, asAt: r.as_at };
       const type = r.type as PropertyType;
-      if (!s || (type !== 'houses' && type !== 'units')) continue;
-      let rent = num(r.median_rent);
+      if (type !== 'houses' && type !== 'units') continue;
+      let rent = raw;
       // Unit medians include townhouses; blend the 2-bed flat rent with the 2-bed house
       // rent in proportion to the suburb's townhouse share of units.
       const h2 = type === 'units' ? house2.get(r.key) ?? house2.get(ALIAS[r.key] ?? '') : null;

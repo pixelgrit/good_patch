@@ -47,6 +47,7 @@ The basemap is a built-in Apple Maps–style light style (`src/lib/basemap.ts`) 
 - **For sale now**: each suburb's panel links to the live search on realestate.com.au and Domain for that suburb and property type. In rural localities (under 100 dwellings per km²), land searches also include acreage and rural property. Good patch doesn't copy listings: both sites' terms prohibit scraping. Domain offers a paid listings API, which could be added as a licensed source.
 - **Buying for**: 3–5 year buy and sell, long-term investment or owner-occupier. Each goal weights the categories and metrics differently (see [docs/scoring.md](docs/scoring.md)).
 - **Focus**: Balanced, Cashflow (yield and rent growth weighted up) or Growth (growth, value and supply weighted up), applied on top of the goal. The weights sliders let you set your own mix; the map recolours live. An optional toggle deducts points for risk flags.
+- **Suburb panel**: a market snapshot (typical price, rent, yield, rent cover, and rents by bedroom) and an indicator list rating each measure Strong, Neutral or Weak against other suburbs.
 - **Hover** shows the score and the two strongest and two weakest factors. **Click** opens the detail panel: key figures with source and "as at" date (flagged when stale), category breakdown, a full metric table (raw value, percentile, weight, points), five-year sparklines, tram and train access, risk flags and zoning.
 - **Search** by suburb or postcode.
 - **Filters**: budget range, minimum yield, maximum vacancy, maximum distance to CBD, tram suburbs only.
@@ -81,8 +82,8 @@ The method, the research behind it and its limits are written up in [docs/scorin
 | Risk | 5 | 10 | 15 |
 | Tram access | 0 | 0 | 0 |
 
-- **3–5 year buy and sell** metric multipliers: `growth1y` ×3, `growth3y` ×1.5, `growth5y` ×0.5, `growth10y` ×0, `rentGrowth1y` ×1, `rentGrowth3y` ×0.5, `turnover` ×2, `dom` ×1.5, `ownerOccupier` ×0.5, `hazard` ×0.5.
-- **Long-term investment** metric multipliers: `growth1y` ×0.25, `growth3y` ×0.5, `growth5y` ×1, `growth10y` ×2, `rentGrowth1y` ×0.5, `rentGrowth3y` ×1.5, `nrzShare` ×2, `landToAsset` ×2, `townhouseShare` ×2, `highriseShare` ×1.5, `turnover` ×0.
+- **3–5 year buy and sell** metric multipliers: `growth1y` ×3, `growth3y` ×1.5, `growth5y` ×0.5, `growth10y` ×0, `rentGrowth1y` ×1, `rentGrowth3y` ×0.5, `turnover` ×2, `dom` ×1.5, `ownerOccupier` ×0.5, `hazard` ×0.5, `growthVsHistory` ×0.5.
+- **Long-term investment** metric multipliers: `growth1y` ×0.25, `growth3y` ×0.5, `growth5y` ×1, `growth10y` ×2, `rentGrowth1y` ×0.5, `rentGrowth3y` ×1.5, `nrzShare` ×2, `landToAsset` ×2, `townhouseShare` ×2, `highriseShare` ×1.5, `unitDwellingShare` ×1.5, `turnover` ×0.
 - **Owner-occupier** metric multipliers: `growth1y` ×0, `growth3y` ×0.5, `growth5y` ×1, `growth10y` ×2, `rentGrowth1y` ×0, `rentGrowth3y` ×0, `priceToIncome` ×1.5, `neighbourGap` ×0.5, `ownerOccupier` ×2, `distanceTrain` ×1.5, `hazard` ×2, `approvalsRatio` ×0.5.
 
 Focus tilts (multiplied onto the goal's category weights):
@@ -117,21 +118,24 @@ Weights are the default share within each category, before a goal's multipliers.
 
 | Metric | Key | Source | Direction | Weight in category | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Price against fundamentals | `valueGap` | Derived | Lower is better | 44% | How far the median price sits above (+) or below (−) what similar suburbs fetch, given household income, socio-economic standing, distance to the CBD and to a train station, and the share of apartments. Fitted across all suburbs each build. Prices tend to drift back toward fundamentals, so below-model suburbs have more room to catch up. |
-| Discount to neighbours | `neighbourGap` | Derived | Higher is better | 33% | How much cheaper (+) or dearer (−) the suburb is than the median of suburbs within 4 km. Cheaper suburbs next to dearer ones tend to gain most in a rising market (the ripple effect). |
-| Price-to-income ratio | `priceToIncome` | Derived | Lower is better | 22% | Median price / median annual household income (Census). Lower is more affordable for local buyers. |
+| Price against fundamentals | `valueGap` | Derived | Lower is better | 31% | How far the median price sits above (+) or below (−) what similar suburbs fetch, given household income, socio-economic standing, distance to the CBD and to a train station, and the share of apartments. Fitted across all suburbs each build. Prices tend to drift back toward fundamentals, so below-model suburbs have more room to catch up. |
+| Discount to neighbours | `neighbourGap` | Derived | Higher is better | 23% | How much cheaper (+) or dearer (−) the suburb is than the median of suburbs within 4 km. Cheaper suburbs next to dearer ones tend to gain most in a rising market (the ripple effect). |
+| Years of income to buy | `priceToIncome` | Derived | Lower is better | 15% | Median price / median annual household income (Census): how many years of a local household's gross income the median home costs. Lower is more affordable for local buyers. |
+| Unit to house value | `unitToHouseValue` | Derived | Lower is better | 15% | Median unit price as a share of the median house price in the same suburb. A low share means units are cheap next to local houses, leaving room for units to catch up. Houses only. |
+| Growth against own history, 5 years | `growthVsHistory` | Derived | Lower is better | 15% | Annual price growth over the last 5 years minus the suburb's own annual growth over the 5 years before (Valuer-General yearly medians). Below its own history suggests the suburb has lagged and may have room to catch up; well above suggests it has run ahead. |
 
 **Supply**
 
 | Metric | Key | Source | Direction | Weight in category | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Building approvals ratio | `approvalsRatio` | ABS Building Approvals (8731.0) | Lower is better | 20% | Dwelling approvals in the last 12 months / total dwelling stock. Lower is better. Above ~2.5% hints at future oversupply. |
-| Neighbourhood residential zone | `nrzShare` | Vicmap Planning (zones and overlays) | Higher is better | 10% | Share of residential land zoned NRZ, which limits new density. Where supply is hard to add, prices rise more when demand grows. |
-| Land-to-asset ratio | `landToAsset` | Valuer-General Victoria median prices | Higher is better | 10% | Site value / capital improved value. Land appreciates; buildings depreciate. Houses only. |
-| Townhouse share of units | `townhouseShare` | ABS Census 2021 | Higher is better | 10% | Townhouses, semis and villas as a share of all units, flats and apartments in the suburb (Census). Units with their own land behave more like houses: more land content, less new competing supply. Houses only. |
-| Stock on market | `stockOnMarket` | SQM Research | Lower is better | 20% | Active listings / total dwellings. Around 1–1.3% is balanced; lower is tighter. |
-| Inventory | `inventoryMonths` | Cotality | Lower is better | 15% | Months to sell current listings at the current sales rate. Under 6 months suggests upward price pressure. |
-| Stock on market trend | `supplyTrend` | SQM Research | Lower is better | 15% | Change in listings over 6 months. Falling stock is a positive signal. |
+| Building approvals ratio | `approvalsRatio` | ABS Building Approvals (8731.0) | Lower is better | 18% | Dwelling approvals in the last 12 months / total dwelling stock. Lower is better. Above ~2.5% hints at future oversupply. |
+| Unit to house share | `unitDwellingShare` | ABS Census 2021 | Lower is better | 9% | Townhouses, semis, flats and apartments as a share of all occupied homes (Census). A suburb mostly of houses has scarcer land and less room for competing new stock. |
+| Neighbourhood residential zone | `nrzShare` | Vicmap Planning (zones and overlays) | Higher is better | 9% | Share of residential land zoned NRZ, which limits new density. Where supply is hard to add, prices rise more when demand grows. |
+| Land-to-asset ratio | `landToAsset` | Valuer-General Victoria median prices | Higher is better | 9% | Site value / capital improved value. Land appreciates; buildings depreciate. Houses only. |
+| Townhouse share of units | `townhouseShare` | ABS Census 2021 | Higher is better | 9% | Townhouses, semis and villas as a share of all units, flats and apartments in the suburb (Census). Units with their own land behave more like houses: more land content, less new competing supply. Houses only. |
+| Stock on market | `stockOnMarket` | SQM Research | Lower is better | 18% | Active listings / total dwellings. Around 1–1.3% is balanced; lower is tighter. |
+| Inventory | `inventoryMonths` | Cotality | Lower is better | 14% | Months to sell current listings at the current sales rate. Under 6 months suggests upward price pressure. |
+| Stock on market trend | `supplyTrend` | SQM Research | Lower is better | 14% | Change in listings over 6 months. Falling stock is a positive signal. |
 
 **Demand**
 
@@ -175,6 +179,8 @@ Weights are the default share within each category, before a goal's multipliers.
 | --- | --- | --- | --- | --- | --- |
 | Median sale price | `medianPrice` | Valuer-General Victoria median prices | Context only | — | Median sale price for the latest quarter (Valuer-General Victoria). |
 | Median weekly rent | `medianRent` | Homes Victoria Rental Report | Context only | — | Moving annual median rent for new leases (Homes Victoria). Where a suburb has no Homes Victoria figure, it is estimated from the Census median rent scaled to today’s rents, and marked approximate. |
+| Rent cover | `rentCover` | Derived | Higher is better | — | Gross rental yield / the RBA investor variable mortgage rate: how much of the interest on a loan for the full price the rent pays. Over 100% means rent covers the interest. |
+| Renter share | `renterShare` | ABS Census 2021 | Context only | — | Share of occupied homes that are rented (Census). The inverse of the owner-occupier ratio, which is scored. |
 | Sales, last 12 months | `sales12m` | Cotality, via Your Investment Property | Context only | — | Number of sales over the last 12 months (Cotality). Medians from fewer than 20 sales are left out. |
 | Sales, latest quarter | `salesQuarter` | Valuer-General Victoria median prices | Context only | — | Number of sales in the latest quarter (Valuer-General Victoria). |
 | Median household income | `medianIncome` | ABS Census 2021 | Context only | — | Median annual household income (Census weekly × 52). |

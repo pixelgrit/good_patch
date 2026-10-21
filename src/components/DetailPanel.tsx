@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import { useAbout } from '../hooks/useAbout';
-import { useAvailableMetrics, useSuburbByCode } from '../hooks/useDerived';
+import { useSuburbByCode } from '../hooks/useDerived';
 import { formatDate, formatDistance, formatMetric, formatScore, formatValue } from '../lib/format';
 import { METRIC_BY_KEY } from '../lib/metrics';
 import { FOCUS, GOALS } from '../lib/presets';
@@ -8,12 +8,9 @@ import { getMetric, type SuburbScore } from '../lib/scoring';
 import { isStale, SOURCES } from '../lib/sources';
 import { rampColor } from '../lib/colors';
 import { formatListingPrice, LISTING_PRICE_MAX, LISTING_PRICE_STEP, listingLinks } from '../lib/listings';
-import { PROPERTY_TYPES, TYPE_LABEL, TYPE_SINGULAR, type MetricValue, type PropertyType, type SeriesKey, type Suburb } from '../lib/types';
+import { PROPERTY_TYPES, TYPE_LABEL, TYPE_SINGULAR, type BedroomRent, type MetricValue, type PropertyType, type SeriesKey, type Suburb } from '../lib/types';
 import { MAX_PINNED, TRAM_SUBURB_SHARE, useStore } from '../store';
 import { Pill, Sparkline } from './ui';
-
-/** Shown in this order, skipping any metric with no data loaded. */
-const KEY_FIGURES = ['medianPrice', 'medianRent', 'grossYield', 'vacancy', 'dom', 'growth1y', 'sales12m', 'stockOnMarket', 'approvalsRatio', 'clearance', 'ownerOccupier', 'seifa'];
 
 const SERIES: { key: SeriesKey; label: string; unit: 'aud' | 'audWeekly' | 'pct' | 'days' }[] = [
   { key: 'price', label: 'Median price', unit: 'aud' },
@@ -58,9 +55,6 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
   const setMaxPrice = useStore((st) => st.setListingMaxPrice);
   const links = listingLinks(s, type, maxPrice);
   const [showAll, setShowAll] = useState(false);
-  const available = useAvailableMetrics();
-  // Only figures this suburb has a value for.
-  const figures = KEY_FIGURES.filter((k) => available.has(k) && getMetric(s, type, k)?.value != null).slice(0, 8);
   const hasSeries = SERIES.some((x) => (s[type].series[x.key]?.length ?? 0) > 1);
   const isPinned = pinned.includes(s.code);
   const focusLabel = focus === 'custom' ? 'Custom weights' : `${FOCUS[focus].label} focus`;
@@ -145,22 +139,9 @@ function DetailBody({ s, sc }: { s: Suburb; sc: SuburbScore }) {
         </p>
       </section>
 
-      <section className="detail__section">
-        <h3>Key figures</h3>
-        <div className="figures">
-          {figures.map((k) => {
-            const def = METRIC_BY_KEY[k];
-            const mv = getMetric(s, type, k);
-            return (
-              <div className="figure" key={k}>
-                <div className="figure__label muted">{def.label}</div>
-                <div className="figure__value">{formatMetric(def, mv?.value)}</div>
-                <Provenance mv={mv} />
-              </div>
-            );
-          })}
-        </div>
-      </section>
+      <MarketSnapshot s={s} type={type} />
+
+      <Indicators s={s} type={type} />
 
       {!sc.unpriced && (
         <section className="detail__section">
@@ -433,5 +414,151 @@ function Attribution({ title, url }: { title: string; url: string }) {
       </a>
       , CC BY-SA 4.0.
     </p>
+  );
+}
+
+/** Headline figures and a by-bedroom table, like a buyer's agent's suburb sheet. */
+function MarketSnapshot({ s, type }: { s: Suburb; type: PropertyType }) {
+  const v = (k: string) => getMetric(s, type, k)?.value ?? null;
+  const chips: [string, string][] = (
+    [
+      ['Typical', v('medianPrice') != null ? formatValue('aud', v('medianPrice'), { compact: true }) : null],
+      ['Rent', v('medianRent') != null ? formatValue('audWeekly', v('medianRent')) : null],
+      ['Yield', v('grossYield') != null ? formatValue('pct', v('grossYield')) : null],
+      ['Vacancy', v('vacancy') != null ? formatValue('pct', v('vacancy')) : null],
+      ['Days on market', v('dom') != null ? formatValue('days', v('dom')) : null],
+      ['Rent cover', v('rentCover') != null ? `${Math.round(v('rentCover')!)}%` : null],
+    ] as [string, string | null][]
+  ).filter((c): c is [string, string] => c[1] != null);
+  const beds: [string, BedroomRent][] =
+    type === 'units'
+      ? [
+          ['1 bed', 'flat1'],
+          ['2 bed', 'flat2'],
+          ['3 bed', 'flat3'],
+        ]
+      : type === 'houses'
+        ? [
+            ['2 bed', 'house2'],
+            ['3 bed', 'house3'],
+            ['4 bed', 'house4'],
+          ]
+        : [];
+  const bedRows = beds.filter(([, k]) => s.rentByBedroom?.[k]);
+  if (!chips.length) return null;
+  return (
+    <section className="detail__section">
+      <h3>Market snapshot</h3>
+      <div className="pill-row">
+        {chips.map(([k, val]) => (
+          <span className="pill pill--small pill--static" key={k}>
+            {k} {val}
+          </span>
+        ))}
+      </div>
+      <div className="table-wrap">
+        <table className="metric-table">
+          <thead>
+            <tr>
+              <th />
+              <th>Price</th>
+              {type !== 'land' && <th>Rent</th>}
+              {type !== 'land' && <th>Yield</th>}
+              <th>12 months</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>All {TYPE_LABEL[type].toLowerCase()}</td>
+              <td>{formatValue('aud', v('medianPrice'), { compact: true })}</td>
+              {type !== 'land' && <td>{formatValue('audWeekly', v('medianRent'))}</td>}
+              {type !== 'land' && <td>{formatValue('pct', v('grossYield'))}</td>}
+              <td>{formatValue('pct', v('growth1y'), { signed: true })}</td>
+            </tr>
+            {bedRows.map(([label, k]) => (
+              <tr key={k}>
+                <td>{label}</td>
+                <td>—</td>
+                <td>{formatValue('audWeekly', s.rentByBedroom![k]!.value)}</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="muted note">
+        Prices are Valuer-General medians for all {TYPE_LABEL[type].toLowerCase()}; prices by bedroom aren't published free.{type !== 'land' ? ' Rents by bedroom are Homes Victoria medians for new leases.' : ''}
+        {v('rentCover') != null ? ' Rent cover is yield as a share of the RBA investor variable rate: over 100% means the rent covers the interest on a loan for the full price.' : ''}
+      </p>
+    </section>
+  );
+}
+
+/** Indicators in the order a buyer's agent reads them, each rated against other suburbs. */
+const INDICATORS = [
+  'stockOnMarket',
+  'inventoryMonths',
+  'dom',
+  'vacancy',
+  'approvalsRatio',
+  'vendorDiscount',
+  'searchInterest',
+  'clearance',
+  'seifa',
+  'renterShare',
+  'unitDwellingShare',
+  'unitToHouseValue',
+  'priceToIncome',
+  'growthVsHistory',
+  'valueGap',
+  'neighbourGap',
+  'turnover',
+  'volatility',
+  'popGrowth',
+  'nrzShare',
+  'distanceTrain',
+];
+/** Measures that only arrive with a licensed feed. */
+const LICENSED = ['stockOnMarket', 'inventoryMonths', 'dom', 'vacancy', 'vendorDiscount', 'searchInterest', 'clearance'];
+
+function rating(pct: number | null | undefined): { label: string; tone: 'strong' | 'neutral' | 'weak' } | null {
+  if (pct == null) return null;
+  if (pct >= 60) return { label: 'Strong', tone: 'strong' };
+  if (pct >= 40) return { label: 'Neutral', tone: 'neutral' };
+  return { label: 'Weak', tone: 'weak' };
+}
+
+function Indicators({ s, type }: { s: Suburb; type: PropertyType }) {
+  const rows = INDICATORS.map((k) => {
+    const def = METRIC_BY_KEY[k];
+    const mv = getMetric(s, type, k);
+    // Renter share isn't ranked itself: rate it by the owner-occupier ratio it mirrors.
+    const pct = k === 'renterShare' ? getMetric(s, type, 'ownerOccupier')?.pct : mv?.pct;
+    return { k, def, mv, r: rating(pct) };
+  }).filter((x) => x.def && x.mv?.value != null);
+  const missing = LICENSED.filter((k) => getMetric(s, type, k)?.value == null).map((k) => METRIC_BY_KEY[k]?.label.toLowerCase());
+  if (!rows.length) return null;
+  return (
+    <section className="detail__section">
+      <h3>Indicators</h3>
+      <div className="table-wrap">
+        <table className="metric-table">
+          <tbody>
+            {rows.map(({ k, def, mv, r }) => (
+              <tr key={k} title={def.guide ?? def.description}>
+                <td>{def.label}</td>
+                <td>{formatMetric(def, mv!.value, true)}</td>
+                <td>{r && <span className={`rating rating--${r.tone}`}>{r.label}</span>}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="muted note">
+        Strong, neutral and weak compare this suburb with the others on the map (top 40%, middle 20%, bottom 40%), allowing for whether higher or lower is better.
+        {missing.length ? ` ${missing[0][0].toUpperCase()}${missing.join(', ').slice(1)} need a licensed feed (such as HtAG, SQM Research, Cotality or Domain).` : ''}
+      </p>
+    </section>
   );
 }
