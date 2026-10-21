@@ -7,7 +7,7 @@ import type { PropertyType, Suburb } from './types';
  */
 /** The price slider's range. At the top of the range, searches have no price limit. */
 export const LISTING_PRICE_MAX = 10_000_000;
-export const LISTING_PRICE_DEFAULT = 750_000;
+export const LISTING_PRICE_DEFAULT = 1_000_000;
 export const LISTING_PRICE_STEP = 50_000;
 
 /** "$850k", "$1.5m", or "Any price" at the top of the range. */
