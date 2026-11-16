@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T23:44:00.592Z",
+  "updatedAt": "2026-11-16T00:05:06.901Z",
   "sources": {
     "abs-boundaries": {
       "id": "abs-boundaries",
@@ -47,22 +47,22 @@
       "id": "vgv",
       "name": "Valuer-General Victoria median prices by suburb",
       "status": "ok",
-      "fetchedAt": "2026-10-17T04:01:10.364Z",
+      "fetchedAt": "2026-11-15T23:58:22.375Z",
       "asAt": "2026-03-31",
       "url": "https://discover.data.vic.gov.au/dataset/victorian-property-sales-report-median-house-by-suburb",
-      "rows": 1431,
+      "rows": 1436,
       "files": [
         "vgv-medians.csv",
         "vgv-series.json"
       ],
-      "message": "houses quarter: March 2026 Quarter (sheet \"Sheet1\", median col \"Jan-Mar\", sales col \"No. of\"); houses series:  Houses by suburb 2015-2025 (sheet \"Sheet1\", years 2015–2025); units quarter: March 2026 Quarter (sheet \"Sheet1\", median col \"Jan-Mar\", sales col \"No. of\"); units series: Units by suburb 2015-2025 (sheet \"Sheet1\", years 2015–2025); land quarter:  December 2025 Quarter (sheet \"Sheet1\", median col \"\", sales col \"No. of Sales\"); land series: Land by suburb 2015-2025 (sheet \"Sheet1\", years 2015–2025)",
+      "message": "houses quarter: March 2026 Quarter (sheet \"Sheet1\", median col \"Jan-Mar\", sales col \"No. of\"); houses series:  Houses by suburb 2015-2025 (sheet \"Sheet1\", years 2015–2025); units quarter: March 2026 Quarter (sheet \"Sheet1\", median col \"Jan-Mar\", sales col \"No. of\"); units series: Units by suburb 2015-2025 (sheet \"Sheet1\", years 2015–2025); land quarter: March 2026 Quarter (sheet \"Sheet1\", median col \"Jan-Mar\", sales col \"No. of\"); land series: Land by suburb 2015-2025 (sheet \"Sheet1\", years 2015–2025)",
       "version": 3
     },
     "homesvic": {
       "id": "homesvic",
       "name": "Homes Victoria Rental Report, moving annual rents by suburb",
       "status": "ok",
-      "fetchedAt": "2026-10-21T10:01:46.922Z",
+      "fetchedAt": "2026-11-15T23:58:26.774Z",
       "asAt": "2025-09-30",
       "url": "https://www.dffh.vic.gov.au/moving-annual-rent-suburb-september-quarter-2025-excel",
       "rows": 1275,
@@ -77,14 +77,14 @@
       "id": "abs-approvals",
       "name": "ABS Building Approvals by SA2 (monthly)",
       "status": "ok",
-      "fetchedAt": "2026-10-17T05:07:57.951Z",
-      "asAt": "2026-08-31",
+      "fetchedAt": "2026-11-15T23:59:16.314Z",
+      "asAt": "2026-09-30",
       "url": "https://data.api.abs.gov.au/rest/data/ABS,BA_SA2",
       "rows": 1621,
       "files": [
         "approvals-sal.csv"
       ],
-      "message": "12 months to 2026-08-31; {\"MEASURE\":\"1 (Number of dwelling units)\",\"SECTOR\":\"9 (Total Sectors)\",\"WORK_TYPE\":\"TOT (Total Work)\",\"BUILDING_TYPE\":\"100 (Total Residential)\",\"REGION_TYPE\":\"SA2 (Statistical Area Level 2)\",\"FREQ\":\"M (Monthly)\"}"
+      "message": "12 months to 2026-09-30; {\"MEASURE\":\"1 (Number of dwelling units)\",\"SECTOR\":\"9 (Total Sectors)\",\"WORK_TYPE\":\"TOT (Total Work)\",\"BUILDING_TYPE\":\"100 (Total Residential)\",\"REGION_TYPE\":\"SA2 (Statistical Area Level 2)\",\"FREQ\":\"M (Monthly)\"}"
     },
     "abs-population": {
       "id": "abs-population",
@@ -103,19 +103,19 @@
       "id": "vicmap-planning",
       "name": "Vicmap Planning zones and overlays",
       "status": "ok",
-      "fetchedAt": "2026-10-17T05:14:02.050Z",
-      "asAt": "2026-10-17",
+      "fetchedAt": "2026-11-16T00:05:05.072Z",
+      "asAt": "2026-11-16",
       "url": "https://opendata.maps.vic.gov.au/geoserver/wfs",
       "rows": 1621,
       "files": [
         "planning-sal.csv"
       ],
-      "message": "5240 zone and 39665 overlay polygons"
+      "message": "5240 zone and 39669 overlay polygons"
     },
     "ptv-gtfs": {
       "id": "ptv-gtfs",
       "name": "PTV GTFS Schedule (tram, metro and V/Line train)",
-      "status": "ok",
+      "status": "failed",
       "fetchedAt": "2026-10-17T05:14:37.852Z",
       "asAt": "2026-10-17",
       "url": "https://opendata.transport.vic.gov.au/dataset/3f4e292e-7f8a-4ffe-831f-1953be0fe448/resource/fb152201-859f-4882-9206-b768060b50ad/download/gtfs.zip",
@@ -124,7 +124,7 @@
         "transport-lines.geojson",
         "transport-stops.geojson"
       ],
-      "message": "93 route shapes, 1954 stops",
+      "message": "HTTP 404 for https://opendata.transport.vic.gov.au/dataset/3f4e292e-7f8a-4ffe-831f-1953be0fe448/resource/fb152201-859f-4882-9206-b768060b50ad/download/gtfs.zip",
       "version": 2
     },
     "vicmap-admin": {
@@ -159,8 +159,8 @@
       "id": "rba-rates",
       "name": "RBA housing lending rates (F6)",
       "status": "ok",
-      "fetchedAt": "2026-10-21T10:04:15.684Z",
-      "asAt": "31/08/2026",
+      "fetchedAt": "2026-11-16T00:05:06.901Z",
+      "asAt": "30/09/2026",
       "url": "https://www.rba.gov.au/statistics/tables/csv/f6-data.csv",
       "rows": 1,
       "files": [
