@@ -54,3 +54,21 @@ export function formatDistance(m: number | null | undefined): string {
 export function formatScore(v: number | null | undefined): string {
   return v == null ? '—' : Math.round(v).toString();
 }
+
+/** "just now", "5 minutes ago", "3 hours ago", "2 days ago", "5 weeks ago". */
+export function formatAgo(iso: string, now = Date.now()): string {
+  const mins = Math.max(0, Math.round((now - new Date(iso).getTime()) / 60_000));
+  const plural = (n: number, unit: string) => `${n} ${unit}${n === 1 ? '' : 's'} ago`;
+  if (mins < 1) return 'just now';
+  if (mins < 60) return plural(mins, 'minute');
+  const hours = Math.round(mins / 60);
+  if (hours < 24) return plural(hours, 'hour');
+  const days = Math.round(hours / 24);
+  if (days < 14) return plural(days, 'day');
+  return plural(Math.round(days / 7), 'week');
+}
+
+/** Full local date and time, for tooltips. */
+export function formatDateTime(iso: string): string {
+  return new Date(iso).toLocaleString('en-AU', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+}

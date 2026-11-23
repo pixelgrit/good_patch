@@ -6,7 +6,7 @@ import { Legend } from './components/Legend';
 import { MapView } from './components/MapView';
 import { Search } from './components/Search';
 import { activeFilterCount, useFilteredCodes, useMapValues, useScores } from './hooks/useDerived';
-import { formatDate } from './lib/format';
+import { formatAgo, formatDate, formatDateTime } from './lib/format';
 import type { Dataset } from './lib/types';
 import { useStore } from './store';
 
@@ -40,6 +40,13 @@ export default function App() {
       .catch((e) => useStore.getState().setLoadError(`Couldn't load suburb data (${e.message}). Run "npm run data" to build it.`));
   }, []);
 
+  // Re-render every minute so "updated … ago" stays current while the page is open.
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const t = window.setInterval(() => setNow(Date.now()), 60_000);
+    return () => window.clearInterval(t);
+  }, []);
+
   const scores = useScores();
   const visible = useFilteredCodes();
   const values = useMapValues(scores);
@@ -50,6 +57,11 @@ export default function App() {
     <div className="brand">
       <h1>Good patch</h1>
       <span className="muted">Melbourne and regional investment map</span>
+      {dataset && (
+        <span className="muted brand__updated" title={`Data last fetched and built ${formatDateTime(dataset.generatedAt)}`}>
+          Data updated {formatAgo(dataset.generatedAt, now)}
+        </span>
+      )}
     </div>
   );
 
