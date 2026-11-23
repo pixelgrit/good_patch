@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T00:54:45.863Z",
+  "updatedAt": "2026-11-23T01:00:59.597Z",
   "sources": {
     "abs-boundaries": {
       "id": "abs-boundaries",
@@ -115,16 +115,16 @@
     "ptv-gtfs": {
       "id": "ptv-gtfs",
       "name": "PTV GTFS Schedule (tram, metro and V/Line train)",
-      "status": "failed",
-      "fetchedAt": "2026-10-17T05:14:37.852Z",
-      "asAt": "2026-10-17",
-      "url": "https://opendata.transport.vic.gov.au/dataset/3f4e292e-7f8a-4ffe-831f-1953be0fe448/resource/fb152201-859f-4882-9206-b768060b50ad/download/gtfs.zip",
-      "rows": 2047,
+      "status": "ok",
+      "fetchedAt": "2026-11-23T01:00:59.597Z",
+      "asAt": "2026-11-23",
+      "url": "https://opendata.transport.vic.gov.au/dataset/3f4e292e-7f8a-4ffe-831f-1953be0fe448/resource/8af7737c-5c9e-4022-aa98-911aa04370a7/download/gtfs.zip",
+      "rows": 2050,
       "files": [
         "transport-lines.geojson",
         "transport-stops.geojson"
       ],
-      "message": "HTTP 404 for https://opendata.transport.vic.gov.au/dataset/3f4e292e-7f8a-4ffe-831f-1953be0fe448/resource/fb152201-859f-4882-9206-b768060b50ad/download/gtfs.zip",
+      "message": "93 route shapes, 1957 stops",
       "version": 2
     },
     "vicmap-admin": {
