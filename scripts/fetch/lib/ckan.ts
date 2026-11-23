@@ -21,9 +21,9 @@ interface CkanPackage {
   resources: CkanResource[];
 }
 
-export async function packageShow(id: string): Promise<CkanPackage> {
+export async function packageShow(id: string, catalogues: string[] = CATALOGUES): Promise<CkanPackage> {
   let lastErr: unknown;
-  for (const base of CATALOGUES) {
+  for (const base of catalogues) {
     try {
       const res = await getJson<{ success: boolean; result: CkanPackage }>(`${base}/package_show?id=${encodeURIComponent(id)}`);
       if (res.success) return res.result;

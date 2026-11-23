@@ -9,6 +9,7 @@ import path from 'node:path';
 import * as turf from '@turf/turf';
 import type { Feature, FeatureCollection, LineString, MultiPolygon, Polygon } from 'geojson';
 import { cache, CACHE_DIR, readJsonOut, writeCsv, writeJson } from '../lib/common';
+import { packageShow } from '../lib/ckan';
 import { download, getJson } from '../lib/http';
 import type { Fetcher } from './types';
 
@@ -192,7 +193,29 @@ export const vicmapPlanning: Fetcher = {
 /* PTV GTFS Schedule                                                     */
 /* ------------------------------------------------------------------ */
 
-const GTFS_URL = 'https://opendata.transport.vic.gov.au/dataset/3f4e292e-7f8a-4ffe-831f-1953be0fe448/resource/fb152201-859f-4882-9206-b768060b50ad/download/gtfs.zip';
+/** The GTFS Schedule dataset on Transport Victoria's open data portal (also harvested by DataVic). */
+const GTFS_DATASET = ['3f4e292e-7f8a-4ffe-831f-1953be0fe448', 'gtfs-schedule'];
+const GTFS_CATALOGUES = ['https://opendata.transport.vic.gov.au/api/3/action', 'https://discover.data.vic.gov.au/api/3/action', 'https://data.gov.au/data/api/3/action'];
+/** Last known download link, tried only if the catalogue can't be read. */
+const GTFS_FALLBACK = 'https://opendata.transport.vic.gov.au/dataset/3f4e292e-7f8a-4ffe-831f-1953be0fe448/resource/fb152201-859f-4882-9206-b768060b50ad/download/gtfs.zip';
+
+/**
+ * The current GTFS zip. PTV replaces the file (and its resource ID) from time
+ * to time, so look it up in the catalogue on every run rather than hard-coding it.
+ */
+async function gtfsUrl(): Promise<string> {
+  for (const id of GTFS_DATASET) {
+    try {
+      const pkg = await packageShow(id, GTFS_CATALOGUES);
+      const zips = pkg.resources.filter((r) => /zip/i.test(r.format || '') || /\.zip(\?|$)/i.test(r.url));
+      const pick = zips.find((r) => /gtfs/i.test(`${r.name} ${r.url}`) && !/realtime|real-time/i.test(r.name)) ?? zips[0];
+      if (pick?.url) return pick.url;
+    } catch (err) {
+      console.warn(`  GTFS catalogue lookup (${id}): ${(err as Error).message}`);
+    }
+  }
+  return GTFS_FALLBACK;
+}
 /** Folders inside the PTV GTFS zip: 2 = metropolitan train, 3 = metropolitan tram. */
 const MODES = { '1': 'REGIONAL TRAIN', '2': 'METRO TRAIN', '3': 'METRO TRAM' } as const;
 
@@ -236,7 +259,8 @@ export const ptvGtfs: Fetcher = {
   // 2: adds V/Line regional trains.
   version: 2,
   async run() {
-    const zip = await download(GTFS_URL, cache('gtfs.zip'), { timeoutMs: 900_000 });
+    const url = await gtfsUrl();
+    const zip = await download(url, cache('gtfs.zip'), { timeoutMs: 900_000 });
     const root = path.join(CACHE_DIR, 'gtfs');
     fs.rmSync(root, { recursive: true, force: true });
     fs.mkdirSync(root, { recursive: true });
@@ -287,6 +311,6 @@ export const ptvGtfs: Fetcher = {
     if (lines.length < 20 || stops.length < 500) throw new Error(`GTFS gave ${lines.length} lines and ${stops.length} stops`);
     writeJson('transport-lines.geojson', turf.featureCollection(lines));
     writeJson('transport-stops.geojson', turf.featureCollection(stops));
-    return { asAt: feedDate || new Date().toISOString().slice(0, 10), url: GTFS_URL, rows: lines.length + stops.length, files: ['transport-lines.geojson', 'transport-stops.geojson'], message: `${lines.length} route shapes, ${stops.length} stops` };
+    return { asAt: feedDate || new Date().toISOString().slice(0, 10), url, rows: lines.length + stops.length, files: ['transport-lines.geojson', 'transport-stops.geojson'], message: `${lines.length} route shapes, ${stops.length} stops` };
   },
 };
